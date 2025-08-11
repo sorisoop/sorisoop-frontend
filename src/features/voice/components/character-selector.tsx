@@ -17,7 +17,7 @@ export default function CharacterSelector({ items, selectedId, onSelect }: Chara
   return (
     <>
       {/* 모바일: 프리뷰 + 리스트 */}
-      <div className="md:hidden flex flex-col items-center gap-6">
+      <div className="sm:hidden flex flex-col items-center gap-6">
         {selected && (
           <div className="grid h-32 w-32 sm:h-40 sm:w-40 place-items-center rounded-full bg-secondary overflow-hidden">
             <img
@@ -59,13 +59,13 @@ export default function CharacterSelector({ items, selectedId, onSelect }: Chara
       </div>
 
       {/* 데스크탑: 라벨 + 리스트 */}
-      <div className="hidden md:grid md:grid-cols-12 md:items-center">
-        <div className="md:col-span-4 self-center">
+      <div className="hidden sm:grid sm:grid-cols-12 sm:items-center">
+        <div className="sm:col-span-4 self-center">
           <h2 className="text-lg lg:text-xl font-semibold">캐릭터 선택</h2>
           <p className="text-sm text-muted-foreground">프로필 이미지로 보여질 캐릭터를 선택해 주세요.</p>
         </div>
 
-        <div className="md:col-span-8">
+        <div className="sm:col-span-8">
           <ul className="flex justify-end items-center gap-3 lg:gap-4">
             {items.map((c) => {
               const active = selectedId === c.id;
@@ -94,7 +94,7 @@ export default function CharacterSelector({ items, selectedId, onSelect }: Chara
           </ul>
         </div>
       </div>
-      <div className="my-4 border-0 md:border-b border-border" />
+      <div className="my-4 border-0 sm:border-b border-border" />
     </>
   );
 }

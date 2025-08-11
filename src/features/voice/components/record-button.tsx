@@ -3,10 +3,11 @@ import { PlusIcon } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
 
 type RecordButtonProps = {
-  onClick: () => void;
+  onClick?: (e: React.MouseEvent) => void;
+  className?: string;
 };
 
-export default function RecordButton({ onClick }: RecordButtonProps) {
+export default function RecordButton({ onClick, className }: RecordButtonProps) {
   return (
     <div className="mt-6">
       <Button
@@ -16,8 +17,9 @@ export default function RecordButton({ onClick }: RecordButtonProps) {
         className={cn(
           "w-full rounded-xl border-2 border-dashed",
           "border-border cursor-pointer",
-          "h-20 sm:h-24 md:h-28 grid place-items-center",
-          "transition-colors duration-200"
+          "h-20 sm:h-24 grid place-items-center",
+          "transition-colors duration-200",
+          className
         )}
         aria-label="녹음하기"
       >
