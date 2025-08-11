@@ -1,11 +1,12 @@
 import { useState } from "react";
-import CommonLayout from "@/shared/layouts/common-layout";
 import CharacterSelector from "@/features/voice/components/character-selector";
 import NameField from "@/features/voice/components/name-field";
 import type { CharacterCandidate } from "@/features/voice/types";
 import RecordButton from "@/features/voice/components/record-button";
 import RecordingDrawer from "@/features/voice/components/recording-drawer";
 import BottomActionButton from "@/features/voice/components/bottom-action-button";
+import Preview from "@/features/voice/components/preview";
+import BackHeaderLayout from "@/shared/layouts/back-header-layou";
 
 const CANDIDATES: CharacterCandidate[] = [
   {
@@ -36,18 +37,23 @@ export default function VoiceNewPage() {
   const [recordOpen, setRecordOpen] = useState(false);
 
   return (
-    <CommonLayout title="목소리 추가하기">
+    <BackHeaderLayout title="목소리 추가하기">
       <section className="pt-4">
-        <CharacterSelector items={CANDIDATES} selectedId={selectedId} onSelect={setSelectedId} />
-        <NameField value={name} onChange={setName} />
         <RecordingDrawer open={recordOpen} onOpenChange={setRecordOpen}>
+          <CharacterSelector items={CANDIDATES} selectedId={selectedId} onSelect={setSelectedId} />
+          <NameField value={name} onChange={setName} />
+
+          <RecordingDrawer.IfRecorded>
+            <Preview />
+          </RecordingDrawer.IfRecorded>
+
           <RecordingDrawer.Trigger>
-            <RecordButton onClick={() => {}} />
+            <RecordButton />
           </RecordingDrawer.Trigger>
           <RecordingDrawer.Content />
         </RecordingDrawer>
       </section>
       <BottomActionButton />
-    </CommonLayout>
+    </BackHeaderLayout>
   );
 }
