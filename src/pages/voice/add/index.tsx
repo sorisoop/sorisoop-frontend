@@ -6,7 +6,7 @@ import RecordButton from "@/features/voice/components/record-button";
 import RecordingDrawer from "@/features/voice/components/recording-drawer";
 import BottomActionButton from "@/features/voice/components/bottom-action-button";
 import Preview from "@/features/voice/components/preview";
-import BackHeaderLayout from "@/shared/layouts/back-header-layou";
+import BackHeaderLayout from "@/shared/layouts/back-header-layout";
 
 const CANDIDATES: CharacterCandidate[] = [
   {
