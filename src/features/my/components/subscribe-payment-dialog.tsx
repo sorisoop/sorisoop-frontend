@@ -11,7 +11,7 @@ import { Check, X } from "lucide-react";
 import type { Plan } from "@/features/my/types";
 
 interface SubscribePaymentDialogProps {
-  selectedPlan: Plan; // "yearly" | "monthly"
+  selectedPlan: Plan;
   onSelectPlan: (p: Plan) => void;
 }
 
