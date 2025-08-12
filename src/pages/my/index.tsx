@@ -1,20 +1,12 @@
-import { ChevronRight, X, Star, Check } from "lucide-react";
-import CommonLayout from "@/shared/layouts/common-layout";
-import { Button } from "@/shared/components/ui/button";
-import { Link } from "react-router-dom";
 import { useState } from "react";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/shared/components/ui/dialog";
+import { Link } from "react-router-dom";
+import { ChevronRight } from "lucide-react";
+
+import { Button } from "@/shared/components/ui/button";
+import { Dialog, DialogTrigger } from "@/shared/components/ui/dialog";
 import { cn } from "@/shared/lib/utils";
-import { useIsDeskTop } from "@/shared/hooks";
+import CommonLayout from "@/shared/layouts/common-layout";
+
 import SubscribePaymentDialog from "@/features/my/components/subscribe-payment-dialog";
 
 const supportMenus = ["알림 설정", "고객센터", "약관 및 정책"];
@@ -29,7 +21,6 @@ const profile = {
 export default function MyPage() {
   const [open, setOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<"yearly" | "monthly">("yearly");
-  const isDesktop = useIsDeskTop();
 
   return (
     <CommonLayout title="">
