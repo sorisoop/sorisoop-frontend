@@ -78,17 +78,19 @@ export default function MyPage() {
         <div className="border-b border-border pb-2">
           <p className="text-base text-muted-foreground">구독</p>
         </div>
-        <Link to="#" className="flex justify-between items-center pt-4">
-          <span className="text-lg font-medium">구독 관리</span>
-          <ChevronRight className="h-5 w-5 text-muted-foreground" />
-        </Link>
+        <div className="flex flex-col gap-6 pt-2">
+          <Link to="#" className="flex justify-between items-center">
+            <span className="text-lg font-medium">구독 관리</span>
+            <ChevronRight className="h-5 w-5 text-muted-foreground" />
+          </Link>
+        </div>
       </section>
 
       <section className="pt-8">
         <div className="border-b border-border pb-2">
           <p className="text-base text-muted-foreground">고객지원</p>
         </div>
-        <div className="flex flex-col gap-6 pt-4">
+        <div className="flex flex-col gap-6 pt-2">
           {supportMenus.map((label) => (
             <Link to="#" key={label} className="flex justify-between items-center">
               <span className="text-lg font-medium">{label}</span>
@@ -100,7 +102,7 @@ export default function MyPage() {
 
       <section className="pt-8">
         <div className="border-b border-border pb-2"></div>
-        <div className="flex flex-col gap-6 pt-4">
+        <div className="flex flex-col gap-6 pt-2">
           {accountMenus.map((label) => (
             <Link to="#" key={label} className="flex justify-between items-center">
               <span className="text-lg font-medium">{label}</span>
