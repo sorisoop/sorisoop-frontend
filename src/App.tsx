@@ -4,7 +4,7 @@ import LibraryPage from "@/pages/library";
 import VoicePage from "@/pages/voice";
 import VoiceAddPage from "@/pages/voice/add";
 import MyPage from "@/pages/my";
-import FairyTaleDetailPage from "./pages/fairy-tale/detail";
+import FairyTaleDetailPage from "@/pages/fairy-tale/detail";
 
 export default function App() {
   return (
