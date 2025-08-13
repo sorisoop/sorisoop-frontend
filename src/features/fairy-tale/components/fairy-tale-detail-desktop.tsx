@@ -4,6 +4,7 @@ import { ArrowLeft, Play } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 
 import type { FairyTale } from "@/entities/fairy-tale/models/fairy-tale";
+import Tag from "./tag";
 
 export default function FairyTaleDetailDesktop({ fairyTale }: { fairyTale: FairyTale }) {
   const navigate = useNavigate();
@@ -26,6 +27,11 @@ export default function FairyTaleDetailDesktop({ fairyTale }: { fairyTale: Fairy
 
       <div className="absolute bottom-0 left-0 right-0 px-8 py-8 from-black/60 via-black/30 to-transparent text-secondary">
         <h1 className="text-4xl font-extrabold">{fairyTale.title}</h1>
+
+        <div className="mt-2 flex gap-2 text-foreground">
+          <Tag variant="inverted">{fairyTale.category_id}</Tag>
+          <Tag variant="inverted">{fairyTale.author}</Tag>
+        </div>
 
         <div className="mt-6 flex flex-col gap-4 w-full max-w-md">
           <Button className="w-full h-14 rounded-md bg-primary text-primary-foreground text-base font-semibold gap-2 cursor-pointer">

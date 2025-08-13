@@ -7,6 +7,7 @@ import { Button } from "@/shared/components/ui/button";
 
 import type { FairyTale } from "@/entities/fairy-tale/models/fairy-tale";
 import { PICKS } from "@/entities/fairy-tale/api/fairy-tale";
+import Tag from "./tag";
 
 export default function FairyTaleDetailMobile({ fairyTale }: { fairyTale: FairyTale }) {
   const navigate = useNavigate();
@@ -31,6 +32,10 @@ export default function FairyTaleDetailMobile({ fairyTale }: { fairyTale: FairyT
       <div className="p-4">
         <h1 className="text-xl font-bold">{fairyTale.title}</h1>
 
+        <div className="mt-2 flex items-center gap-2">
+          <Tag variant="subtle">카테고리 2</Tag>
+          <Tag variant="subtle">{fairyTale.author}</Tag>
+        </div>
         <div className="mt-4 flex flex-col gap-3">
           <Button className="w-full h-10 rounded-md bg-primary text-foreground text-base font-semibold gap-2 cursor-pointer">
             <Play className="!w-5 !h-5" />
