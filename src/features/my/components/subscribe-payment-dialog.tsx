@@ -110,7 +110,7 @@ export default function SubscribePaymentDialog({ selectedPlan, onSelectPlan }: S
         </div>
 
         <div className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-t p-4 sm:static sm:bg-background sm:backdrop-blur-none sm:border-t-0 sm:pt-4 sm:pb-0">
-          <Button size="lg" className="w-full h-12">
+          <Button size="lg" className="w-full h-12 cursor-pointer">
             구독하기
           </Button>
         </div>
