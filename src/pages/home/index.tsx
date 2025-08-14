@@ -63,7 +63,7 @@ export default function HomePage() {
 
   return (
     <CommonLayout title="">
-      <Tabs value={homeFilter} onValueChange={(v: string) => setHomeFilter(v)} className="w-full pt-4">
+      <Tabs value={homeFilter} onValueChange={(v: string) => setHomeFilter(v)} className="w-full pt-2">
         <TabsList className="relative h-10 bg-transparent p-0 gap-8 rounded-none">
           {(["전체", "창작 동화"] as const).map((tabKey) => (
             <TabsTrigger
