@@ -4,6 +4,7 @@ export const subscriptionKeys = {
   getSubscriptionPlans: ["subscription", "plans"] as const,
   startSubscription: ["subscription", "start"] as const,
   getSubscription: ["subscription"] as const,
+  deleteSubscription: ["subscription", "delete"] as const,
 };
 
 export const subscriptionQueryOptions = {

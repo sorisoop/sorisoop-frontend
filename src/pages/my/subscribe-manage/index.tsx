@@ -8,6 +8,7 @@ export default function SubscribeManagePage() {
         <SubscribeManage.Active />
         <SubscribeManage.Empty />
         <SubscribeManage.Notice />
+        <SubscribeManage.CancelDialog />
       </SubscribeManage>
     </BackHeaderLayout>
   );

@@ -5,8 +5,11 @@ import { formatDate } from "@/shared/lib/date";
 import { useSubscriptionManageContext } from "../hooks";
 
 export function SubscribeManageActive() {
-  const { subscription } = useSubscriptionManageContext();
+  const { subscription, setCancelDialogOpen } = useSubscriptionManageContext();
   if (!subscription) return null;
+
+  const isActive = subscription.status === "ACTIVE";
+  const isCancelled = subscription.status === "CANCELLED";
 
   return (
     <section
@@ -25,8 +28,8 @@ export function SubscribeManageActive() {
           </div>
           <h2 className="text-2xl font-bold text-foreground">소리숲</h2>
         </div>
-        <Badge variant="destructive" className="text-xs font-semibold px-3 py-1 shadow-sm">
-          구독중
+        <Badge variant={isActive ? "default" : "destructive"} className="text-xs font-semibold px-3 py-1 shadow-sm">
+          {isActive ? "구독중" : "해지됨"}
         </Badge>
       </div>
 
@@ -35,21 +38,26 @@ export function SubscribeManageActive() {
           {subscription.type === "MONTH" ? "월간 플랜 이용중입니다." : "연간 플랜 이용중입니다."}
         </p>
 
-        <div className="flex items-center gap-2">
-          <div className="w-2 h-2 bg-primary rounded-full" />
-          <p className="text-sm text-muted-foreground">
-            다음 결제일
-            <span className="font-semibold text-primary bg-primary/10 px-2 py-1 rounded-md ml-2">
-              {formatDate(subscription.nextBillingAt)}
-            </span>
-          </p>
-        </div>
-
-        {subscription.cancelledAt && (
+        {isActive && (
           <div className="flex items-center gap-2">
-            <div className="w-1 h-1 bg-primary rounded-full" />
+            <div className="w-2 h-2 bg-primary rounded-full" />
             <p className="text-sm text-muted-foreground">
-              해지 예정일: <span className="font-semibold text-foreground">{subscription.cancelledAt}</span>
+              다음 결제일
+              <span className="font-semibold text-primary bg-primary/10 px-2 py-1 rounded-md ml-2">
+                {formatDate(subscription.nextBillingAt)}
+              </span>
+            </p>
+          </div>
+        )}
+
+        {isCancelled && (
+          <div className="flex items-center gap-2">
+            <div className="w-2 h-2 bg-destructive rounded-full" />
+            <p className="text-sm text-muted-foreground">
+              서비스 종료일
+              <span className="font-semibold text-destructive bg-primary/10 px-2 py-1.5 rounded-md ml-2">
+                {formatDate(subscription.nextBillingAt)}
+              </span>
             </p>
           </div>
         )}
@@ -61,8 +69,16 @@ export function SubscribeManageActive() {
           "mt-3 w-full sm:w-auto font-semibold shadow-md hover:shadow-lg cursor-pointer text-secondary text-base",
           "transition-all duration-200 hover:scale-[1.02] relative z-10"
         )}
+        onClick={() => {
+          if (isActive) {
+            setCancelDialogOpen(true);
+          } else {
+            // 구독하기 로직 (예: 결제 페이지로 이동)
+            // setSubscribeDialogOpen(true) 또는 router.push('/subscribe')
+          }
+        }}
       >
-        구독 해지
+        {isActive ? "구독 해지" : "구독하기"}
       </Button>
     </section>
   );
