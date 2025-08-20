@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/shared/components/ui/tabs";
+import { CommonLayout } from "@/shared/layouts";
 import type { FairyTale } from "@/entities/fairy-tale/models/fairy-tale";
 import { FairyTaleCardGrid, FairyTaleSnapShelf, FairyTaleSpotlightSplit } from "@/features/fairy-tale/components";
-import CommonLayout from "@/shared/layouts/common-layout";
 import Hero from "@/widgets/hero";
 import Categories from "@/widgets/categories";
 import TitleBar from "@/shared/components/ui/title-bar";

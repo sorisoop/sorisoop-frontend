@@ -1,5 +1,5 @@
-import BackHeaderLayout from "@/shared/layouts/back-header-layout";
 import { SubscribeManage } from "@/features/subscription/components";
+import { BackHeaderLayout } from "@/shared/layouts";
 
 export default function SubscribeManagePage() {
   return (

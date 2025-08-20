@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
-
-import CommonLayout from "@/shared/layouts/common-layout";
+import { CommonLayout } from "@/shared/layouts";
 import { Button } from "@/shared/components/ui/button";
 import { Dialog, DialogTrigger } from "@/shared/components/ui/dialog";
 import { cn } from "@/shared/lib/utils";

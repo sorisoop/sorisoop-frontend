@@ -1,9 +1,9 @@
-import CommonLayout from "@/shared/layouts/common-layout";
+import { Book } from "lucide-react";
+import { Link } from "react-router-dom";
+import { Button } from "@/shared/components/ui/button";
+import { CommonLayout } from "@/shared/layouts";
 import { FairyTaleCardGrid } from "@/features/fairy-tale/components";
 import type { FairyTale } from "@/entities/fairy-tale/models/fairy-tale";
-import { Book } from "lucide-react";
-import { Button } from "@/shared/components/ui/button";
-import { Link } from "react-router-dom";
 
 const MY_LIBRARY: FairyTale[] = [
   {
