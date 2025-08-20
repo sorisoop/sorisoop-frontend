@@ -7,7 +7,6 @@ import { Dialog, DialogTrigger } from "@/shared/components/ui/dialog";
 import { cn } from "@/shared/lib/utils";
 import { useQueryClient } from "@tanstack/react-query";
 import { subscriptionQueryOptions } from "@/entities/subscription/api/query-options";
-import { billingQueryOptions } from "@/entities/billing/api/query-options";
 
 function MypageRoot({ children }: { children: React.ReactNode }) {
   return <CommonLayout title="">{children}</CommonLayout>;
