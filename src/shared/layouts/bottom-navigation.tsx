@@ -1,4 +1,3 @@
-// src/shared/layout/BottomNavigation.tsx
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/shared/components/ui/button";
 import { Home, BookOpen, Mic, UserRound, PenLine } from "lucide-react";
