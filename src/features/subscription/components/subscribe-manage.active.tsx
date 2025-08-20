@@ -2,10 +2,13 @@ import { Badge } from "@/shared/components/ui/badge";
 import { Button } from "@/shared/components/ui/button";
 import { cn } from "@/shared/lib/utils";
 import { formatDate } from "@/shared/lib/date";
+import { useRestartSubscription } from "@/entities/subscription/api/mutations";
 import { useSubscriptionManageContext } from "../hooks";
 
 export function SubscribeManageActive() {
   const { subscription, setCancelDialogOpen } = useSubscriptionManageContext();
+  const { mutate: restartSubscription } = useRestartSubscription();
+
   if (!subscription) return null;
 
   const isActive = subscription.status === "ACTIVE";
@@ -28,7 +31,10 @@ export function SubscribeManageActive() {
           </div>
           <h2 className="text-2xl font-bold text-foreground">소리숲</h2>
         </div>
-        <Badge variant={isActive ? "default" : "destructive"} className="text-xs font-semibold px-3 py-1 shadow-sm">
+        <Badge
+          variant={isActive ? "default" : "destructive"}
+          className={cn("text-xs font-semibold px-3 py-1 shadow-sm", isActive && "text-white")}
+        >
           {isActive ? "구독중" : "해지됨"}
         </Badge>
       </div>
@@ -73,8 +79,7 @@ export function SubscribeManageActive() {
           if (isActive) {
             setCancelDialogOpen(true);
           } else {
-            // 구독하기 로직 (예: 결제 페이지로 이동)
-            // setSubscribeDialogOpen(true) 또는 router.push('/subscribe')
+            restartSubscription();
           }
         }}
       >

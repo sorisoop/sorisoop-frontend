@@ -16,6 +16,7 @@ import { useDeleteSubscription } from "@/entities/subscription/api/mutations";
 export function SubscribeCancelDialog() {
   const isDesktop = useIsDeskTop();
   const { isCancelDialogOpen, setCancelDialogOpen } = useSubscriptionManageContext();
+
   const deleteMutation = useDeleteSubscription();
 
   if (isDesktop) {
@@ -38,7 +39,16 @@ export function SubscribeCancelDialog() {
             >
               취소
             </Button>
-            <Button variant="destructive" onClick={() => deleteMutation.mutate()} className="cursor-pointer">
+            <Button
+              variant="destructive"
+              onClick={() =>
+                deleteMutation.mutate(undefined, {
+                  onSuccess: () => setCancelDialogOpen(false),
+                })
+              }
+              className="cursor-pointer"
+              disabled={deleteMutation.isPending}
+            >
               해지하기
             </Button>
           </div>
@@ -66,8 +76,13 @@ export function SubscribeCancelDialog() {
           </DrawerClose>
           <Button
             variant="destructive"
-            onClick={() => deleteMutation.mutate()}
-            className="cursor-pointer text-secondary font-semibold"
+            onClick={() =>
+              deleteMutation.mutate(undefined, {
+                onSuccess: () => setCancelDialogOpen(false),
+              })
+            }
+            className="cursor-pointer"
+            disabled={deleteMutation.isPending}
           >
             해지하기
           </Button>
