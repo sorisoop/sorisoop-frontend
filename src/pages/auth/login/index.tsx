@@ -1,7 +1,12 @@
+import { KakaoLoginButton, LocalLoginButton } from "@/features/auth/components";
+import { NonHeaderLayout } from "@/shared/layouts";
+
 export default function LoginPage() {
   return (
-    <div>
+    <NonHeaderLayout>
       <h1>gd</h1>
-    </div>
+      <KakaoLoginButton />
+      <LocalLoginButton />
+    </NonHeaderLayout>
   );
 }
