@@ -31,7 +31,7 @@ const CANDIDATES: CharacterCandidate[] = [
   },
 ];
 
-export default function VoiceNewPage() {
+export default function VoiceAddPage() {
   const [selectedId, setSelectedId] = useState<string>(CANDIDATES[0].id);
   const [name, setName] = useState("");
   const [recordOpen, setRecordOpen] = useState(false);
