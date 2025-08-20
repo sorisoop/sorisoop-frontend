@@ -5,6 +5,9 @@ import CommonLayout from "@/shared/layouts/common-layout";
 import { Button } from "@/shared/components/ui/button";
 import { Dialog, DialogTrigger } from "@/shared/components/ui/dialog";
 import { cn } from "@/shared/lib/utils";
+import { useQueryClient } from "@tanstack/react-query";
+import { subscriptionQueryOptions } from "@/entities/subscription/api/query-options";
+import { billingQueryOptions } from "@/entities/billing/api/query-options";
 
 function MypageRoot({ children }: { children: React.ReactNode }) {
   return <CommonLayout title="">{children}</CommonLayout>;
@@ -44,12 +47,19 @@ function Profile({
 }
 
 function SubscribeBanner({ children }: { children: React.ReactNode }) {
+  const queryClient = useQueryClient();
+
+  const prefetch = () => {
+    queryClient.prefetchQuery(subscriptionQueryOptions.getSubscriptionPlans());
+  };
+
   return (
     <Dialog>
       <section className="pt-8">
         <DialogTrigger asChild>
           <Button
             type="button"
+            onMouseEnter={prefetch}
             className={cn(
               "relative w-full sm:h-56 h-40 rounded-xl overflow-hidden cursor-pointer",
               "ring-1 ring-border hover:ring-ring/50 transition"
@@ -93,12 +103,33 @@ function MenuSection({ title, children }: { title?: string; children: React.Reac
   );
 }
 
-function MenuItem({ to, children }: { to: string; children: React.ReactNode }) {
-  return (
-    <Link to={to} className="flex justify-between items-center">
+/**
+ * MenuItem - Link 또는 Button 모두 지원
+ */
+function MenuItem({ to, onClick, children }: { to?: string; onClick?: () => void; children: React.ReactNode }) {
+  const content = (
+    <>
       <span className="text-lg font-medium">{children}</span>
       <ChevronRight className="h-5 w-5 text-muted-foreground" />
-    </Link>
+    </>
+  );
+
+  if (to) {
+    return (
+      <Link to={to} className="flex justify-between items-center">
+        {content}
+      </Link>
+    );
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className="flex justify-between items-center w-full text-left cursor-pointer"
+    >
+      {content}
+    </button>
   );
 }
 

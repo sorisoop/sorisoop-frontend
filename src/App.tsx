@@ -5,10 +5,9 @@ import VoicePage from "@/pages/voice";
 import VoiceAddPage from "@/pages/voice/add";
 import MyPage from "@/pages/my";
 import FairyTaleDetailPage from "@/pages/fairy-tale/detail";
-import BillingSuccessPage from "@/pages/payments/billing";
-import PaymentFailPage from "@/pages/payments/fail";
-import SubscriptionSuccessPage from "@/pages/payments/success";
 import SubscribeManagePage from "@/pages/my/subscribe-manage";
+import PaymentSuccessPage from "./pages/payment/success";
+import PaymentFailPage from "./pages/payment/fail";
 
 export default function App() {
   return (
@@ -21,11 +20,10 @@ export default function App() {
         <Route path="/my" element={<MyPage />} />
         <Route path="/fairy-tale/:id" element={<FairyTaleDetailPage />} />
 
-        <Route path="/payment/billing" element={<BillingSuccessPage />} />
-        <Route path="/payment/fail" element={<PaymentFailPage />} />
-        <Route path="/subscription/success" element={<SubscriptionSuccessPage />} />
-
         <Route path="/subscription/manage" element={<SubscribeManagePage />} />
+
+        <Route path="/payment/success" element={<PaymentSuccessPage />} />
+        <Route path="/payment/fail" element={<PaymentFailPage />} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

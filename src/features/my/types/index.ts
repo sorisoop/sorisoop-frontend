@@ -1,1 +1,1 @@
-export type Plan = "yearly" | "monthly";
+export type Plan = "YEAR" | "MONTH";

@@ -1,10 +1,12 @@
-import { useState } from "react";
-
 import { Mypage } from "@/features/my/components";
-import { SubscribePaymentDialog } from "@/features/payments/components";
+import { SubscriptionDialog } from "@/features/subscription/components";
+import { useManageCard } from "@/features/subscription/hooks";
+import { SubscriptionProvider } from "@/features/subscription/providers/subscription-provider";
+import { Loader2 } from "lucide-react";
+import { Suspense } from "react";
 
 export default function MypageScreen() {
-  const [selectedPlan, setSelectedPlan] = useState<"yearly" | "monthly">("yearly");
+  const { openSettings } = useManageCard();
 
   return (
     <Mypage>
@@ -17,11 +19,26 @@ export default function MypageScreen() {
       />
 
       <Mypage.SubscribeBanner>
-        <SubscribePaymentDialog selectedPlan={selectedPlan} onSelectPlan={setSelectedPlan} />
+        <SubscriptionProvider>
+          <SubscriptionDialog>
+            <Suspense
+              fallback={
+                <div className="flex items-center justify-center h-60">
+                  <Loader2 className="w-6 h-6 animate-spin text-primary" />
+                </div>
+              }
+            >
+              <SubscriptionDialog.PlanSelector />
+              <SubscriptionDialog.PaymentTerms />
+              <SubscriptionDialog.SubscribeButton />
+            </Suspense>
+          </SubscriptionDialog>
+        </SubscriptionProvider>
       </Mypage.SubscribeBanner>
 
       <Mypage.MenuSection title="구독">
         <Mypage.MenuItem to="/subscription/manage">구독 관리</Mypage.MenuItem>
+        <Mypage.MenuItem onClick={openSettings}>카드 관리</Mypage.MenuItem>
       </Mypage.MenuSection>
 
       <Mypage.MenuSection title="고객지원">
