@@ -16,9 +16,12 @@ export default function NonHeaderLayout({ children, title = "" }: NonHeaderLayou
         </div>
       </header>
 
-      <main id="main-content" className="w-full flex-1">
-        <div className="mx-auto max-w-screen-lg px-4 pb-safe-bottom pb-16">{children}</div>
-      </main>
+      <div
+        id="main-content"
+        className="flex w-full max-w-limit flex-1 flex-col items-stretch justify-start pb-safe-bottom"
+      >
+        {children}
+      </div>
 
       <div aria-hidden className="pointer-events-none -z-50">
         <div className="fixed inset-0 -z-50 bg-muted" />
