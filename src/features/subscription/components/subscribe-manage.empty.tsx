@@ -36,7 +36,7 @@ export function SubscribeManageEmpty() {
           "transition-all duration-200 hover:scale-[1.02]"
         )}
       >
-        구독 시작하기
+        구독하기
       </Button>
     </section>
   );

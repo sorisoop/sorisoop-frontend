@@ -3,6 +3,8 @@ import type { Subscription } from "@/entities/subscription/model";
 
 export interface SubscriptionManageContextValue {
   subscription: Subscription | null;
+  isCancelDialogOpen: boolean;
+  setCancelDialogOpen: (open: boolean) => void;
 }
 
 export const SubscriptionManageContext = createContext<SubscriptionManageContextValue | null>(null);
