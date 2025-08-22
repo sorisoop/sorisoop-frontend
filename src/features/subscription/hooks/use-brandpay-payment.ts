@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { loadTossPayments, type TossPaymentsBrandpay } from "@tosspayments/tosspayments-sdk";
-import { useCustomerKey } from "@/entities/billing/api/hooks";
+import { useCustomerKey } from "@/entities/member/api/hooks";
 
 const generateOrderId = (planType: string) => {
   return `sub-${planType}-${crypto.randomUUID()}`;

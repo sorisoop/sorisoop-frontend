@@ -2,8 +2,7 @@ import { useEffect, useState } from "react";
 
 import type { TossPaymentsBrandpay } from "@tosspayments/tosspayments-sdk";
 import { loadTossPayments } from "@tosspayments/tosspayments-sdk";
-
-import { useCustomerKey } from "@/entities/billing/api/hooks";
+import { useCustomerKey } from "@/entities/member/api/hooks";
 
 const TOSS_CLIENT_KEY = import.meta.env.VITE_TOSS_PAYMENTS_CLIENT_KEY as string;
 
