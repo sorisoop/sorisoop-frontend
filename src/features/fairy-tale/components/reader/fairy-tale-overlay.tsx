@@ -1,10 +1,10 @@
+import { useEffect, useRef } from "react";
 import { useFairyTaleReaderContext } from "@/features/fairy-tale/hooks";
 import { useDragScroll } from "@/shared/hooks";
 import { useDragPreventClick } from "@/shared/hooks";
-import { useEffect, useRef } from "react";
 
 export function FairyTaleOverlay() {
-  const { data, currentPage, setCurrentPage, isOverlayOpen, setIsOverlayOpen } = useFairyTaleReaderContext();
+  const { data, currentPage, goToPage, isOverlayOpen, setIsOverlayOpen } = useFairyTaleReaderContext();
   const { onMouseDown, onMouseMove, onMouseUp } = useDragScroll<HTMLDivElement>();
   const { handleMouseDown, handleMouseMove, handleClick, isDragging } = useDragPreventClick(8);
   const thumbnailContainerRef = useRef<HTMLDivElement>(null);
@@ -40,7 +40,7 @@ export function FairyTaleOverlay() {
   const handleThumbnailClick = (pageIndex: number) => (e: React.MouseEvent) => {
     handleClick(e);
     if (!isDragging) {
-      setCurrentPage(pageIndex);
+      goToPage(pageIndex);
       setIsOverlayOpen(false);
     }
   };

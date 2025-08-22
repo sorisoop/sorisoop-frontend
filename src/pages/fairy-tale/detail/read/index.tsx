@@ -12,11 +12,12 @@ export default function FairyTaleReaderPage() {
     <FullScreenBackHeaderLayout>
       <FairyTaleReaderProvider id={id}>
         <FairyTaleReader>
-          <FairyTaleReader.Page />
+          <FairyTaleReader.Book />
           <FairyTaleReader.Navigation />
           <FairyTaleReader.Indicator />
           <FairyTaleReader.Hint />
           <FairyTaleReader.Overlay />
+          <FairyTaleReader.ToggleTextButton />
         </FairyTaleReader>
       </FairyTaleReaderProvider>
     </FullScreenBackHeaderLayout>
