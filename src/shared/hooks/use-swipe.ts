@@ -1,27 +1,9 @@
 import { useRef } from "react";
 
 interface UseSwipeOptions {
-  /**
-   * 왼쪽으로 스와이프 했을 때 실행되는 콜백
-   */
   onSwipeLeft: () => void;
-
-  /**
-   * 오른쪽으로 스와이프 했을 때 실행되는 콜백
-   */
   onSwipeRight: () => void;
-
-  /**
-   * 스와이프 감지 민감도 (px)
-   * - 기본값: 50
-   */
   threshold?: number;
-
-  /**
-   * 스와이프 감지 활성화 여부
-   * - false면 이벤트 무시
-   * - 기본값: true
-   */
   enabled?: boolean;
 }
 
