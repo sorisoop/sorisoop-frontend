@@ -9,6 +9,7 @@ import SubscribeManagePage from "@/pages/my/subscribe-manage";
 import PaymentSuccessPage from "./pages/payment/success";
 import PaymentFailPage from "./pages/payment/fail";
 import LoginPage from "./pages/auth/login";
+import FairyTaleReaderPage from "./pages/fairy-tale/detail/read";
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
         <Route path="/voice/add" element={<VoiceAddPage />} />
         <Route path="/my" element={<MyPage />} />
         <Route path="/fairy-tale/:id" element={<FairyTaleDetailPage />} />
+        <Route path="/fairy-tale/:id/read" element={<FairyTaleReaderPage />} />
 
         <Route path="/subscription/manage" element={<SubscribeManagePage />} />
 
