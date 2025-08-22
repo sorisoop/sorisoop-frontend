@@ -57,10 +57,10 @@ export function FairyTalePage() {
           showText ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"
         }`}
       >
-        <div className="bg-gradient-to-t from-foreground/50 via-foreground/70 to-transparent pt-16 pb-8">
+        <div className="bg-black/50 py-6">
           <div className="px-6 md:px-8 lg:px-12">
-            <div className="max-w-4xl mx-auto">
-              <p className="text-white text-lg md:text-xl lg:text-2xl leading-relaxed font-light tracking-wide break-keep whitespace-pre-wrap">
+            <div className="max-w-screen-lg mx-auto">
+              <p className="text-white text-xl md:text-xl lg:text-2xl leading-relaxed font-semibold tracking-wide break-keep whitespace-pre-wrap">
                 {page.script}
               </p>
             </div>
