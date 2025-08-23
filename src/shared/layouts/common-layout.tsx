@@ -18,9 +18,9 @@ export default function CommonLayout({ children, title = "" }: CommonLayoutProps
     >
       <header className="sticky top-0 z-20 w-full border-b border-border bg-background/90 backdrop-blur">
         <div className="mx-auto max-w-screen-lg h-[52px] px-4 flex items-center justify-between gap-4">
-          <Link to="/" className="inline-flex items-center p-2">
+          <Link to="/" className="inline-flex items-center">
             <span className="sr-only">Home</span>
-            <img src="/header-logo.png" width={60} height={52} alt="logo" className="h-[52px] pt-1" />
+            <img src="/logo.webp" width={50} height={48} alt="logo" className="h-[48px] pt-1" />
           </Link>
 
           <div className="flex-1 truncate text-center text-sm font-bold text-muted-foreground">{title}</div>
