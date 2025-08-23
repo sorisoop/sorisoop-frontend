@@ -4,9 +4,13 @@ import { CommonLayout } from "@/shared/layouts";
 import Hero from "@/widgets/hero";
 import Categories from "@/widgets/categories";
 import TitleBar from "@/shared/components/ui/title-bar";
+import { useFairyTalesByCategoryInfinite } from "@/entities/fairy-tale/api/hooks";
+import { FairyTaleCard } from "@/features/fairy-tale/components/variants";
 
 export default function HomePage() {
   const [homeFilter, setHomeFilter] = useState<string>("전체");
+  const { data } = useFairyTalesByCategoryInfinite(1);
+  const tales = data?.pages[0] ?? [];
 
   return (
     <CommonLayout title="">
@@ -48,14 +52,12 @@ export default function HomePage() {
 
       <section className="pt-10">
         <TitleBar title="이번 주 이야기 상자" subtitle="반짝반짝, 이번 주에 꺼내 보는 이야기" />
+        <FairyTaleCard.HighlightRow tales={tales} />
       </section>
 
       <section className="pt-10">
-        <TitleBar title="새로 나온 그림책" subtitle="따끈따끈 신간을 지금 만나보세요" />
-      </section>
-
-      <section className="pt-10 pb-16">
         <TitleBar title="오늘의 픽" subtitle="소리숲이 고른 오늘의 이야기" />
+        <FairyTaleCard.Grid tales={tales} />
       </section>
     </CommonLayout>
   );
