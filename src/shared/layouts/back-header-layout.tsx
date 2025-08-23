@@ -34,7 +34,7 @@ export default function BackHeaderLayout({ children, title = "" }: BackHeaderLay
       </header>
 
       <main id="main-content" className="w-full flex-1">
-        <div className="mx-auto max-w-screen-lg px-4 pb-safe-bottom pb-16">{children}</div>
+        <div className="mx-auto max-w-screen-lg px-4 pb-safe-bottom">{children}</div>
       </main>
 
       <div aria-hidden className="pointer-events-none -z-50">

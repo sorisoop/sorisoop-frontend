@@ -1,12 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Play } from "lucide-react";
 
-import { FairyTaleCardGrid } from "@/features/fairy-tale/components";
-
 import { Button } from "@/shared/components/ui/button";
 
 import type { FairyTale } from "@/entities/fairy-tale/models/fairy-tale";
-import { PICKS } from "@/entities/fairy-tale/api/fairy-tale";
 import Tag from "./tag";
 
 export default function FairyTaleDetailMobile({ fairyTale }: { fairyTale: FairyTale }) {
@@ -60,7 +57,6 @@ export default function FairyTaleDetailMobile({ fairyTale }: { fairyTale: FairyT
 
       <div className="p-4">
         <h2 className="text-base font-bold mb-3">비슷한 콘텐츠</h2>
-        <FairyTaleCardGrid tales={PICKS.filter((t) => t.id !== fairyTale.id)} />
       </div>
     </div>
   );

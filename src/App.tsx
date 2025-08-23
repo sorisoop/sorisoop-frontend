@@ -11,6 +11,7 @@ import PaymentFailPage from "@/pages/payment/fail";
 import LoginPage from "@/pages/auth/login";
 import FairyTaleReaderPage from "@/pages/fairy-tale/detail/read";
 import SignupPage from "@/pages/auth/signup";
+import FairyTaleByCategoryPage from "@/pages/fairy-tale/category/name";
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
         <Route path="/my" element={<MyPage />} />
         <Route path="/fairy-tale/:id" element={<FairyTaleDetailPage />} />
         <Route path="/fairy-tale/:id/read" element={<FairyTaleReaderPage />} />
+        <Route path="/fairy-tale/category/:id" element={<FairyTaleByCategoryPage />} />
 
         <Route path="/subscription/manage" element={<SubscribeManagePage />} />
 

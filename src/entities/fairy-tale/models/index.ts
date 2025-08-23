@@ -10,3 +10,21 @@ export interface FairyTaleCategoryResponse {
   id: number;
   name: string;
 }
+
+export interface FairyTaleResponse {
+  id: number;
+  title: string;
+  author: string;
+  thumbnailImage: string;
+  pageCount: number;
+  name: string;
+}
+
+export interface FairyTale {
+  id: number;
+  title: string;
+  author: string;
+  thumbnailImage: string;
+  pageCount: number;
+  categoryName: string;
+}

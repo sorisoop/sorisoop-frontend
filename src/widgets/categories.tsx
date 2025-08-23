@@ -34,7 +34,7 @@ export default function Categories() {
               <div key={id ?? name} className="shrink-0 text-center">
                 <Button
                   variant="ghost"
-                  onClick={() => navigate(`/fairy-tale?category=${encodeURIComponent(name)}`)}
+                  onClick={() => navigate(`/fairy-tale/category/${encodeURIComponent(id)}`)}
                   className={[
                     "relative mx-auto h-20 w-20 p-0 rounded-full cursor-pointer",
                     "bg-muted border border-border",

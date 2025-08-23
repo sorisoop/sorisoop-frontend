@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/shared/components/ui/tabs";
 import { CommonLayout } from "@/shared/layouts";
 import type { FairyTale } from "@/entities/fairy-tale/models/fairy-tale";
-import { FairyTaleCardGrid, FairyTaleSnapShelf, FairyTaleSpotlightSplit } from "@/features/fairy-tale/components";
+import { FairyTaleSnapShelf, FairyTaleSpotlightSplit } from "@/features/fairy-tale/components";
 import Hero from "@/widgets/hero";
 import Categories from "@/widgets/categories";
 import TitleBar from "@/shared/components/ui/title-bar";
@@ -101,17 +101,16 @@ export default function HomePage() {
 
       <section className="pt-10">
         <TitleBar title="이번 주 이야기 상자" subtitle="반짝반짝, 이번 주에 꺼내 보는 이야기" />
-        <FairyTaleSpotlightSplit tales={PICKS.slice(0, 3)} />
+        {/* <FairyTaleSpotlightSplit tales={PICKS.slice(0, 3)} /> */}
       </section>
 
       <section className="pt-10">
         <TitleBar title="새로 나온 그림책" subtitle="따끈따끈 신간을 지금 만나보세요" />
-        <FairyTaleSnapShelf tales={PICKS} />
+        {/* <FairyTaleSnapShelf tales={PICKS} /> */}
       </section>
 
       <section className="pt-10 pb-16">
         <TitleBar title="오늘의 픽" subtitle="소리숲이 고른 오늘의 이야기" />
-        <FairyTaleCardGrid tales={PICKS} />
       </section>
     </CommonLayout>
   );
