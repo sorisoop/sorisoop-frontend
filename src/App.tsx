@@ -6,10 +6,11 @@ import VoiceAddPage from "@/pages/voice/add";
 import MyPage from "@/pages/my";
 import FairyTaleDetailPage from "@/pages/fairy-tale/detail";
 import SubscribeManagePage from "@/pages/my/subscribe-manage";
-import PaymentSuccessPage from "./pages/payment/success";
-import PaymentFailPage from "./pages/payment/fail";
-import LoginPage from "./pages/auth/login";
-import FairyTaleReaderPage from "./pages/fairy-tale/detail/read";
+import PaymentSuccessPage from "@/pages/payment/success";
+import PaymentFailPage from "@/pages/payment/fail";
+import LoginPage from "@/pages/auth/login";
+import FairyTaleReaderPage from "@/pages/fairy-tale/detail/read";
+import SignupPage from "@/pages/auth/signup";
 
 export default function App() {
   return (
@@ -29,6 +30,7 @@ export default function App() {
         <Route path="/payment/fail" element={<PaymentFailPage />} />
 
         <Route path="/auth/login" element={<LoginPage />} />
+        <Route path="/auth/signup" element={<SignupPage />} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

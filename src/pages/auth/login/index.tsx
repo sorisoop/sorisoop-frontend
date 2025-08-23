@@ -6,6 +6,7 @@ import { Input } from "@/shared/components/ui/input";
 import { Button } from "@/shared/components/ui/button";
 import { Separator } from "@/shared/components/ui/separator";
 import { FloatingShapesBackground } from "@/widgets";
+import { Link } from "react-router-dom";
 
 export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
@@ -58,8 +59,8 @@ export default function LoginPage() {
           </Button>
 
           <div className="text-center">
-            <Button variant="ghost" className="text-foreground text-sm font-medium transition-colors">
-              회원가입
+            <Button asChild variant="ghost" className="text-foreground text-sm font-medium transition-colors">
+              <Link to="/auth/signup">회원가입</Link>
             </Button>
           </div>
 
