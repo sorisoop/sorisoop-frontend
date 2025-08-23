@@ -10,11 +10,12 @@ type FairyTaleHighlightRowProps = {
 export default function FairyTaleHighlightRow({ tales, className = "" }: FairyTaleHighlightRowProps) {
   return (
     <div className={`w-full overflow-x-auto scrollbar-hide mt-4 ${className}`}>
-      <div className="flex gap-4">
+      <div className="flex gap-4" role="list">
         {tales.map((tale) => (
           <Link
             key={tale.id}
             to={`/fairy-tale/${tale.id}/read`}
+            role="listitem"
             className="relative flex-shrink-0 w-[240px] md:w-[280px] overflow-hidden rounded-md shadow-md cursor-pointer"
             aria-label={tale.title}
           >
@@ -24,8 +25,10 @@ export default function FairyTaleHighlightRow({ tales, className = "" }: FairyTa
 
             <div className="absolute inset-x-0 bottom-0 flex flex-col gap-1 px-3 pb-4">
               <Badge className="text-foreground font-semibold">{tale.name}</Badge>
-              <h3 className="text-base md:text-lg font-bold text-white drop-shadow line-clamp-1">{tale.title}</h3>
-              <p className="text-xs text-secondary line-clamp-1">
+              <h3 className="font-serif italic  text-base md:text-lg font-bold text-secondary drop-shadow line-clamp-1">
+                {tale.title}
+              </h3>
+              <p className="font-serif italic text-xs text-secondary line-clamp-1">
                 {tale.author} · {tale.pageCount}p
               </p>
             </div>

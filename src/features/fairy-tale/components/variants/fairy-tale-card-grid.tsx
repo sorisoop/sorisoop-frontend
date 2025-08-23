@@ -37,8 +37,10 @@ export default function FairyTaleCardGrid({ tales, className, ariaLabel = "오�
           <div className="absolute inset-x-0 bottom-0 pointer-events-none">
             <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
             <div className="relative p-3">
-              <h4 className="text-background font-extrabold leading-snug line-clamp-2">{tale.title}</h4>
-              <p className="mt-1 text-background/90 text-xs">
+              <h4 className="font-serif italic text-lg md:text-xl font-bold text-background drop-shadow-sm leading-snug line-clamp-2">
+                {tale.title}
+              </h4>
+              <p className="font-serif italic mt-1 text-background/90 text-xs">
                 {tale.author} · {tale.pageCount}p
               </p>
             </div>
