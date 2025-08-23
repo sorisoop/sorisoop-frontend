@@ -20,7 +20,7 @@ export const useBrandpayPayment = () => {
       setBrandpay(
         toss.brandpay({
           customerKey: customerKeyData.customerKey,
-          redirectUrl: `${import.meta.env.VITE_API_BASE_URL}/billing/callback-auth`,
+          redirectUrl: `${import.meta.env.VITE_API_BASE_URL}/subscription/callback-auth`,
         })
       );
     })();
