@@ -8,7 +8,6 @@ import { SignupPassword, SignupPasswordConfirm } from "./signup-password";
 import { SignupSubmit } from "./signup-submit";
 import { SignupEmailInput } from "./signup-email-input";
 import { Link } from "react-router-dom";
-import { FloatingShapesBackground } from "@/widgets";
 
 const formSchema = z
   .object({
@@ -59,7 +58,6 @@ function Root({ children, onSubmit }: SignupProps) {
   return (
     <Form {...form}>
       <div className="relative overflow-hidden">
-        <FloatingShapesBackground />
         <div className="relative text-center mb-16 flex justify-center items-center gap-2 z-10 ">
           <div className="inline-flex items-center gap-2">
             <span className="inline-block h-5 w-1.5 rounded-full bg-primary" aria-hidden />
