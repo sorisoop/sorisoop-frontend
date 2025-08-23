@@ -14,7 +14,13 @@ export function SignupPassword() {
         <FormItem>
           <FormLabel>비밀번호</FormLabel>
           <FormControl>
-            <Input type="password" placeholder="비밀번호" {...field} className="h-10" autoComplete="new-password" />
+            <Input
+              type="password"
+              placeholder="비밀번호"
+              {...field}
+              className="h-10 placeholder:text-muted-foreground placeholder:text-sm"
+              autoComplete="new-password"
+            />
           </FormControl>
           <FormMessage />
         </FormItem>
@@ -38,7 +44,7 @@ export function SignupPasswordConfirm() {
               type="password"
               placeholder="비밀번호 확인"
               {...field}
-              className="h-10"
+              className="h-10 placeholder:text-muted-foreground placeholder:text-sm"
               autoComplete="new-password"
             />
           </FormControl>

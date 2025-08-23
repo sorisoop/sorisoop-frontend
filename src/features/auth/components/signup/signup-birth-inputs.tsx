@@ -36,14 +36,14 @@ export function SignupBirthInputs() {
           inputMode="numeric"
           pattern="[0-9]*"
           maxLength={4}
-          placeholder="YYYY"
+          placeholder="1990"
           value={year}
           onChange={(e) => {
             const val = onlyNumbers(e.target.value);
             setYear(val);
             if (val.length === 4) monthRef.current?.focus();
           }}
-          className="flex-1"
+          className="flex-1 placeholder:text-muted-foreground placeholder:text-sm"
         />
 
         <Input
@@ -52,14 +52,14 @@ export function SignupBirthInputs() {
           inputMode="numeric"
           pattern="[0-9]*"
           maxLength={2}
-          placeholder="MM"
+          placeholder="05"
           value={month}
           onChange={(e) => {
             const val = onlyNumbers(e.target.value);
             setMonth(val);
             if (val.length === 2) dayRef.current?.focus();
           }}
-          className="flex-1"
+          className="flex-1 placeholder:text-muted-foreground placeholder:text-sm"
         />
 
         <Input
@@ -68,13 +68,13 @@ export function SignupBirthInputs() {
           inputMode="numeric"
           pattern="[0-9]*"
           maxLength={2}
-          placeholder="DD"
+          placeholder="05"
           value={day}
           onChange={(e) => {
             const val = onlyNumbers(e.target.value);
             setDay(val);
           }}
-          className="flex-1"
+          className="flex-1 placeholder:text-muted-foreground placeholder:text-sm"
         />
       </div>
       {errors.birth && <p className="text-sm text-destructive mt-1">{errors.birth.message as string}</p>}
