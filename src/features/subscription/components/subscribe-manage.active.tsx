@@ -1,7 +1,7 @@
 import { Badge } from "@/shared/components/ui/badge";
 import { Button } from "@/shared/components/ui/button";
 import { cn } from "@/shared/lib/utils";
-import { formatDate } from "@/shared/lib/date";
+import { formatDate } from "@/shared/utils/date";
 import { useRestartSubscription } from "@/entities/subscription/api/mutations";
 import { useSubscriptionManageContext } from "../hooks";
 

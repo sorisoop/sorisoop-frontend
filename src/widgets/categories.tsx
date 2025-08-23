@@ -1,18 +1,18 @@
-import { useState } from "react";
+"use client";
+
+import { useNavigate } from "react-router-dom";
+import { useFairyTaleCategories } from "@/entities/fairy-tale/api/hooks";
 import { Button } from "@/shared/components/ui/button";
+import { useDragScroll } from "@/shared/hooks";
+import { pickEmoji } from "@/shared/utils/emoji";
 import TitleBar from "@/shared/components/ui/title-bar";
 
-const ALL_CATEGORIES = [
-  { key: "전체" as const, label: "전체", emoji: "🧺" },
-  { key: "과학" as const, label: "과학", emoji: "🔬" },
-  { key: "동물" as const, label: "동물", emoji: "🐻" },
-  { key: "모험" as const, label: "모험", emoji: "🏔️" },
-  { key: "생활" as const, label: "생활", emoji: "🏠" },
-  { key: "역사" as const, label: "역사", emoji: "🏛️" },
-];
-
 export default function Categories() {
-  const [activeCategory, setActiveCategory] = useState<(typeof ALL_CATEGORIES)[number]["key"]>("전체");
+  const { data: categories } = useFairyTaleCategories();
+  const navigate = useNavigate();
+  const { onMouseDown, onMouseMove, onMouseUp } = useDragScroll<HTMLDivElement>();
+
+  const allCategories = [{ id: 0, name: "전체" }, ...(categories ?? [])];
 
   return (
     <section className="pt-8">
@@ -24,34 +24,27 @@ export default function Categories() {
           tabIndex={-1}
           style={{ WebkitOverflowScrolling: "touch" }}
           aria-label="카테고리 선택"
+          onMouseDown={onMouseDown}
+          onMouseMove={onMouseMove}
+          onMouseUp={onMouseUp}
         >
-          {ALL_CATEGORIES.map(({ key, label, emoji }) => {
-            const selected = activeCategory === key;
+          {allCategories.map(({ id, name }) => {
+            const emoji = pickEmoji(name);
             return (
-              <div key={String(key)} className="shrink-0 text-center">
+              <div key={id ?? name} className="shrink-0 text-center">
                 <Button
                   variant="ghost"
-                  onClick={() => setActiveCategory(key)}
-                  aria-pressed={selected}
+                  onClick={() => navigate(`/fairy-tale?category=${encodeURIComponent(name)}`)}
                   className={[
                     "relative mx-auto h-20 w-20 p-0 rounded-full cursor-pointer",
-                    "bg-muted",
-                    "border",
-                    selected ? "border-2 border-primary" : "border-border",
+                    "bg-muted border border-border",
                     "shadow-sm hover:shadow-md transition",
                     "focus-visible:ring-0 focus-visible:ring-offset-0",
                   ].join(" ")}
                 >
                   <span className="text-2xl select-none">{emoji}</span>
                 </Button>
-                <p
-                  className={[
-                    "mt-2 text-sm font-medium leading-tight",
-                    selected ? "text-primary" : "text-foreground",
-                  ].join(" ")}
-                >
-                  {label}
-                </p>
+                <p className="mt-2 text-sm font-medium leading-tight text-foreground">{name}</p>
               </div>
             );
           })}

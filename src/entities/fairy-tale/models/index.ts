@@ -5,3 +5,8 @@ export interface FairyTaleContentResponse {
   imageUrl: string;
   script: string;
 }
+
+export interface FairyTaleCategoryResponse {
+  id: number;
+  name: string;
+}
