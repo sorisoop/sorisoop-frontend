@@ -1,5 +1,6 @@
 import type { FairyTaleResponse } from "@/entities/fairy-tale/models";
 import { Badge } from "@/shared/components/ui/badge";
+import { Link } from "react-router-dom";
 
 type FairyTaleHighlightRowProps = {
   tales: FairyTaleResponse[];
@@ -9,10 +10,12 @@ type FairyTaleHighlightRowProps = {
 export default function FairyTaleHighlightRow({ tales, className = "" }: FairyTaleHighlightRowProps) {
   return (
     <div className={`w-full overflow-x-auto scrollbar-hide mt-4 ${className}`}>
-      <div className="flex gap-4">
+      <div className="flex gap-4" role="list">
         {tales.map((tale) => (
-          <article
+          <Link
             key={tale.id}
+            to={`/fairy-tale/${tale.id}/read`}
+            role="listitem"
             className="relative flex-shrink-0 w-[240px] md:w-[280px] overflow-hidden rounded-md shadow-md cursor-pointer"
             aria-label={tale.title}
           >
@@ -27,7 +30,7 @@ export default function FairyTaleHighlightRow({ tales, className = "" }: FairyTa
                 {tale.author} · {tale.pageCount}p
               </p>
             </div>
-          </article>
+          </Link>
         ))}
       </div>
     </div>
