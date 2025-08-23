@@ -1,4 +1,4 @@
-import TitleBar from "@/shared/components/ui/title-bar";
+import { TitleBar } from "@/widgets";
 
 export function SubscribeManageNotice() {
   return (

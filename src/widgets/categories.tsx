@@ -5,7 +5,7 @@ import { useFairyTaleCategories } from "@/entities/fairy-tale/api/hooks";
 import { Button } from "@/shared/components/ui/button";
 import { useDragScroll } from "@/shared/hooks";
 import { pickEmoji } from "@/shared/utils/emoji";
-import TitleBar from "@/shared/components/ui/title-bar";
+import TitleBar from "@/widgets/title-bar";
 
 export default function Categories() {
   const { data: categories } = useFairyTaleCategories();
