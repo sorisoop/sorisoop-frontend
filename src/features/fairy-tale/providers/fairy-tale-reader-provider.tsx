@@ -14,6 +14,7 @@ export function FairyTaleReaderProvider({ id, children }: { id: string; children
 
   const [currentPage, setCurrentPage] = useState(0);
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
+  const [isBookEndOpen, setIsBookEndOpen] = useState(false);
   const [showText, setShowText] = useState(true);
   const flipBookRef = useRef<FlipBookRef | null>(null);
 
@@ -26,6 +27,8 @@ export function FairyTaleReaderProvider({ id, children }: { id: string; children
     const book = flipBookRef.current.pageFlip();
     if (currentPage < data.length - 1) {
       book.flip(currentPage + 1, "top");
+    } else {
+      setIsBookEndOpen(true);
     }
   }, [currentPage, data]);
 
@@ -73,6 +76,7 @@ export function FairyTaleReaderProvider({ id, children }: { id: string; children
     data: data ?? ([] as FairyTaleContentResponse[]),
     currentPage,
     isOverlayOpen,
+    isBookEndOpen,
     flipBookRef,
     showText,
     nextPage,
@@ -80,6 +84,7 @@ export function FairyTaleReaderProvider({ id, children }: { id: string; children
     goToPage,
     setCurrentPage,
     setIsOverlayOpen,
+    setIsBookEndOpen,
     setShowText,
   };
 

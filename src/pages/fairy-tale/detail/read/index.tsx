@@ -18,6 +18,7 @@ export default function FairyTaleReaderPage() {
           <FairyTaleReader.Hint />
           <FairyTaleReader.Overlay />
           <FairyTaleReader.ToggleTextButton />
+          <FairyTaleReader.EndDialog />
         </FairyTaleReader>
       </FairyTaleReaderProvider>
     </FullScreenBackHeaderLayout>

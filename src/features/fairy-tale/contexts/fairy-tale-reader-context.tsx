@@ -6,13 +6,15 @@ export interface FairyTaleReaderContextValue {
   data: FairyTaleContentResponse[];
   currentPage: number;
   isOverlayOpen: boolean;
+  isBookEndOpen: boolean;
   flipBookRef: React.RefObject<FlipBookRef | null>;
   showText: boolean;
   nextPage: () => void;
   prevPage: () => void;
   goToPage: (page: number) => void;
   setCurrentPage: (page: number) => void;
-  setIsOverlayOpen: (isOverlayOpen: boolean) => void;
+  setIsOverlayOpen: Dispatch<SetStateAction<boolean>>;
+  setIsBookEndOpen: Dispatch<SetStateAction<boolean>>;
   setShowText: Dispatch<SetStateAction<boolean>>;
 }
 

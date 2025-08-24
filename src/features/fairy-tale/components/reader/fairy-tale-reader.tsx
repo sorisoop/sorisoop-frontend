@@ -6,6 +6,7 @@ import { FairyTaleHint } from "./fairy-tale-hint";
 import { FairyTaleOverlay } from "./fairy-tale-overlay";
 import { FairyTaleBook } from "./fairy-tale-book";
 import { FairyTaleToggleTextButton } from "./fairy-tale-toggle-text-button";
+import { FairyTaleBookEndDialog } from "./fairy-tale-book-end-dialog";
 
 function Root({ children }: { children: React.ReactNode }) {
   const { nextPage, prevPage, isOverlayOpen, setIsOverlayOpen } = useFairyTaleReaderContext();
@@ -36,4 +37,5 @@ export const FairyTaleReader = Object.assign(Root, {
   Hint: FairyTaleHint,
   Overlay: FairyTaleOverlay,
   ToggleTextButton: FairyTaleToggleTextButton,
+  EndDialog: FairyTaleBookEndDialog,
 });

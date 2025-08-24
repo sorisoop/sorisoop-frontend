@@ -1,5 +1,4 @@
 import type { ReactNode } from "react";
-
 import {
   DialogClose,
   DialogContent,
@@ -7,12 +6,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/shared/components/ui/dialog";
-
-import SubscriptionDialogPlanSelector from "./subscription-dialog.plan-selector";
-import SubscriptionDialogPaymentTerms from "./subscription-dialog.payment.terms";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/components/ui/button";
 import { X } from "lucide-react";
+import SubscriptionDialogPlanSelector from "./subscription-dialog.plan-selector";
+import SubscriptionDialogPaymentTerms from "./subscription-dialog.payment.terms";
 import SubscriptionDialogPaymentSubscribeButton from "./subscription-dialog.payment.subscribe-button";
 
 function SubscriptionDialog({ children }: { children: ReactNode }) {
