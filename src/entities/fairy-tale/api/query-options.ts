@@ -1,5 +1,11 @@
 import type { FairyTaleResponse } from "../models";
-import { getFairyTaleCategories, getFairyTaleContents, getFairyTaleDetailById, getFairyTalesByCategory } from "./get";
+import {
+  getFairyTaleCategories,
+  getFairyTaleContents,
+  getFairyTaleDetailById,
+  getFairyTalesByCategory,
+  searchFairyTales,
+} from "./get";
 
 const PAGE_SIZE = 20;
 
@@ -8,6 +14,7 @@ export const fairyTaleKeys = {
   getFairyTaleCategories: ["fairy-tale", "categories"] as const,
   getFairyTalesByCategory: (categoryId: number) => ["fairy-tale", "category", categoryId] as const,
   getFairyTaleDetailById: (id: string) => ["fairy-tale", "detail", id] as const,
+  search: (keyword: string) => ["fairy-tale", "search", keyword] as const,
 };
 
 export const fairyTaleQueryOptions = {
@@ -41,5 +48,16 @@ export const fairyTaleQueryOptions = {
     queryFn: () => getFairyTaleDetailById(id),
     staleTime: 1000 * 60 * 10,
     gcTime: 1000 * 60 * 10,
+  }),
+
+  search: (keyword: string) => ({
+    queryKey: fairyTaleKeys.search(keyword),
+    queryFn: ({ pageParam = 1 }: { pageParam?: number }) => searchFairyTales(keyword, pageParam),
+    initialPageParam: 1,
+    getNextPageParam: (lastPage: FairyTaleResponse[], allPages: FairyTaleResponse[][]) => {
+      return lastPage.length < PAGE_SIZE ? undefined : allPages.length + 1;
+    },
+    staleTime: 1000 * 60 * 1,
+    gcTime: 1000 * 60 * 5,
   }),
 };

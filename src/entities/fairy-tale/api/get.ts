@@ -58,3 +58,14 @@ export const getFairyTaleDetailById = async (
     throw err;
   }
 };
+
+export const searchFairyTales = async (keyword: string, page: number = 0): Promise<FairyTaleResponse[]> => {
+  try {
+    const res = await api
+      .get("fairy-tale", { searchParams: { keyword, page: String(page) } })
+      .json<ApiResponse<FairyTaleResponse[]>>();
+    return res.data;
+  } catch {
+    return [];
+  }
+};

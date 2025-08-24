@@ -1,7 +1,9 @@
-import { Link, useNavigate } from "react-router-dom";
-import { Button } from "@/shared/components/ui/button";
+import { Link } from "react-router-dom";
 import { Search, Bell } from "lucide-react";
+import { Button } from "@/shared/components/ui/button";
+import { useSearchStore } from "@/store/search";
 import BottomNavigation from "./bottom-navigation";
+import { SearchSidebar } from "@/features/search";
 
 interface CommonLayoutProps {
   children: React.ReactNode;
@@ -9,13 +11,18 @@ interface CommonLayoutProps {
 }
 
 export default function CommonLayout({ children, title = "" }: CommonLayoutProps) {
-  const navigate = useNavigate();
+  const open = useSearchStore((s) => s.open);
 
   return (
     <div
       id="main-container"
       className="flex min-h-screen w-full max-w-screen-lg mx-auto flex-col items-center bg-background text-foreground"
     >
+      <SearchSidebar>
+        <SearchSidebar.Header />
+        <SearchSidebar.Content />
+      </SearchSidebar>
+
       <header className="sticky top-0 z-20 w-full border-b border-border bg-background/90 backdrop-blur">
         <div className="mx-auto max-w-screen-lg h-[52px] px-4 flex items-center justify-between gap-4">
           <Link to="/" className="inline-flex items-center">
@@ -30,7 +37,7 @@ export default function CommonLayout({ children, title = "" }: CommonLayoutProps
               type="button"
               variant="link"
               className="h-8 w-8 p-0 cursor-pointer"
-              onClick={() => navigate("/search")}
+              onClick={open}
               aria-label="검색"
             >
               <Search className="!h-6 !w-6 text-foreground" />

@@ -18,7 +18,7 @@ export default function NonHeaderLayout({ children, title = "" }: NonHeaderLayou
 
       <div
         id="main-content"
-        className="flex w-full max-w-limit flex-1 flex-col items-stretch justify-start pb-safe-bottom"
+        className="flex w-full max-w-screen-lg flex-1 flex-col items-stretch justify-start pb-safe-bottom"
       >
         {children}
       </div>
