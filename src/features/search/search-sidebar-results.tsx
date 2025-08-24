@@ -1,7 +1,7 @@
 import { forwardRef } from "react";
 import { FairyTaleCard } from "@/features/fairy-tale/components/variants";
 import { Spinner } from "@/shared/components/ui/spinner";
-import type { FairyTaleResponse } from "@/entities/fairy-tale/models";
+import type { FairyTaleResponse } from "@/entities/fairy-tale/model";
 
 interface Props {
   tales: FairyTaleResponse[];

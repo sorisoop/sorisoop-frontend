@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useFairyTaleContents } from "@/entities/fairy-tale/api/hooks";
 import { FairyTaleReaderContext } from "../contexts";
-import type { FairyTaleContentResponse } from "@/entities/fairy-tale/models";
+import type { FairyTaleContentResponse } from "@/entities/fairy-tale/model";
 import { type FlipBookRef } from "react-pageflip";
 
 /**

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import type { FairyTaleResponse } from "@/entities/fairy-tale/models";
+import type { FairyTaleResponse } from "@/entities/fairy-tale/model";
 import { Badge } from "@/shared/components/ui/badge";
 import { Button } from "@/shared/components/ui/button";
 import { cn } from "@/shared/lib/utils";

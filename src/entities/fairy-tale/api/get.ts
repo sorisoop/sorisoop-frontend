@@ -1,6 +1,6 @@
 import { api } from "@/shared/lib/api/ky";
 import type { ApiResponse } from "@/shared/lib/model/common-api-response";
-import type { FairyTaleCategoryResponse, FairyTaleContentResponse, FairyTaleResponse } from "../models";
+import type { FairyTaleCategoryResponse, FairyTaleContentResponse, FairyTaleResponse } from "../model";
 import { BaseApiError, type DisplayMode } from "@/shared/lib/api/errors";
 
 export const getFairyTaleContents = async (id: string) => {

@@ -1,4 +1,4 @@
-import type { FairyTaleContentResponse } from "@/entities/fairy-tale/models";
+import type { FairyTaleContentResponse } from "@/entities/fairy-tale/model";
 import { createContext, type Dispatch, type SetStateAction } from "react";
 import type { FlipBookRef } from "react-pageflip";
 

@@ -1,4 +1,4 @@
-import type { FairyTaleResponse } from "../models";
+import type { FairyTaleResponse } from "../model";
 import {
   getFairyTaleCategories,
   getFairyTaleContents,

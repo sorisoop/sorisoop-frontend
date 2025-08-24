@@ -1,7 +1,7 @@
 import { forwardRef, useEffect, useState } from "react";
 import HTMLFlipBook from "react-pageflip";
 import { useFairyTaleReaderContext } from "@/features/fairy-tale/hooks";
-import type { FairyTaleContentResponse } from "@/entities/fairy-tale/models";
+import type { FairyTaleContentResponse } from "@/entities/fairy-tale/model";
 
 const Page = forwardRef<HTMLDivElement, { pageData: FairyTaleContentResponse }>(({ pageData }, ref) => {
   const [imageLoaded, setImageLoaded] = useState(false);

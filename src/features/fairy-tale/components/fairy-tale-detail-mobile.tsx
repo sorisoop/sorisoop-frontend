@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Play } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
-import type { FairyTaleResponse } from "@/entities/fairy-tale/models";
+import type { FairyTaleResponse } from "@/entities/fairy-tale/model";
 import { Badge } from "@/shared/components/ui/badge";
 import { FairyTaleCard } from "./variants";
 

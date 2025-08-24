@@ -1,6 +1,6 @@
 import { useInfiniteQuery, useSuspenseInfiniteQuery, useSuspenseQuery, type InfiniteData } from "@tanstack/react-query";
 import { fairyTaleKeys, fairyTaleQueryOptions } from "./query-options";
-import { type FairyTaleCategoryResponse, type FairyTaleContentResponse, type FairyTaleResponse } from "../models";
+import { type FairyTaleCategoryResponse, type FairyTaleContentResponse, type FairyTaleResponse } from "../model";
 
 export const useFairyTaleContents = (id: string) => {
   return useSuspenseQuery<FairyTaleContentResponse[]>(fairyTaleQueryOptions.getFairyTaleContents(id));

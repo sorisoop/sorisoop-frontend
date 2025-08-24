@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import type { FairyTaleResponse } from "@/entities/fairy-tale/models";
+import type { FairyTaleResponse } from "@/entities/fairy-tale/model";
 import type { ApiResponse } from "@/shared/lib/model/common-api-response";
 import { addFavorite } from "./create";
 import { deleteFavorite } from "./delete";
