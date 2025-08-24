@@ -29,14 +29,14 @@ export default function CommonLayout({ children, title = "" }: CommonLayoutProps
             <Button
               type="button"
               variant="link"
-              className="h-8 w-8 p-0"
+              className="h-8 w-8 p-0 cursor-pointer"
               onClick={() => navigate("/search")}
               aria-label="검색"
             >
-              <Search className="h-6 w-6 text-foreground" />
+              <Search className="!h-6 !w-6 text-foreground" />
             </Button>
             <Button type="button" variant="link" className="h-8 w-8 p-0" aria-label="알림">
-              <Bell className="h-6 w-6 text-foreground" />
+              <Bell className="!h-6 !w-6 text-foreground cursor-pointer" />
             </Button>
           </div>
         </div>
