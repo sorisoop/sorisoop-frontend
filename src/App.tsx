@@ -12,10 +12,12 @@ import LoginPage from "@/pages/auth/login";
 import FairyTaleReaderPage from "@/pages/fairy-tale/detail/read";
 import SignupPage from "@/pages/auth/signup";
 import FairyTaleByCategoryPage from "@/pages/fairy-tale/category/name";
+import { ScrollToTop } from "./widgets";
 
 export default function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/lib" element={<LibraryPage />} />

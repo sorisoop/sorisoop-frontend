@@ -5,3 +5,4 @@ export { default as CategoriesSkeleton } from "./categories-skeleton";
 export { default as Categories } from "./categories";
 export { default as Hero } from "./hero";
 export { default as TitleBar } from "./title-bar";
+export { default as ScrollToTop } from "./scroll-to-top";
