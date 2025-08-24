@@ -1,31 +1,27 @@
-import { Button } from "@/shared/components/ui/button";
+import { Suspense } from "react";
 import { Settings } from "lucide-react";
-import BackHeaderLayout from "@/shared/layouts/back-header-layout";
-import { useProfiles } from "@/entities/profile/api/hooks";
-import { ProfilePage } from "@/features/profile/components";
+import { Button } from "@/shared/components/ui/button";
+import { BackHeaderLayout } from "@/shared/layouts";
+import { ProfileGridSkeleton, ProfilePage } from "@/features/profile/components";
 import { ProfileAddProvider } from "@/features/profile/providers/profile-add-provider";
 import { FloatingShapesBackground } from "@/widgets";
 
 export default function ProfilePageScreen() {
-  const { data: profiles } = useProfiles();
-
   return (
     <BackHeaderLayout title="">
       <FloatingShapesBackground />
 
       <ProfilePage>
         <ProfilePage.Header />
-        <ProfilePage.Grid>
-          {profiles?.map((p) => (
-            <ProfilePage.Card key={p.id} name={p.nickname} image={p.profileImage} />
-          ))}
-
-          <ProfileAddProvider>
-            <ProfilePage.AddCard>
-              <ProfilePage.AddDialog />
-            </ProfilePage.AddCard>
-          </ProfileAddProvider>
-        </ProfilePage.Grid>
+        <Suspense fallback={<ProfileGridSkeleton />}>
+          <ProfilePage.Grid>
+            <ProfileAddProvider>
+              <ProfilePage.AddCard>
+                <ProfilePage.AddDialog />
+              </ProfilePage.AddCard>
+            </ProfileAddProvider>
+          </ProfilePage.Grid>
+        </Suspense>
 
         <div className="text-center">
           <Button
