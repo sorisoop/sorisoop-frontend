@@ -21,13 +21,13 @@ import { useFairyTaleReaderContext } from "@/features/fairy-tale/hooks";
 import { useNavigate } from "react-router-dom";
 import { useMemo } from "react";
 
+const messages = ["끝까지 읽었어요!", "훌륭해요  마지막 장까지 완주했네요!", "대단해요  책 한 권을 다 읽었어요!"];
+
 export function FairyTaleBookEndDialog() {
+  const randomMessage = useMemo(() => messages[Math.floor(Math.random() * messages.length)], []);
   const isDesktop = useIsDeskTop();
   const { isBookEndOpen, setIsBookEndOpen } = useFairyTaleReaderContext();
   const navigate = useNavigate();
-
-  const messages = ["끝까지 읽었어요!", "훌륭해요  마지막 장까지 완주했네요!", "대단해요  책 한 권을 다 읽었어요!"];
-  const randomMessage = useMemo(() => messages[Math.floor(Math.random() * messages.length)], []);
 
   const goHome = () => {
     setIsBookEndOpen(false);
