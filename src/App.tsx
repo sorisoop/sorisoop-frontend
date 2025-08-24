@@ -1,19 +1,21 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { ScrollToTop } from "./widgets";
-import HomePage from "@/pages/home";
-import LibraryPage from "@/pages/library";
-import VoicePage from "@/pages/voice";
-import VoiceAddPage from "@/pages/voice/add";
-import MyPage from "@/pages/my";
-import FairyTaleDetailPage from "@/pages/fairy-tale/detail";
-import SubscribeManagePage from "@/pages/my/subscribe-manage";
-import PaymentSuccessPage from "@/pages/payment/success";
-import PaymentFailPage from "@/pages/payment/fail";
-import LoginPage from "@/pages/auth/login";
-import FairyTaleReaderPage from "@/pages/fairy-tale/detail/read";
-import SignupPage from "@/pages/auth/signup";
-import FairyTaleByCategoryPage from "@/pages/fairy-tale/category/name";
-import ProfilePage from "@/pages/profile";
+import { lazy } from "react";
+
+const HomePage = lazy(() => import("@/pages/home"));
+const LibraryPage = lazy(() => import("@/pages/library"));
+const VoicePage = lazy(() => import("@/pages/voice"));
+const VoiceAddPage = lazy(() => import("@/pages/voice/add"));
+const MyPage = lazy(() => import("@/pages/my"));
+const FairyTaleDetailPage = lazy(() => import("@/pages/fairy-tale/detail"));
+const FairyTaleReaderPage = lazy(() => import("@/pages/fairy-tale/detail/read"));
+const FairyTaleByCategoryPage = lazy(() => import("@/pages/fairy-tale/category/name"));
+const SubscribeManagePage = lazy(() => import("@/pages/my/subscribe-manage"));
+const PaymentSuccessPage = lazy(() => import("@/pages/payment/success"));
+const PaymentFailPage = lazy(() => import("@/pages/payment/fail"));
+const LoginPage = lazy(() => import("@/pages/auth/login"));
+const SignupPage = lazy(() => import("@/pages/auth/signup"));
+const ProfilePage = lazy(() => import("@/pages/profile"));
 
 export default function App() {
   return (
