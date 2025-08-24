@@ -1,9 +1,20 @@
 import { Button } from "@/shared/components/ui/button";
 import { cn } from "@/shared/lib/utils";
-import { useSubscriptionManageContext } from "../hooks";
+import { useBrandpayPayment, useSubscriptionManageContext } from "../hooks";
 
 export function SubscribeManageEmpty() {
   const { subscription } = useSubscriptionManageContext();
+  const { requestPayment } = useBrandpayPayment();
+
+  if (subscription) return null;
+
+  const handleSubscribe = async () => {
+    const planType = "MONTH"; // TODO: 유저 선택 기반으로 바꿀 수 있음
+    const orderName = `소리숲 ${planType === "MONTH" ? "월간" : "연간"} 구독`;
+    const amount = planType === "MONTH" ? 9900 : 35900;
+
+    await requestPayment(planType, orderName, amount);
+  };
   if (subscription) return null;
 
   return (
@@ -35,6 +46,7 @@ export function SubscribeManageEmpty() {
           "relative z-10 mt-2 w-full sm:w-auto font-semibold shadow-md hover:shadow-lg cursor-pointer text-secondary text-base",
           "transition-all duration-200 hover:scale-[1.02]"
         )}
+        onClick={handleSubscribe}
       >
         구독하기
       </Button>

@@ -18,7 +18,7 @@ export const subscriptionQueryOptions = {
   getSubcription: () => ({
     queryKey: subscriptionKeys.getSubscription,
     queryFn: getSubcription,
-    staleTime: 1000 * 60 * 60 * 24,
+    staleTime: 0,
     gcTime: 0,
   }),
 };
