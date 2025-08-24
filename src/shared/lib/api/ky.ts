@@ -1,5 +1,12 @@
 import ky from "ky";
-import { MemberApiError, MemberError, type MemberErrorCode } from "./errors";
+import {
+  AuthApiError,
+  AuthError,
+  MemberApiError,
+  MemberError,
+  type AuthErrorCode,
+  type MemberErrorCode,
+} from "./errors";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -13,10 +20,14 @@ export const api = ky.create({
         const data = await cloned.json().catch(() => null);
 
         if (!response.ok && data) {
-          const code = data.code as MemberErrorCode | undefined;
+          const code = data.code as string;
+
+          if (code && code in AuthError) {
+            throw new AuthApiError(code as AuthErrorCode, response.status);
+          }
 
           if (code && code in MemberError) {
-            throw new MemberApiError(code, response.status);
+            throw new MemberApiError(code as MemberErrorCode, response.status);
           }
 
           throw new Error(data.message ?? "알 수 없는 오류가 발생했습니다.");
