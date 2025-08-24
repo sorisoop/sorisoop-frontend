@@ -39,3 +39,22 @@ export const getFairyTalesByCategory = async (
     throw err;
   }
 };
+
+/**
+ * 동화책 상세 조회 API
+ * @param fairyTaleId 동화책 ID
+ */
+export const getFairyTaleDetailById = async (
+  fairyTaleId: string,
+  displayMode: DisplayMode = "fallback"
+): Promise<FairyTaleResponse> => {
+  try {
+    const res = await api.get(`fairy-tale/${fairyTaleId}`).json<ApiResponse<FairyTaleResponse>>();
+    return res.data;
+  } catch (err) {
+    if (err instanceof BaseApiError) {
+      err.displayMode = displayMode;
+    }
+    throw err;
+  }
+};

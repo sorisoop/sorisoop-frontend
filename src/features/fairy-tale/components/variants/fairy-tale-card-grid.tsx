@@ -31,7 +31,7 @@ export default function FairyTaleCardGrid({ tales, className, ariaLabel = "오�
         return (
           <Link
             key={tale.id}
-            to={`/fairy-tale/${tale.id}/read`}
+            to={`/fairy-tale/${tale.id}`}
             role="listitem"
             className="group relative block aspect-[3/4] rounded-md overflow-hidden bg-muted shadow hover:shadow-md transition cursor-pointer"
             aria-label={`동화책 ${tale.title}`}

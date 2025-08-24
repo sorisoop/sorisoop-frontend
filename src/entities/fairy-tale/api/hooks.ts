@@ -21,3 +21,7 @@ export const useFairyTalesByCategoryInfinite = (categoryId: number) => {
     ...fairyTaleQueryOptions.getFairyTalesByCategory(categoryId),
   });
 };
+
+export const useFairyTaleDetailById = (id: string) => {
+  return useSuspenseQuery<FairyTaleResponse>(fairyTaleQueryOptions.getFairyTaleDetailById(id));
+};

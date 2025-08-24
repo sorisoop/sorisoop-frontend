@@ -32,7 +32,7 @@ export default function FairyTaleHighlightRow({ tales, className = "" }: FairyTa
         {tales.map((tale) => (
           <Link
             key={tale.id}
-            to={`/fairy-tale/${tale.id}/read`}
+            to={`/fairy-tale/${tale.id}`}
             role="listitem"
             onClick={handleClick}
             className="relative flex-shrink-0 w-[240px] md:w-[280px] overflow-hidden rounded-md shadow-md cursor-pointer"

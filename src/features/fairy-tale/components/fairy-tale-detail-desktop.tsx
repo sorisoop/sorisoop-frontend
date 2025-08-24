@@ -1,54 +1,60 @@
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Play } from "lucide-react";
-
 import { Button } from "@/shared/components/ui/button";
+import type { FairyTaleResponse } from "@/entities/fairy-tale/models";
+import { Badge } from "@/shared/components/ui/badge";
 
-import type { FairyTale } from "@/entities/fairy-tale/models/fairy-tale";
-import Tag from "./tag";
-
-export default function FairyTaleDetailDesktop({ fairyTale }: { fairyTale: FairyTale }) {
+export default function FairyTaleDetailDesktop({ fairyTale }: { fairyTale: FairyTaleResponse }) {
   const navigate = useNavigate();
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
       <img
-        src={fairyTale.thumbnail_image}
+        src={fairyTale.thumbnailImage}
         alt={fairyTale.title}
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-cover bg-foreground"
       />
 
-      <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-black/60 to-transparent z-10" />
+      <div className="absolute inset-0 bg-black/20" />
+      <div className="absolute top-0 left-0 right-0 h-32 bg-gradient-to-b from-black/80 to-transparent" />
+      <div className="absolute bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-black/90 via-black/60 to-transparent" />
 
-      <div className="absolute top-4 left-4 z-10">
-        <Button variant="link" size="icon" onClick={() => navigate(-1)} className="cursor-pointer">
+      <div className="absolute top-4 left-4 z-20">
+        <Button variant="ghost" size="icon" onClick={() => navigate(-1)} className="cursor-pointer rounded-full">
           <ArrowLeft className="!w-6 !h-6 text-secondary" />
         </Button>
       </div>
 
-      <div className="absolute bottom-0 left-0 right-0 px-8 py-8 from-black/60 via-black/30 to-transparent text-secondary">
-        <h1 className="text-4xl font-extrabold">{fairyTale.title}</h1>
+      <div className="absolute bottom-0 left-0 right-0 px-8 py-10 z-20 text-secondary">
+        <div className="relative inline-block mb-2">
+          <h1 className="text-4xl font-extrabold drop-shadow-lg">{fairyTale.title}</h1>
+          <div className="absolute inset-0 bg-black/30 rounded-lg blur-sm -z-10" />
+        </div>
 
-        <div className="mt-2 flex gap-2 text-foreground">
-          <Tag variant="inverted">{fairyTale.category_id}</Tag>
-          <Tag variant="inverted">{fairyTale.author}</Tag>
+        <div className="mt-2 flex gap-2">
+          <Badge variant="secondary">{fairyTale.name}</Badge>
+          <Badge variant="secondary">{fairyTale.author}</Badge>
         </div>
 
         <div className="mt-6 flex flex-col gap-4 w-full max-w-md">
-          <Button className="w-full h-14 rounded-md bg-primary text-primary-foreground text-base font-semibold gap-2 cursor-pointer">
-            <Play className="!w-5 !h-5" />
+          <Button
+            className="w-full h-12 text-secondary text-base font-semibold gap-2 cursor-pointer shadow-lg"
+            onClick={() => navigate(`/fairy-tale/${fairyTale.id}/read`)}
+          >
+            <Play className="w-5 h-5" />
             보기
           </Button>
 
-          <div className="flex flex-row gap-3 w-full">
+          <div className="flex gap-3 w-full">
             <Button
-              variant="link"
-              className="flex-1 h-12 rounded-mdd bg-muted text-foreground text-sm font-medium cursor-pointer"
+              variant="secondary"
+              className="flex-1 h-12 rounded-md text-sm font-medium cursor-pointer backdrop-blur-sm shadow-md"
             >
-              처음부터 보기
+              내 책장에 저장
             </Button>
             <Button
-              variant="link"
-              className="flex-1 h-12 rounded-md bg-muted text-foreground text-sm font-medium cursor-pointer"
+              variant="secondary"
+              className="flex-1 h-12 rounded-md text-sm font-medium cursor-pointer backdrop-blur-sm shadow-md"
             >
               내 책장 보기
             </Button>
