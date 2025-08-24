@@ -1,5 +1,4 @@
 import { Suspense } from "react";
-import { useNavigate } from "react-router-dom";
 import { Loader2 } from "lucide-react";
 import { Mypage } from "@/features/my/components";
 import { SubscriptionDialog } from "@/features/subscription/components";
@@ -8,7 +7,6 @@ import { SubscriptionProvider } from "@/features/subscription/providers/subscrip
 import { useLogout } from "@/entities/member/api/mutations";
 
 export default function MypageScreen() {
-  const navigate = useNavigate();
   const { openSettings } = useManageCard();
   const logout = useLogout();
 
@@ -56,13 +54,14 @@ export default function MypageScreen() {
           onClick={() =>
             logout.mutate(undefined, {
               onSuccess: () => {
-                navigate("/auth/login", { replace: true });
+                window.history.pushState(null, "", "/auth/login");
+                window.history.go(0);
               },
             })
           }
         >
           로그아웃
-        </Mypage.MenuItem>{" "}
+        </Mypage.MenuItem>
         <Mypage.MenuItem to="#">회원탈퇴</Mypage.MenuItem>
       </Mypage.MenuSection>
     </Mypage>
