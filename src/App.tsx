@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { ScrollToTop } from "./widgets";
 import HomePage from "@/pages/home";
 import LibraryPage from "@/pages/library";
 import VoicePage from "@/pages/voice";
@@ -12,7 +13,7 @@ import LoginPage from "@/pages/auth/login";
 import FairyTaleReaderPage from "@/pages/fairy-tale/detail/read";
 import SignupPage from "@/pages/auth/signup";
 import FairyTaleByCategoryPage from "@/pages/fairy-tale/category/name";
-import { ScrollToTop } from "./widgets";
+import ProfilePage from "@/pages/profile";
 
 export default function App() {
   return (
@@ -35,6 +36,8 @@ export default function App() {
 
         <Route path="/auth/login" element={<LoginPage />} />
         <Route path="/auth/signup" element={<SignupPage />} />
+
+        <Route path="/profile" element={<ProfilePage />} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>

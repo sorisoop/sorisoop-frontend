@@ -6,9 +6,10 @@ import { Input } from "@/shared/components/ui/input";
 import { Button } from "@/shared/components/ui/button";
 import { Separator } from "@/shared/components/ui/separator";
 import { FloatingShapesBackground } from "@/widgets";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
+  const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -54,6 +55,7 @@ export default function LoginPage() {
           <Button
             variant="default"
             className="w-full h-12 text-secondary opacity-95 font-semibold text-base cursor-pointer"
+            onClick={() => navigate("/profile")}
           >
             로그인
           </Button>
