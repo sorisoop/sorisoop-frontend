@@ -37,3 +37,7 @@ export const login = async (data: LoginSchema, displayMode: DisplayMode = "toast
     throw err;
   }
 };
+
+export const logout = async () => {
+  await api.post("auth/logout").json();
+};
