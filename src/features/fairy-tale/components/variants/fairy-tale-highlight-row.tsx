@@ -1,5 +1,6 @@
 import type { FairyTaleResponse } from "@/entities/fairy-tale/models";
 import { Badge } from "@/shared/components/ui/badge";
+import { useDragPreventClick, useDragScroll } from "@/shared/hooks";
 import { Link } from "react-router-dom";
 
 type FairyTaleHighlightRowProps = {
@@ -8,14 +9,32 @@ type FairyTaleHighlightRowProps = {
 };
 
 export default function FairyTaleHighlightRow({ tales, className = "" }: FairyTaleHighlightRowProps) {
+  const { onMouseDown, onMouseMove, onMouseUp } = useDragScroll<HTMLDivElement>();
+  const { handleMouseDown, handleMouseMove, handleClick } = useDragPreventClick(8);
+
   return (
-    <div className={`w-full overflow-x-auto scrollbar-hide mt-4 ${className}`}>
+    <div
+      className={`w-full overflow-x-auto scrollbar-hide mt-4 ${className}`}
+      onMouseDown={(e) => {
+        onMouseDown(e);
+        handleMouseDown(e);
+      }}
+      onMouseMove={(e) => {
+        onMouseMove(e);
+        handleMouseMove(e);
+      }}
+      onMouseUp={onMouseUp}
+      onMouseLeave={onMouseUp}
+      onTouchStart={handleMouseDown}
+      onTouchMove={handleMouseMove}
+    >
       <div className="flex gap-4" role="list">
         {tales.map((tale) => (
           <Link
             key={tale.id}
             to={`/fairy-tale/${tale.id}/read`}
             role="listitem"
+            onClick={handleClick}
             className="relative flex-shrink-0 w-[240px] md:w-[280px] overflow-hidden rounded-md shadow-md cursor-pointer"
             aria-label={tale.title}
           >
