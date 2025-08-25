@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addFavorite } from "./create";
+import { addFavorite, createCustomSynopsis } from "./create";
 import { deleteFavorite } from "./delete";
 import { fairyTaleKeys } from "./query-options";
 import type { FairyTaleResponse } from "../model";
@@ -38,4 +38,12 @@ export const useDeleteFavorite = () => {
       });
     },
   });
+};
+
+export const useCreateCustomSynopsis = () => {
+  const mutation = useMutation({
+    mutationFn: (file: Blob) => createCustomSynopsis(file),
+  });
+
+  return mutation.mutateAsync;
 };

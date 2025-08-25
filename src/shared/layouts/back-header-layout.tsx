@@ -1,14 +1,20 @@
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-
 import { Button } from "@/shared/components/ui/button";
 
 interface BackHeaderLayoutProps {
   children: React.ReactNode;
   title?: string;
+  rightButtonLabel?: string;
+  onRightButtonClick?: () => void;
 }
 
-export default function BackHeaderLayout({ children, title = "" }: BackHeaderLayoutProps) {
+export default function BackHeaderLayout({
+  children,
+  title = "",
+  rightButtonLabel,
+  onRightButtonClick,
+}: BackHeaderLayoutProps) {
   const navigate = useNavigate();
 
   return (
@@ -29,7 +35,19 @@ export default function BackHeaderLayout({ children, title = "" }: BackHeaderLay
           </Button>
 
           <div className="flex-1 truncate text-center text-sm font-bold text-muted-foreground">{title}</div>
-          <div className="h-6 w-6" />
+
+          {rightButtonLabel && onRightButtonClick ? (
+            <Button
+              variant="link"
+              size="sm"
+              className="h-6 px-2 text-primary font-semibold cursor-pointer"
+              onClick={onRightButtonClick}
+            >
+              {rightButtonLabel}
+            </Button>
+          ) : (
+            <div className="h-6 w-6" />
+          )}
         </div>
       </header>
 
@@ -37,6 +55,7 @@ export default function BackHeaderLayout({ children, title = "" }: BackHeaderLay
         <div className="mx-auto max-w-screen-lg px-4 pb-safe-bottom">{children}</div>
       </main>
 
+      {/* Background layers */}
       <div aria-hidden className="pointer-events-none -z-50">
         <div className="fixed inset-0 -z-50 bg-muted" />
         <div className="fixed inset-y-0 left-1/2 -translate-x-1/2 -z-40 w-full max-w-screen-lg bg-background" />

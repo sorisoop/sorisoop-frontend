@@ -29,3 +29,14 @@ export interface FairyTale {
   pageCount: number;
   categoryName: string;
 }
+
+export interface ConceptResponse {
+  concept_kr: string;
+  concept_en: string;
+}
+
+export interface CustomFairyTaleConceptResponse {
+  imageUrl: string;
+  imageContentType: string;
+  conceptResponse: ConceptResponse[];
+}
