@@ -32,7 +32,7 @@ export default function FairyTaleDetailDesktop({ fairyTale }: { fairyTale: Fairy
         </div>
 
         <div className="mt-2 flex gap-2">
-          <Badge variant="secondary">{fairyTale.name}</Badge>
+          <Badge variant="secondary">{fairyTale.categoryName}</Badge>
           <Badge variant="secondary">{fairyTale.author}</Badge>
         </div>
 

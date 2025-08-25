@@ -17,7 +17,7 @@ export interface FairyTaleResponse {
   author: string;
   thumbnailImage: string;
   pageCount: number;
-  name: string;
+  categoryName: string;
   isFavorite: boolean;
 }
 

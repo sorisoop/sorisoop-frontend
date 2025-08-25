@@ -4,7 +4,7 @@ import { Badge } from "@/shared/components/ui/badge";
 import { Button } from "@/shared/components/ui/button";
 import { cn } from "@/shared/lib/utils";
 import { Heart } from "lucide-react";
-import { useState } from "react";
+import { useAddFavorite, useDeleteFavorite } from "@/entities/fairy-tale/api/mutations";
 
 type FairyTaleCardGridProps = {
   tales: FairyTaleResponse[];
@@ -13,10 +13,12 @@ type FairyTaleCardGridProps = {
 };
 
 export default function FairyTaleCardGrid({ tales, className, ariaLabel = "오늘의 픽" }: FairyTaleCardGridProps) {
-  const [favorites, setFavorites] = useState<number[]>([]);
+  const addFavorite = useAddFavorite();
+  const deleteFavorite = useDeleteFavorite();
 
-  const toggleFavorite = (id: number) => {
-    setFavorites((prev) => (prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]));
+  const handleToggle = (tale: FairyTaleResponse) => {
+    if (tale.isFavorite) deleteFavorite.mutate({ fairyTaleId: tale.id });
+    else addFavorite.mutate({ fairyTaleId: tale.id });
   };
 
   return (
@@ -25,64 +27,60 @@ export default function FairyTaleCardGrid({ tales, className, ariaLabel = "오�
       aria-label={ariaLabel}
       role="list"
     >
-      {tales.map((tale) => {
-        const isFavorite = favorites.includes(tale.id);
+      {tales.map((tale) => (
+        <Link
+          key={tale.id}
+          to={`/fairy-tale/${tale.id}`}
+          role="listitem"
+          className="group relative block aspect-[3/4] rounded-md overflow-hidden bg-muted shadow hover:shadow-md transition cursor-pointer"
+          aria-label={`동화책 ${tale.title}`}
+        >
+          <img
+            src={tale.thumbnailImage}
+            alt={`동화책 ${tale.title} 표지`}
+            className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition"
+          />
 
-        return (
-          <Link
-            key={tale.id}
-            to={`/fairy-tale/${tale.id}`}
-            role="listitem"
-            className="group relative block aspect-[3/4] rounded-md overflow-hidden bg-muted shadow hover:shadow-md transition cursor-pointer"
-            aria-label={`동화책 ${tale.title}`}
-          >
-            <img
-              src={tale.thumbnailImage}
-              alt={`동화책 ${tale.title} 표지`}
-              className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition"
-            />
+          <div className="absolute right-2 top-2">
+            <Badge className="rounded-full bg-primary text-secondary h-5 px-2 text-xs">{tale.categoryName}</Badge>
+          </div>
 
-            <div className="absolute right-2 top-2">
-              <Badge className="rounded-full bg-primary text-secondary h-5 px-2 text-xs">{tale.name}</Badge>
+          <div className="absolute right-2 bottom-2 z-20 pointer-events-auto">
+            <Button
+              type="button"
+              size="icon"
+              variant="ghost"
+              aria-label={`동화책 ${tale.title} 찜하기`}
+              aria-pressed={tale.isFavorite}
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                handleToggle(tale);
+              }}
+              className="h-8 w-8 rounded-full bg-background shadow-md transition cursor-pointer"
+            >
+              <Heart
+                className={cn(
+                  "w-4 h-4 transition",
+                  tale.isFavorite ? "fill-destructive text-destructive" : "text-foreground"
+                )}
+              />
+            </Button>
+          </div>
+
+          <div className="absolute inset-x-0 bottom-0 pointer-events-none z-0">
+            <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
+            <div className="relative p-3">
+              <h4 className="font-serif italic text-lg md:text-xl font-bold text-background drop-shadow-sm leading-snug line-clamp-2">
+                {tale.title}
+              </h4>
+              <p className="font-serif italic mt-1 text-background/90 text-xs">
+                {tale.author} · {tale.pageCount}p
+              </p>
             </div>
-
-            <div className="absolute right-2 bottom-2 z-20 pointer-events-auto">
-              <Button
-                type="button"
-                size="icon"
-                variant="ghost"
-                aria-label={`동화책 ${tale.title} 찜하기`}
-                aria-pressed={isFavorite}
-                onClick={(e) => {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  toggleFavorite(tale.id);
-                }}
-                className="h-8 w-8 rounded-full bg-background shadow-md transition cursor-pointer"
-              >
-                <Heart
-                  className={cn(
-                    "w-4 h-4 transition",
-                    isFavorite ? "fill-destructive text-destructive" : "text-foreground"
-                  )}
-                />
-              </Button>
-            </div>
-
-            <div className="absolute inset-x-0 bottom-0 pointer-events-none z-0">
-              <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />
-              <div className="relative p-3">
-                <h4 className="font-serif italic text-lg md:text-xl font-bold text-background drop-shadow-sm leading-snug line-clamp-2">
-                  {tale.title}
-                </h4>
-                <p className="font-serif italic mt-1 text-background/90 text-xs">
-                  {tale.author} · {tale.pageCount}p
-                </p>
-              </div>
-            </div>
-          </Link>
-        );
-      })}
+          </div>
+        </Link>
+      ))}
     </div>
   );
 }

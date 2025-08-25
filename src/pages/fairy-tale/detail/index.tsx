@@ -6,7 +6,7 @@ import { CATEGORY_MAP } from "@/shared/utils/category";
 export default function FairyTaleDetailPage() {
   const { id } = useParams<{ id: string }>();
   const { data: fairyTale } = useFairyTaleDetailById(id!);
-  const categoryId = CATEGORY_MAP[fairyTale.name];
+  const categoryId = CATEGORY_MAP[fairyTale.categoryName];
   const { data: relatedTales } = useFairyTalesByCategoryInfinite(categoryId);
   const similarTales = relatedTales?.pages[0] ?? [];
 
