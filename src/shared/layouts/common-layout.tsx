@@ -16,7 +16,7 @@ export default function CommonLayout({ children, title = "" }: CommonLayoutProps
   return (
     <div
       id="main-container"
-      className="flex min-h-screen w-full max-w-screen-lg mx-auto flex-col items-center bg-background text-foreground"
+      className="flex min-h-dvh w-full max-w-screen-lg mx-auto flex-col items-center bg-background text-foreground"
     >
       <SearchSidebar>
         <SearchSidebar.Header />

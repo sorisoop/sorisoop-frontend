@@ -20,7 +20,7 @@ export default function BackHeaderLayout({
   return (
     <div
       id="main-container"
-      className="flex min-h-screen w-full max-w-screen-lg mx-auto flex-col items-center bg-background text-foreground"
+      className="flex min-h-dvh w-full max-w-screen-lg mx-auto flex-col items-center bg-background text-foreground"
     >
       <header className="sticky top-0 z-20 w-full border-b border-border bg-background/90 backdrop-blur">
         <div className="mx-auto max-w-screen-lg h-[52px] px-4 flex items-center justify-between gap-4">

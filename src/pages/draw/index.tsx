@@ -7,10 +7,10 @@ export default function DrawPage() {
   return (
     <DrawProvider>
       <DrawFlowProvider>
-        <DrawFlow.Draw>
-          <DrawContent />
-        </DrawFlow.Draw>
         <DrawFlowTransition>
+          <DrawFlow.Draw>
+            <DrawContent />
+          </DrawFlow.Draw>
           <DrawFlow.Loading>
             <DrawLoading />
           </DrawFlow.Loading>

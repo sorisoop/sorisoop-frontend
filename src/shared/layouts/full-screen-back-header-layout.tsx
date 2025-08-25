@@ -12,7 +12,7 @@ export default function FullScreenBackHeaderLayout({ children }: FullScreenBackL
   return (
     <div
       id="main-container"
-      className="relative flex min-h-screen w-full max-w-screen-lg mx-auto flex-col items-center bg-background text-foreground"
+      className="relative flex h-dvh w-full max-w-screen-lg mx-auto flex-col items-center bg-background text-foreground"
     >
       <header className="absolute top-4 left-4 z-50">
         <Button
