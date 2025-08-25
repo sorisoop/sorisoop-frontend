@@ -49,7 +49,7 @@ export function FairyTaleBookEndDialog() {
             <Button variant="outline" onClick={() => setIsBookEndOpen(false)} className="cursor-pointer">
               다시보기
             </Button>
-            <Button onClick={goHome} className="cursor-pointer bg-primary text-white font-semibold">
+            <Button onClick={goHome} className="cursor-pointer bg-primary text-secondary font-semibold">
               돌아가기
             </Button>
           </DialogFooter>
@@ -60,21 +60,28 @@ export function FairyTaleBookEndDialog() {
 
   return (
     <Drawer open={isBookEndOpen} onOpenChange={setIsBookEndOpen}>
-      <DrawerContent>
+      <DrawerContent
+        ref={(el) => {
+          if (el) {
+            requestAnimationFrame(() => {
+              const focusable = el.querySelector<HTMLElement>("button, [tabindex]:not([tabindex='-1'])");
+              focusable?.focus();
+            });
+          }
+        }}
+      >
         <DrawerHeader>
           <DrawerTitle className="text-left text-lg font-bold animate-pulse">{randomMessage}</DrawerTitle>
+          <DrawerDescription className="text-sm text-muted-foreground text-left">
+            이 동화책은 여기서 끝났습니다.
+          </DrawerDescription>
         </DrawerHeader>
-
-        <DrawerDescription className="px-4 text-sm text-muted-foreground">
-          이 동화책은 여기서 끝났습니다.
-        </DrawerDescription>
-
         <DrawerFooter className="pt-4 flex flex-col gap-2">
           <Button onClick={goHome} className="w-full bg-primary text-white font-semibold">
             홈으로
           </Button>
           <DrawerClose asChild>
-            <Button variant="outline" className="w-full cursor-pointer">
+            <Button type="button" variant="outline" className="w-full cursor-pointer">
               돌아가기
             </Button>
           </DrawerClose>
