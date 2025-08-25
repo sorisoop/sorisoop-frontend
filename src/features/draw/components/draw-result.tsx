@@ -93,11 +93,11 @@ export default function DrawResult() {
                 );
               })}
             </div>
-            <div className=" bg-background/80 backdrop-blur-sm pt-4 border-t">
+            <div className="bg-background/80 backdrop-blur-sm pt-4 border-t">
               <Button
                 onClick={handleProceed}
                 disabled={!selected}
-                className="w-full h-12 text-base font-medium text-secondary"
+                className="w-full h-12 text-base font-medium text-secondary cursor-pointer"
               >
                 {selected ? `"${selected}" 스토리로 진행하기` : "테마를 선택해주세요"}
               </Button>

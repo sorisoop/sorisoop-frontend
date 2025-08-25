@@ -5,9 +5,11 @@ export type Step = "draw" | "loading" | "result";
 
 interface DrawFlowContextValue {
   step: Step;
+  previousStep: Step | null;
+  direction: "forward" | "backward";
   result: CustomFairyTaleConceptResponse | null;
-  setStep: (s: Step) => void;
-  setResult: (r: CustomFairyTaleConceptResponse | null) => void;
+  setStep: (step: Step) => void;
+  setResult: (result: CustomFairyTaleConceptResponse | null) => void;
 }
 
 export const DrawFlowContext = createContext<DrawFlowContextValue | null>(null);

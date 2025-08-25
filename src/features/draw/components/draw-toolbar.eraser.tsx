@@ -21,7 +21,7 @@ export function DrawToolbarEraser() {
       <PopoverContent side="top" align="center" className="z-50 max-w-48">
         <div className="flex flex-col gap-2 items-center">
           <span className="text-sm text-muted-foreground">지우개</span>
-          <div className="w-8 bg-foreground rounded-full" style={{ height: eraserWidth }} />
+          <div className="bg-foreground rounded-full" style={{ width: eraserWidth, height: eraserWidth }} />{" "}
           <Slider
             value={[eraserWidth]}
             min={5}

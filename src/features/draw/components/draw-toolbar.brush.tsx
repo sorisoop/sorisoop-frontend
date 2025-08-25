@@ -21,8 +21,7 @@ export function DrawToolbarBrush() {
       <PopoverContent side="top" align="center" className="z-50 max-w-48">
         <div className="flex flex-col gap-2 items-center">
           <span className="text-sm text-foreground">브러시</span>
-
-          <div className="w-8 bg-foreground rounded-full" style={{ height: brushWidth }} />
+          <div className="bg-foreground rounded-full" style={{ width: brushWidth, height: brushWidth }} />
           <Slider
             value={[brushWidth]}
             min={1}

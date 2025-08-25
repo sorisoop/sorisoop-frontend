@@ -30,7 +30,7 @@ export default function DrawCanvas() {
 
       {isEraser && cursor && (
         <div
-          className="absolute rounded-full border-2 border-gray-600 border-dashed pointer-events-none"
+          className="absolute rounded-full border-2 border-muted-foreground border-dashed pointer-events-none"
           style={{
             left: cursor.x - eraserWidth / 2,
             top: cursor.y - eraserWidth / 2,
