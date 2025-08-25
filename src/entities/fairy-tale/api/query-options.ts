@@ -6,6 +6,7 @@ import {
   getFairyTaleDetailById,
   getFairyTalesByCategory,
   getFavoriteFairyTales,
+  getMyCustomFairyTales,
   searchFairyTales,
 } from "./get";
 
@@ -19,6 +20,8 @@ export const fairyTaleKeys = {
   getFairyTaleDetailById: (id: string) => ["fairy-tale", "detail", id] as const,
   search: (keyword: string) => ["fairy-tale", "search", keyword] as const,
   getFavoriteFairyTales: () => ["fairy-tale", "favorites"] as const,
+
+  getCustomFairyTales: (id: number) => ["custom", "fairy-tales", id] as const,
 };
 
 export const fairyTaleQueryOptions = {
@@ -80,5 +83,12 @@ export const fairyTaleQueryOptions = {
     },
     staleTime: 1000 * 60 * 1,
     gcTime: 1000 * 60 * 5,
+  }),
+
+  getCustomFairyTales: (id: number) => ({
+    queryKey: fairyTaleKeys.getCustomFairyTales(id),
+    queryFn: () => getMyCustomFairyTales(id),
+    staleTime: 1000 * 60 * 60 * 24,
+    gcTime: 1000 * 60 * 60 * 24,
   }),
 };

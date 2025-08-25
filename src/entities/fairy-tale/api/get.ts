@@ -103,3 +103,26 @@ export const getFavoriteFairyTales = async (
     throw err;
   }
 };
+
+/**
+ * 내가 만든 동화 목록 조회 API
+ * @param categoryId 카테고리 ID (기본값 0 → 전체)
+ */
+export const getMyCustomFairyTales = async (
+  categoryId: number = 0,
+  displayMode: DisplayMode = "fallback"
+): Promise<FairyTaleResponse[]> => {
+  try {
+    const res = await api
+      .get("fairy-tale/custom", {
+        searchParams: { categoryId: String(categoryId ?? 0) },
+      })
+      .json<ApiResponse<FairyTaleResponse[]>>();
+    return res.data;
+  } catch (err) {
+    if (err instanceof BaseApiError) {
+      err.displayMode = displayMode;
+    }
+    throw err;
+  }
+};

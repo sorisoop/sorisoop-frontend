@@ -56,3 +56,7 @@ export const useFavoriteFairyTalesInfinite = () => {
     initialPageParam: 1,
   });
 };
+
+export const useCustomFairyTales = (id: number) => {
+  return useSuspenseQuery<FairyTaleResponse[]>(fairyTaleQueryOptions.getCustomFairyTales(id));
+};
