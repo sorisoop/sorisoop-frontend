@@ -18,7 +18,7 @@ function Root({ children }: { children: React.ReactNode }) {
 
   return (
     <div
-      className="w-full h-[100vh] relative overflow-hidden bg-background text-foreground"
+      className="w-full h-dvh relative overflow-hidden bg-background text-foreground"
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
