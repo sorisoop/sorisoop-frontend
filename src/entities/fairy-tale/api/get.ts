@@ -8,6 +8,18 @@ export const getFairyTaleContents = async (id: string) => {
   return res.data;
 };
 
+export const getFairyTaleByRandom = async (displayMode: DisplayMode = "fallback"): Promise<FairyTaleResponse[]> => {
+  try {
+    const res = await api.get("fairy-tale/random").json<ApiResponse<FairyTaleResponse[]>>();
+    return res.data;
+  } catch (err) {
+    if (err instanceof BaseApiError) {
+      err.displayMode = displayMode;
+    }
+    throw err;
+  }
+};
+
 export const getFairyTaleCategories = async (
   displayMode: DisplayMode = "fallback"
 ): Promise<FairyTaleCategoryResponse[]> => {

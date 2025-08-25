@@ -1,5 +1,6 @@
 import type { FairyTaleResponse } from "../model";
 import {
+  getFairyTaleByRandom,
   getFairyTaleCategories,
   getFairyTaleContents,
   getFairyTaleDetailById,
@@ -11,6 +12,7 @@ import {
 const PAGE_SIZE = 20;
 
 export const fairyTaleKeys = {
+  getFairyTaleByRandom: () => ["fairy-tale", "random"] as const,
   getFairyTaleContents: (id: string) => ["fairy-tale", "contents", id] as const,
   getFairyTaleCategories: ["fairy-tale", "categories"] as const,
   getFairyTalesByCategory: (categoryId: number) => ["fairy-tale", "category", categoryId] as const,
@@ -20,6 +22,13 @@ export const fairyTaleKeys = {
 };
 
 export const fairyTaleQueryOptions = {
+  getFairyTaleByRandom: () => ({
+    queryKey: fairyTaleKeys.getFairyTaleByRandom(),
+    queryFn: () => getFairyTaleByRandom(),
+    staleTime: 1000 * 60 * 60 * 24,
+    gcTime: 1000 * 60 * 60 * 24,
+  }),
+
   getFairyTaleContents: (id: string) => ({
     queryKey: fairyTaleKeys.getFairyTaleContents(id),
     queryFn: () => getFairyTaleContents(id),

@@ -2,6 +2,10 @@ import { useInfiniteQuery, useSuspenseInfiniteQuery, useSuspenseQuery, type Infi
 import { fairyTaleKeys, fairyTaleQueryOptions } from "./query-options";
 import { type FairyTaleCategoryResponse, type FairyTaleContentResponse, type FairyTaleResponse } from "../model";
 
+export const useFairyTaleByRandom = () => {
+  return useSuspenseQuery<FairyTaleResponse[]>(fairyTaleQueryOptions.getFairyTaleByRandom());
+};
+
 export const useFairyTaleContents = (id: string) => {
   return useSuspenseQuery<FairyTaleContentResponse[]>(fairyTaleQueryOptions.getFairyTaleContents(id));
 };
