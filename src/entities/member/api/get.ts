@@ -13,7 +13,7 @@ export const getCustomerKey = async (): Promise<CustomerKeyResponse> => {
  * @param email - 확인할 이메일
  * @param displayMode - 에러 발생 시 표시 방식 ("toast" | "fallback")
  */
-export const checkEmail = async (email: string, displayMode: DisplayMode = "toast"): Promise<CheckEmailResponse> => {
+export const checkEmail = async (email: string, displayMode: DisplayMode = "toast"): Promise<boolean> => {
   try {
     const res = await api
       .get("members/check-email", {

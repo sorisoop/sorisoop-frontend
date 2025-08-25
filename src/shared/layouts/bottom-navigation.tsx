@@ -12,7 +12,7 @@ const NAV_ITEMS: Array<{
 }> = [
   { key: "home", path: "/", label: "홈", icon: Home },
   { key: "library", path: "/lib", label: "내 책장", icon: BookOpen },
-  { key: "create", path: "/create", label: "창작동화", icon: PenLine },
+  { key: "create", path: "/draw", label: "창작동화", icon: PenLine },
   { key: "voice", path: "/voice", label: "목소리 추가", icon: Mic },
   { key: "my", path: "/my", label: "MY", icon: UserRound },
 ];

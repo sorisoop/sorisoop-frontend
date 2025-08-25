@@ -9,6 +9,4 @@ export interface SignupRequest {
   password: string;
 }
 
-export interface CheckEmailResponse {
-  email: string;
-}
+export type CheckEmailResponse = boolean;

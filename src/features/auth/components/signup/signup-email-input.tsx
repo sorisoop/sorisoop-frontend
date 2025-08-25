@@ -19,12 +19,12 @@ export function SignupEmailInput() {
     if (!email) return;
     const result = await refetch();
 
-    if (result.data?.email === email) {
-      setValue("emailChecked", false, { shouldValidate: true });
-      setStatus("invalid");
-    } else {
+    if (result.data === true) {
       setValue("emailChecked", true, { shouldValidate: true });
       setStatus("valid");
+    } else {
+      setValue("emailChecked", false, { shouldValidate: true });
+      setStatus("invalid");
     }
   };
 
@@ -56,8 +56,8 @@ export function SignupEmailInput() {
             </Button>
           </div>
           <FormMessage />
-          {status === "valid" && <p className="text-sm text-green-600">사용 가능한 이메일입니다 ✅</p>}
-          {status === "invalid" && <p className="text-sm text-destructive">이미 사용 중인 이메일입니다 ❌</p>}
+          {status === "valid" && <p className="text-sm text-green-600">사용 가능한 이메일입니다</p>}
+          {status === "invalid" && <p className="text-sm text-destructive">이미 사용 중인 이메일입니다</p>}
         </FormItem>
       )}
     />
