@@ -39,3 +39,16 @@ export const useFairyTaleSearchInfinite = (keyword: string) => {
     initialPageParam: 1,
   });
 };
+
+export const useFavoriteFairyTalesInfinite = () => {
+  return useSuspenseInfiniteQuery<
+    FairyTaleResponse[],
+    Error,
+    InfiniteData<FairyTaleResponse[]>,
+    ReturnType<typeof fairyTaleKeys.getFavoriteFairyTales>,
+    number
+  >({
+    ...fairyTaleQueryOptions.getFavoriteFairyTales(),
+    initialPageParam: 1,
+  });
+};

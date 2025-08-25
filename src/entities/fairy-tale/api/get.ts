@@ -69,3 +69,25 @@ export const searchFairyTales = async (keyword: string, page: number = 0): Promi
     return [];
   }
 };
+
+/**
+ * 내가 찜한 동화책 목록 조회 API
+ * @param page 페이지 번호 (기본값 1)
+ * @param displayMode 에러 표시 모드 ("toast" | "fallback")
+ */
+export const getFavoriteFairyTales = async (
+  page: number = 1,
+  displayMode: DisplayMode = "fallback"
+): Promise<FairyTaleResponse[]> => {
+  try {
+    const res = await api
+      .get("fairy-tale/favorites", { searchParams: { page: String(page) } })
+      .json<ApiResponse<FairyTaleResponse[]>>();
+    return res.data;
+  } catch (err) {
+    if (err instanceof BaseApiError) {
+      err.displayMode = displayMode;
+    }
+    throw err;
+  }
+};
