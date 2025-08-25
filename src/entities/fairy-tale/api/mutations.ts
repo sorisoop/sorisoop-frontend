@@ -1,6 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addFavorite } from "./create";
 import { deleteFavorite } from "./delete";
+import { fairyTaleKeys } from "./query-options";
+import type { FairyTaleResponse } from "../model";
 
 export const useAddFavorite = () => {
   const queryClient = useQueryClient();
@@ -8,8 +10,14 @@ export const useAddFavorite = () => {
   return useMutation({
     mutationFn: ({ fairyTaleId }: { fairyTaleId: number }) => addFavorite(fairyTaleId),
 
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["fairy-tale"] });
+    onSuccess: (_, variables) => {
+      queryClient.setQueryData<FairyTaleResponse[]>(fairyTaleKeys.getFairyTaleByRandom(), (old) =>
+        old ? old.map((t) => (t.id === variables.fairyTaleId ? { ...t, isFavorite: true } : t)) : old
+      );
+
+      queryClient.invalidateQueries({
+        queryKey: fairyTaleKeys.getFavoriteFairyTales(),
+      });
     },
   });
 };
@@ -20,8 +28,14 @@ export const useDeleteFavorite = () => {
   return useMutation({
     mutationFn: ({ fairyTaleId }: { fairyTaleId: number }) => deleteFavorite(fairyTaleId),
 
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["fairy-tale"] });
+    onSuccess: (_, variables) => {
+      queryClient.setQueryData<FairyTaleResponse[]>(fairyTaleKeys.getFairyTaleByRandom(), (old) =>
+        old ? old.map((t) => (t.id === variables.fairyTaleId ? { ...t, isFavorite: false } : t)) : old
+      );
+
+      queryClient.invalidateQueries({
+        queryKey: fairyTaleKeys.getFavoriteFairyTales(),
+      });
     },
   });
 };
