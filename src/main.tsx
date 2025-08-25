@@ -37,7 +37,7 @@ const isStandalone =
   window.matchMedia("(display-mode: standalone)").matches ||
   ("standalone" in window.navigator && (window.navigator as { standalone?: boolean }).standalone === true);
 
-if (isStandalone) document.documentElement.style.setProperty("--safe-area-top", "0px");
+if (isStandalone) document.documentElement.style.setProperty("--safe-area-top", "max(20px, env(safe-area-inset-top))");
 else document.documentElement.style.setProperty("--safe-area-top", "env(safe-area-inset-top)");
 
 createRoot(document.getElementById("root")!).render(
