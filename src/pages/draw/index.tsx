@@ -1,6 +1,6 @@
 import { BackHeaderLayout } from "@/shared/layouts";
 
-export default function FairyTaleDrawPage() {
+export default function DraePage() {
   return (
     <BackHeaderLayout>
       <h1>gd</h1>

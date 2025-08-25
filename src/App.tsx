@@ -4,13 +4,13 @@ import { lazy } from "react";
 
 const HomePage = lazy(() => import("@/pages/home"));
 const LibraryPage = lazy(() => import("@/pages/library"));
+const DrawPage = lazy(() => import("@/pages/draw"));
 const VoicePage = lazy(() => import("@/pages/voice"));
 const VoiceAddPage = lazy(() => import("@/pages/voice/add"));
 const MyPage = lazy(() => import("@/pages/my"));
 const FairyTaleDetailPage = lazy(() => import("@/pages/fairy-tale/detail"));
 const FairyTaleReaderPage = lazy(() => import("@/pages/fairy-tale/detail/read"));
 const FairyTaleByCategoryPage = lazy(() => import("@/pages/fairy-tale/category/name"));
-const FairyTaleDrawPage = lazy(() => import("@/pages/fairy-tale/draw"));
 const SubscribeManagePage = lazy(() => import("@/pages/my/subscribe-manage"));
 const PaymentSuccessPage = lazy(() => import("@/pages/payment/success"));
 const PaymentFailPage = lazy(() => import("@/pages/payment/fail"));
@@ -26,7 +26,7 @@ export default function App() {
         <Route path="/" element={<HomePage />} />
         <Route path="/lib" element={<LibraryPage />} />
         <Route path="/voice" element={<VoicePage />} />
-        <Route path="/draw" element={<FairyTaleDrawPage />} />
+        <Route path="/draw" element={<DrawPage />} />
         <Route path="/voice/add" element={<VoiceAddPage />} />
         <Route path="/my" element={<MyPage />} />
         <Route path="/fairy-tale/:id" element={<FairyTaleDetailPage />} />
