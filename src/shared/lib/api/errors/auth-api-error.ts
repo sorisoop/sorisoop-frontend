@@ -16,6 +16,11 @@ export const AuthError = {
     devMessage: "토큰 발급 실패",
     message: "토큰 발급에 실패했습니다. 잠시 후 다시 시도해주세요.",
   },
+  AU010: {
+    code: "AU010",
+    devMessage: "Access Token 만료",
+    message: "로그인 세션이 만료되었습니다. 다시 로그인해주세요.",
+  },
 } as const;
 
 export type AuthErrorCode = keyof typeof AuthError;
