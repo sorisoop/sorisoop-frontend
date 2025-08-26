@@ -10,9 +10,10 @@ import { useAddFavorite, useDeleteFavorite } from "@/entities/fairy-tale/api/mut
 type FairyTaleHighlightRowProps = {
   tales: FairyTaleResponse[];
   className?: string;
+  custom: boolean;
 };
 
-export default function FairyTaleHighlightRow({ tales, className = "" }: FairyTaleHighlightRowProps) {
+export default function FairyTaleHighlightRow({ tales, className = "", custom = false }: FairyTaleHighlightRowProps) {
   const { onMouseDown, onMouseMove, onMouseUp } = useDragScroll<HTMLDivElement>();
   const { handleMouseDown, handleMouseMove, handleClick } = useDragPreventClick(8);
 
@@ -44,7 +45,7 @@ export default function FairyTaleHighlightRow({ tales, className = "" }: FairyTa
         {tales.map((tale) => (
           <Link
             key={tale.id}
-            to={`/fairy-tale/${tale.id}`}
+            to={custom ? `/fairy-tale/custom/${tale.id}` : `/fairy-tale/${tale.id}`}
             role="listitem"
             onClick={handleClick}
             className="relative flex-shrink-0 w-[240px] md:w-[280px] overflow-hidden rounded-md shadow-md cursor-pointer"

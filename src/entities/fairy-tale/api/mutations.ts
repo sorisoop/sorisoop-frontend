@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addFavorite, createCustomSynopsis } from "./create";
+import { addFavorite, createCustomSynopsis, makeCustomFairyTale } from "./create";
 import { deleteFavorite } from "./delete";
 import { fairyTaleKeys } from "./query-options";
-import type { FairyTaleResponse } from "../model";
+import type { FairyTaleResponse, MakeCustomFairyTaleRequest } from "../model";
 
 export const useAddFavorite = () => {
   const queryClient = useQueryClient();
@@ -46,4 +46,10 @@ export const useCreateCustomSynopsis = () => {
   });
 
   return mutation.mutateAsync;
+};
+
+export const useMakeCustomFairyTale = () => {
+  return useMutation({
+    mutationFn: (payload: MakeCustomFairyTaleRequest) => makeCustomFairyTale(payload),
+  });
 };

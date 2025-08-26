@@ -1,16 +1,17 @@
 import { useParams } from "react-router-dom";
-import { FairyTaleReaderProvider } from "@/features/fairy-tale/providers";
 import { FullScreenBackHeaderLayout } from "@/shared/layouts";
+import { FairyTaleReaderProvider } from "@/features/fairy-tale/providers";
 import { FairyTaleReader } from "@/features/fairy-tale/components/reader";
 
 export default function FairyTaleReaderPage() {
   const { id } = useParams<{ id: string }>();
+  const fairyTaleId = id ? Number(id) : undefined;
 
-  if (!id) return null;
+  if (!fairyTaleId) return null;
 
   return (
     <FullScreenBackHeaderLayout>
-      <FairyTaleReaderProvider id={id}>
+      <FairyTaleReaderProvider id={fairyTaleId} custom>
         <FairyTaleReader>
           <FairyTaleReader.Book />
           <FairyTaleReader.Navigation />

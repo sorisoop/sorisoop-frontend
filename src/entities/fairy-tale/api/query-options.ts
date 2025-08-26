@@ -1,5 +1,7 @@
 import type { FairyTaleResponse } from "../model";
 import {
+  getCustomFairyTaleContents,
+  getCustomFairyTaleDetailById,
   getFairyTaleByRandom,
   getFairyTaleCategories,
   getFairyTaleContents,
@@ -14,14 +16,16 @@ const PAGE_SIZE = 20;
 
 export const fairyTaleKeys = {
   getFairyTaleByRandom: () => ["fairy-tale", "random"] as const,
-  getFairyTaleContents: (id: string) => ["fairy-tale", "contents", id] as const,
+  getFairyTaleContents: (id: number) => ["fairy-tale", "contents", id] as const,
   getFairyTaleCategories: ["fairy-tale", "categories"] as const,
   getFairyTalesByCategory: (categoryId: number) => ["fairy-tale", "category", categoryId] as const,
-  getFairyTaleDetailById: (id: string) => ["fairy-tale", "detail", id] as const,
+  getFairyTaleDetailById: (id: number) => ["fairy-tale", "detail", id] as const,
   search: (keyword: string) => ["fairy-tale", "search", keyword] as const,
   getFavoriteFairyTales: () => ["fairy-tale", "favorites"] as const,
 
   getCustomFairyTales: (id: number) => ["custom", "fairy-tales", id] as const,
+  getCustomFairyTaleDetailById: (id: number) => ["custom", "fairy-tale", id] as const,
+  getCustomFairytaleContents: (id: number) => ["custom", "fairy-tale", "contents", id] as const,
 };
 
 export const fairyTaleQueryOptions = {
@@ -32,7 +36,7 @@ export const fairyTaleQueryOptions = {
     gcTime: 1000 * 60 * 60 * 24,
   }),
 
-  getFairyTaleContents: (id: string) => ({
+  getFairyTaleContents: (id: number) => ({
     queryKey: fairyTaleKeys.getFairyTaleContents(id),
     queryFn: () => getFairyTaleContents(id),
     staleTime: 1000 * 60 * 60 * 24,
@@ -57,7 +61,7 @@ export const fairyTaleQueryOptions = {
     gcTime: 1000 * 60 * 5,
   }),
 
-  getFairyTaleDetailById: (id: string) => ({
+  getFairyTaleDetailById: (id: number) => ({
     queryKey: fairyTaleKeys.getFairyTaleDetailById(id),
     queryFn: () => getFairyTaleDetailById(id),
     staleTime: 1000 * 60 * 10,
@@ -88,6 +92,20 @@ export const fairyTaleQueryOptions = {
   getCustomFairyTales: (id: number) => ({
     queryKey: fairyTaleKeys.getCustomFairyTales(id),
     queryFn: () => getMyCustomFairyTales(id),
+    staleTime: 1000 * 60 * 60 * 24,
+    gcTime: 1000 * 60 * 60 * 24,
+  }),
+
+  getCustomFariyTaleDetailById: (id: number) => ({
+    queryKey: fairyTaleKeys.getCustomFairyTaleDetailById(id),
+    queryFn: () => getCustomFairyTaleDetailById(id),
+    staleTime: 1000 * 60 * 60 * 24,
+    gcTime: 1000 * 60 * 60 * 24,
+  }),
+
+  getCustomFairytaleContents: (id: number) => ({
+    queryKey: fairyTaleKeys.getCustomFairytaleContents(id),
+    queryFn: () => getCustomFairyTaleContents(id),
     staleTime: 1000 * 60 * 60 * 24,
     gcTime: 1000 * 60 * 60 * 24,
   }),

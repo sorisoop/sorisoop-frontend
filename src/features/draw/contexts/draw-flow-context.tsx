@@ -1,7 +1,7 @@
 import type { CustomFairyTaleConceptResponse } from "@/entities/fairy-tale/model";
 import { createContext } from "react";
 
-export type Step = "draw" | "loading" | "result";
+export type Step = "draw" | "loading" | "result" | "complete" | "error";
 
 interface DrawFlowContextValue {
   step: Step;

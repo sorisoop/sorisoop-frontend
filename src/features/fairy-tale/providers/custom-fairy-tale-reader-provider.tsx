@@ -1,16 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useFairyTaleContents } from "@/entities/fairy-tale/api/hooks";
-import { FairyTaleReaderContext } from "../contexts";
+import { useCustomFairyTaleContents } from "@/entities/fairy-tale/api/hooks";
 import type { FairyTaleContentResponse } from "@/entities/fairy-tale/model";
 import { type FlipBookRef } from "react-pageflip";
+import { CustomFairyTaleReaderContext } from "../contexts";
 
 /**
  * - 동화책 뷰어 전체 상태(Context) 관리
  * - 현재 페이지, 텍스트 표시 여부, 오버레이 상태, flipBook Ref를 관리
  * - 다음/이전/특정 페이지 이동 API 제공
  */
-export function FairyTaleReaderProvider({ id, children }: { id: number; custom: boolean; children: React.ReactNode }) {
-  const { data } = useFairyTaleContents(id);
+export function CustomFairyTaleReaderProvider({ id, children }: { id: number; children: React.ReactNode }) {
+  const { data } = useCustomFairyTaleContents(id);
 
   const [currentPage, setCurrentPage] = useState(0);
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
@@ -88,5 +88,5 @@ export function FairyTaleReaderProvider({ id, children }: { id: number; custom: 
     setShowText,
   };
 
-  return <FairyTaleReaderContext.Provider value={value}>{children}</FairyTaleReaderContext.Provider>;
+  return <CustomFairyTaleReaderContext.Provider value={value}>{children}</CustomFairyTaleReaderContext.Provider>;
 }

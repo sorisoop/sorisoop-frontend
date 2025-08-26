@@ -1,7 +1,7 @@
 import { api } from "@/shared/lib/api/ky";
 import type { ApiResponse } from "@/shared/lib/model/common-api-response";
 import { BaseApiError, type DisplayMode } from "@/shared/lib/api/errors";
-import type { CustomFairyTaleConceptResponse } from "../model";
+import type { CustomFairyTaleConceptResponse, MakeCustomFairyTaleRequest } from "../model";
 
 /**
  * 동화책 찜하기 API
@@ -33,6 +33,30 @@ export const createCustomSynopsis = async (
         body: formData,
       })
       .json<ApiResponse<CustomFairyTaleConceptResponse>>();
+
+    return res.data;
+  } catch (err) {
+    if (err instanceof BaseApiError) {
+      err.displayMode = displayMode;
+    }
+    throw err;
+  }
+};
+
+/**
+ * 커스텀 동화 생성 API
+ * @param payload MakeCustomFairyTaleRequest
+ */
+export const makeCustomFairyTale = async (
+  payload: MakeCustomFairyTaleRequest,
+  displayMode: DisplayMode = "toast"
+): Promise<null> => {
+  try {
+    const res = await api
+      .post("fairy-tale/custom", {
+        json: payload,
+      })
+      .json<ApiResponse<null>>();
 
     return res.data;
   } catch (err) {

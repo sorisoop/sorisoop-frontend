@@ -45,7 +45,7 @@ export default function CustomFairyTaleContent() {
         </div>
       </div>
 
-      <FairyTaleCard.Grid tales={tales} />
+      <FairyTaleCard.Grid tales={tales} custom />
     </div>
   );
 }

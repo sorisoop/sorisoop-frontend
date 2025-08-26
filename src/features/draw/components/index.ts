@@ -2,6 +2,8 @@ export { default as DrawCanvas } from "./draw-canvas";
 export { default as DrawContent } from "./draw-content";
 export { default as DrawLoading } from "./draw-loading";
 export { default as DrawResult } from "./draw-result";
+export { default as DrawComplete } from "./draw-complete";
+export { default as DrawError } from "./draw-error";
 
 import { DrawToolbarRoot } from "./draw-toolbar.root";
 import { DrawToolbarColor } from "./draw-toolbar.color";

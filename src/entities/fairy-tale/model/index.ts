@@ -40,3 +40,9 @@ export interface CustomFairyTaleConceptResponse {
   imageContentType: string;
   conceptResponse: ConceptResponse[];
 }
+
+export interface MakeCustomFairyTaleRequest {
+  imageUrl: string;
+  imageContentType: string;
+  concept: string;
+}

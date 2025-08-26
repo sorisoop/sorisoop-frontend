@@ -6,7 +6,7 @@ export const useFairyTaleByRandom = () => {
   return useSuspenseQuery<FairyTaleResponse[]>(fairyTaleQueryOptions.getFairyTaleByRandom());
 };
 
-export const useFairyTaleContents = (id: string) => {
+export const useFairyTaleContents = (id: number) => {
   return useSuspenseQuery<FairyTaleContentResponse[]>(fairyTaleQueryOptions.getFairyTaleContents(id));
 };
 
@@ -26,7 +26,7 @@ export const useFairyTalesByCategoryInfinite = (categoryId: number) => {
   });
 };
 
-export const useFairyTaleDetailById = (id: string) => {
+export const useFairyTaleDetailById = (id: number) => {
   return useSuspenseQuery<FairyTaleResponse>(fairyTaleQueryOptions.getFairyTaleDetailById(id));
 };
 
@@ -59,4 +59,12 @@ export const useFavoriteFairyTalesInfinite = () => {
 
 export const useCustomFairyTales = (id: number) => {
   return useSuspenseQuery<FairyTaleResponse[]>(fairyTaleQueryOptions.getCustomFairyTales(id));
+};
+
+export const useCustomFairyTaleDetailById = (id: number) => {
+  return useSuspenseQuery<FairyTaleResponse>(fairyTaleQueryOptions.getCustomFariyTaleDetailById(id));
+};
+
+export const useCustomFairyTaleContents = (id: number) => {
+  return useSuspenseQuery<FairyTaleContentResponse[]>(fairyTaleQueryOptions.getCustomFairytaleContents(id));
 };

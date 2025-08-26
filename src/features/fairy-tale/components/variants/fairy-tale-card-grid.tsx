@@ -10,9 +10,15 @@ type FairyTaleCardGridProps = {
   tales: FairyTaleResponse[];
   className?: string;
   ariaLabel?: string;
+  custom?: boolean;
 };
 
-export default function FairyTaleCardGrid({ tales, className, ariaLabel = "오늘의 픽" }: FairyTaleCardGridProps) {
+export default function FairyTaleCardGrid({
+  tales,
+  className,
+  ariaLabel = "오늘의 픽",
+  custom = false,
+}: FairyTaleCardGridProps) {
   const addFavorite = useAddFavorite();
   const deleteFavorite = useDeleteFavorite();
 
@@ -30,7 +36,7 @@ export default function FairyTaleCardGrid({ tales, className, ariaLabel = "오�
       {tales.map((tale) => (
         <Link
           key={tale.id}
-          to={`/fairy-tale/${tale.id}`}
+          to={custom ? `/fairy-tale/custom/${tale.id}` : `/fairy-tale/${tale.id}`}
           role="listitem"
           className="group relative block aspect-[3/4] rounded-md overflow-hidden bg-muted shadow hover:shadow-md transition cursor-pointer"
           aria-label={`동화책 ${tale.title}`}
@@ -45,28 +51,30 @@ export default function FairyTaleCardGrid({ tales, className, ariaLabel = "오�
             <Badge className="rounded-full bg-primary text-secondary h-5 px-2 text-xs">{tale.categoryName}</Badge>
           </div>
 
-          <div className="absolute right-2 bottom-2 z-20 pointer-events-auto">
-            <Button
-              type="button"
-              size="icon"
-              variant="ghost"
-              aria-label={`동화책 ${tale.title} 찜하기`}
-              aria-pressed={tale.isFavorite}
-              onClick={(e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                handleToggle(tale);
-              }}
-              className="h-8 w-8 rounded-full bg-background shadow-md transition cursor-pointer"
-            >
-              <Heart
-                className={cn(
-                  "w-4 h-4 transition",
-                  tale.isFavorite ? "fill-destructive text-destructive" : "text-foreground"
-                )}
-              />
-            </Button>
-          </div>
+          {!custom && (
+            <div className="absolute right-2 bottom-2 z-20 pointer-events-auto">
+              <Button
+                type="button"
+                size="icon"
+                variant="ghost"
+                aria-label={`동화책 ${tale.title} 찜하기`}
+                aria-pressed={tale.isFavorite}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  handleToggle(tale);
+                }}
+                className="h-8 w-8 rounded-full bg-background shadow-md transition cursor-pointer"
+              >
+                <Heart
+                  className={cn(
+                    "w-4 h-4 transition",
+                    tale.isFavorite ? "fill-destructive text-destructive" : "text-foreground"
+                  )}
+                />
+              </Button>
+            </div>
+          )}
 
           <div className="absolute inset-x-0 bottom-0 pointer-events-none z-0">
             <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-black/80 via-black/40 to-transparent" />

@@ -17,6 +17,8 @@ const PaymentFailPage = lazy(() => import("@/pages/payment/fail"));
 const LoginPage = lazy(() => import("@/pages/auth/login"));
 const SignupPage = lazy(() => import("@/pages/auth/signup"));
 const ProfilePage = lazy(() => import("@/pages/profile"));
+const CustomFairyTaleDetailPage = lazy(() => import("@/pages/fairy-tale/custom"));
+const CustomFairyTaleReaderPage = lazy(() => import("@/pages/fairy-tale/custom/read"));
 
 export default function App() {
   return (
@@ -32,6 +34,8 @@ export default function App() {
         <Route path="/fairy-tale/:id" element={<FairyTaleDetailPage />} />
         <Route path="/fairy-tale/:id/read" element={<FairyTaleReaderPage />} />
         <Route path="/fairy-tale/category/:id" element={<FairyTaleByCategoryPage />} />
+        <Route path="/fairy-tale/custom/:id" element={<CustomFairyTaleDetailPage />} />
+        <Route path="/fairy-tale/custom/:id/read" element={<CustomFairyTaleReaderPage />} />
 
         <Route path="/subscription/manage" element={<SubscribeManagePage />} />
 

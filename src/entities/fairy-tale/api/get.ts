@@ -3,7 +3,7 @@ import type { ApiResponse } from "@/shared/lib/model/common-api-response";
 import type { FairyTaleCategoryResponse, FairyTaleContentResponse, FairyTaleResponse } from "../model";
 import { BaseApiError, type DisplayMode } from "@/shared/lib/api/errors";
 
-export const getFairyTaleContents = async (id: string) => {
+export const getFairyTaleContents = async (id: number) => {
   const res = await api.get(`fairy-tale/${id}/contents`).json<ApiResponse<FairyTaleContentResponse[]>>();
   return res.data;
 };
@@ -57,7 +57,7 @@ export const getFairyTalesByCategory = async (
  * @param fairyTaleId 동화책 ID
  */
 export const getFairyTaleDetailById = async (
-  fairyTaleId: string,
+  fairyTaleId: number,
   displayMode: DisplayMode = "fallback"
 ): Promise<FairyTaleResponse> => {
   try {
@@ -125,4 +125,28 @@ export const getMyCustomFairyTales = async (
     }
     throw err;
   }
+};
+
+/**
+ * 내가 만든 동화책 상세 조회 API
+ * @param fairyTaleId 동화책 ID
+ */
+export const getCustomFairyTaleDetailById = async (
+  fairyTaleId: number,
+  displayMode: DisplayMode = "fallback"
+): Promise<FairyTaleResponse> => {
+  try {
+    const res = await api.get(`fairy-tale/custom/${fairyTaleId}`).json<ApiResponse<FairyTaleResponse>>();
+    return res.data;
+  } catch (err) {
+    if (err instanceof BaseApiError) {
+      err.displayMode = displayMode;
+    }
+    throw err;
+  }
+};
+
+export const getCustomFairyTaleContents = async (id: number) => {
+  const res = await api.get(`fairy-tale/custom/${id}/contents`).json<ApiResponse<FairyTaleContentResponse[]>>();
+  return res.data;
 };

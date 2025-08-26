@@ -10,12 +10,14 @@ type FairyTaleCardGridTwoColProps = {
   tales: FairyTaleResponse[];
   className?: string;
   ariaLabel?: string;
+  custom: boolean;
 };
 
 export default function FairyTaleCardGridTwoCol({
   tales,
   className,
   ariaLabel = "검색 결과",
+  custom = false,
 }: FairyTaleCardGridTwoColProps) {
   const addFavorite = useAddFavorite();
   const deleteFavorite = useDeleteFavorite();
@@ -30,7 +32,7 @@ export default function FairyTaleCardGridTwoCol({
       {tales.map((tale) => (
         <Link
           key={tale.id}
-          to={`/fairy-tale/${tale.id}`}
+          to={custom ? `/fairy-tale/custom/${tale.id}` : `/fairy-tale/${tale.id}`}
           role="listitem"
           className="group relative block aspect-[3/4] rounded-md overflow-hidden bg-muted shadow hover:shadow-md transition cursor-pointer"
           aria-label={`동화책 ${tale.title}`}

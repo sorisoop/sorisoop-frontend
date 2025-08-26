@@ -5,14 +5,13 @@ import { CATEGORY_MAP } from "@/shared/utils/category";
 
 export default function FairyTaleDetailPage() {
   const { id } = useParams<{ id: string }>();
-  const { data: fairyTale } = useFairyTaleDetailById(id!);
+  const fairyTaleId = id ? Number(id) : undefined;
+  const { data: fairyTale } = useFairyTaleDetailById(fairyTaleId!);
   const categoryId = CATEGORY_MAP[fairyTale.categoryName];
   const { data: relatedTales } = useFairyTalesByCategoryInfinite(categoryId);
   const similarTales = relatedTales?.pages[0] ?? [];
 
-  if (!fairyTale) {
-    return <div className="p-4">동화를 찾을 수 없습니다.</div>;
-  }
+  if (!fairyTale) return <div className="p-4">동화를 찾을 수 없습니다.</div>;
 
   return (
     <FairyTaleDetailView>

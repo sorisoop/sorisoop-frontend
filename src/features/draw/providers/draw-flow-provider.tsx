@@ -2,7 +2,7 @@ import { useState } from "react";
 import { DrawFlowContext, type Step } from "../contexts/draw-flow-context";
 import type { CustomFairyTaleConceptResponse } from "@/entities/fairy-tale/model";
 
-const stepOrder: Step[] = ["draw", "loading", "result"];
+const stepOrder: Step[] = ["draw", "loading", "result", "complete", "error"];
 
 export function DrawFlowProvider({ children }: { children: React.ReactNode }) {
   const [step, setStepState] = useState<Step>("draw");

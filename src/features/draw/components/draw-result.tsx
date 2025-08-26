@@ -3,10 +3,13 @@ import { AlertTriangle } from "lucide-react";
 import { BackHeaderLayout } from "@/shared/layouts";
 import { Button } from "@/shared/components/ui/button";
 import { useDrawFlow } from "../hooks";
+import { useMakeCustomFairyTale } from "@/entities/fairy-tale/api/mutations";
 
 export default function DrawResult() {
-  const { result } = useDrawFlow();
-  const [selected, setSelected] = useState<string | null>(null);
+  const { result, setStep } = useDrawFlow();
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
+  const makeCustomFairyTaleMutation = useMakeCustomFairyTale();
 
   if (!result) {
     return (
@@ -18,7 +21,7 @@ export default function DrawResult() {
 
           <div>
             <h2 className="text-lg font-bold text-foreground mb-2">결과 데이터를 불러올 수 없습니다</h2>
-            <p className="text-muted-foreground text-sm">
+            <p className="text-muted-fowreground text-sm">
               분석 과정에서 오류가 발생했어요. <br />
               잠시 후 다시 시도해주세요.
             </p>
@@ -37,10 +40,27 @@ export default function DrawResult() {
     );
   }
 
-  const { conceptResponse, imageUrl } = result;
+  const { conceptResponse, imageUrl, imageContentType } = result;
 
   const handleProceed = () => {
-    if (!selected) return;
+    if (selectedIndex === null) return;
+    const chosen = conceptResponse[selectedIndex];
+
+    makeCustomFairyTaleMutation.mutate(
+      {
+        imageUrl,
+        imageContentType,
+        concept: chosen.concept_en,
+      },
+      {
+        onSuccess: () => {
+          setStep("complete");
+        },
+        onError: () => {
+          setStep("error");
+        },
+      }
+    );
   };
 
   return (
@@ -72,12 +92,12 @@ export default function DrawResult() {
 
             <div className="space-y-3 mb-8">
               {conceptResponse.map((concept, index) => {
-                const isSelected = selected === concept.concept_kr;
+                const isSelected = selectedIndex === index;
                 return (
                   <Button
                     key={index}
                     variant="outline"
-                    onClick={() => setSelected(concept.concept_kr)}
+                    onClick={() => setSelectedIndex(index)}
                     className={`
                       cursor-pointer w-full justify-between rounded-xl px-4 py-6 h-auto
                       ${isSelected ? "border-primary bg-primary/5 ring-2 ring-primary/20" : ""}
@@ -93,13 +113,16 @@ export default function DrawResult() {
                 );
               })}
             </div>
+
             <div className="bg-background/80 backdrop-blur-sm pt-4 border-t">
               <Button
                 onClick={handleProceed}
-                disabled={!selected}
+                disabled={selectedIndex === null}
                 className="w-full h-12 text-base font-medium text-secondary cursor-pointer"
               >
-                {selected ? `"${selected}" 스토리로 진행하기` : "테마를 선택해주세요"}
+                {selectedIndex !== null
+                  ? `"${conceptResponse[selectedIndex].concept_kr}" 스토리로 진행하기`
+                  : "테마를 선택해주세요"}
               </Button>
             </div>
           </div>
