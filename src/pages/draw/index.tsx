@@ -1,4 +1,11 @@
-import { DrawContent, DrawLoading, DrawResult, DrawComplete, DrawError } from "@/features/draw/components";
+import {
+  DrawContent,
+  DrawLoading,
+  DrawResult,
+  DrawComplete,
+  DrawError,
+  DrawSubscriptionError,
+} from "@/features/draw/components";
 import { DrawFlow } from "@/features/draw/components/draw";
 import { DrawFlowTransition } from "@/features/draw/components/draw-flow-transition";
 import { DrawFlowProvider, DrawProvider } from "@/features/draw/providers";
@@ -27,6 +34,10 @@ export default function DrawPage() {
           <DrawFlow.Error>
             <DrawError />
           </DrawFlow.Error>
+
+          <DrawFlow.SubscriptionError>
+            <DrawSubscriptionError />
+          </DrawFlow.SubscriptionError>
         </DrawFlowTransition>
       </DrawFlowProvider>
     </DrawProvider>

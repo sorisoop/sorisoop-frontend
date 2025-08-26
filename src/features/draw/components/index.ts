@@ -4,6 +4,7 @@ export { default as DrawLoading } from "./draw-loading";
 export { default as DrawResult } from "./draw-result";
 export { default as DrawComplete } from "./draw-complete";
 export { default as DrawError } from "./draw-error";
+export { default as DrawSubscriptionError } from "./draw-subscription-required";
 
 import { DrawToolbarRoot } from "./draw-toolbar.root";
 import { DrawToolbarColor } from "./draw-toolbar.color";

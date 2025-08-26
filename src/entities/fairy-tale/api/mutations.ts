@@ -39,13 +39,11 @@ export const useDeleteFavorite = () => {
     },
   });
 };
-
 export const useCreateCustomSynopsis = () => {
-  const mutation = useMutation({
+  return useMutation({
     mutationFn: (file: Blob) => createCustomSynopsis(file),
+    throwOnError: false,
   });
-
-  return mutation.mutateAsync;
 };
 
 export const useMakeCustomFairyTale = () => {

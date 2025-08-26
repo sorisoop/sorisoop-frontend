@@ -3,6 +3,7 @@ import { DrawFlowDraw } from "./draw-flow.draw";
 import { DrawFlowError } from "./draw-flow.error";
 import { DrawFlowLoading } from "./draw-flow.loading";
 import { DrawFlowResult } from "./draw-flow.result";
+import { DrawFlowSubscriptionRequired } from "./draw-flow.subscription-required";
 
 export const DrawFlow = {
   Draw: DrawFlowDraw,
@@ -10,4 +11,5 @@ export const DrawFlow = {
   Result: DrawFlowResult,
   Complete: DrawFlowComplete,
   Error: DrawFlowError,
+  SubscriptionError: DrawFlowSubscriptionRequired,
 };

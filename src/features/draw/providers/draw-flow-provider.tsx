@@ -2,7 +2,7 @@ import { useState } from "react";
 import { DrawFlowContext, type Step } from "../contexts/draw-flow-context";
 import type { CustomFairyTaleConceptResponse } from "@/entities/fairy-tale/model";
 
-const stepOrder: Step[] = ["draw", "loading", "result", "complete", "error"];
+const stepOrder: Step[] = ["draw", "loading", "result", "complete"];
 
 export function DrawFlowProvider({ children }: { children: React.ReactNode }) {
   const [step, setStepState] = useState<Step>("draw");
@@ -12,6 +12,12 @@ export function DrawFlowProvider({ children }: { children: React.ReactNode }) {
 
   const setStep = (next: Step) => {
     setPreviousStep(step);
+
+    if (next === "error" || next === "subscription-required") {
+      setDirection("forward");
+      setStepState(next);
+      return;
+    }
 
     const currentIndex = stepOrder.indexOf(step);
     const nextIndex = stepOrder.indexOf(next);

@@ -10,6 +10,11 @@ import "./index.css";
 import App from "./App.tsx";
 
 const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      throwOnError: true,
+    },
+  },
   mutationCache: new MutationCache({
     onError: (error, _variables, _context, mutation) => {
       if (error instanceof BaseApiError) {
@@ -27,12 +32,8 @@ const queryClient = new QueryClient({
       }
     },
   }),
-  defaultOptions: {
-    queries: {
-      throwOnError: true,
-    },
-  },
 });
+
 const isStandalone =
   window.matchMedia("(display-mode: standalone)").matches ||
   ("standalone" in window.navigator && (window.navigator as { standalone?: boolean }).standalone === true);
