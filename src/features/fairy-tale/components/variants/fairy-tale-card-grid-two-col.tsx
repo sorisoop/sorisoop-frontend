@@ -10,7 +10,7 @@ type FairyTaleCardGridTwoColProps = {
   tales: FairyTaleResponse[];
   className?: string;
   ariaLabel?: string;
-  custom: boolean;
+  custom?: boolean;
 };
 
 export default function FairyTaleCardGridTwoCol({

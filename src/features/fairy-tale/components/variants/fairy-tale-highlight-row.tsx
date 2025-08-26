@@ -10,7 +10,7 @@ import { useAddFavorite, useDeleteFavorite } from "@/entities/fairy-tale/api/mut
 type FairyTaleHighlightRowProps = {
   tales: FairyTaleResponse[];
   className?: string;
-  custom: boolean;
+  custom?: boolean;
 };
 
 export default function FairyTaleHighlightRow({ tales, className = "", custom = false }: FairyTaleHighlightRowProps) {
