@@ -2,6 +2,7 @@ import { ProfileManageDialogProvider } from "../providers";
 import { ProfileAddCard } from "./profile-add-card";
 import { ProfileAddDialog } from "./profile-add-dialog";
 import { ProfileCard } from "./profile-card";
+import { ProfileDeleteDialog } from "./profile-delete-dialog";
 import { ProfileGrid } from "./profile-grid";
 import { ProfileHeader } from "./profile-header";
 import { ProfileManageDialogContent } from "./profile-manage-dialog-content";
@@ -15,6 +16,7 @@ export const ProfilePage = Object.assign(ProfileRoot, {
   Card: ProfileCard,
   AddCard: ProfileAddCard,
   AddDialog: ProfileAddDialog,
+  DeleteDialog: ProfileDeleteDialog,
 });
 
 export const ProfileManageDialog = Object.assign(ProfileManageDialogProvider, {

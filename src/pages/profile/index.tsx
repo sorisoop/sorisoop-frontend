@@ -5,6 +5,7 @@ import { BackHeaderLayout } from "@/shared/layouts";
 import { ProfileGridSkeleton, ProfileManageDialog, ProfilePage } from "@/features/profile/components";
 import { ProfileAddProvider } from "@/features/profile/providers/profile-add-provider";
 import { FloatingShapesBackground } from "@/widgets";
+import { ProfileDeleteProvider } from "@/features/profile/providers";
 
 export default function ProfilePageScreen() {
   return (
@@ -14,13 +15,16 @@ export default function ProfilePageScreen() {
       <ProfilePage>
         <ProfilePage.Header />
         <Suspense fallback={<ProfileGridSkeleton />}>
-          <ProfilePage.Grid>
-            <ProfileAddProvider>
-              <ProfilePage.AddCard>
-                <ProfilePage.AddDialog />
-              </ProfilePage.AddCard>
-            </ProfileAddProvider>
-          </ProfilePage.Grid>
+          <ProfileDeleteProvider>
+            <ProfilePage.Grid>
+              <ProfilePage.DeleteDialog />
+              <ProfileAddProvider>
+                <ProfilePage.AddCard>
+                  <ProfilePage.AddDialog />
+                </ProfilePage.AddCard>
+              </ProfileAddProvider>
+            </ProfilePage.Grid>
+          </ProfileDeleteProvider>
         </Suspense>
 
         <ProfileManageDialog>

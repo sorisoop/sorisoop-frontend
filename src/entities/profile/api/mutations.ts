@@ -4,6 +4,7 @@ import { profileKeys } from "./query-options";
 import type { AddProfileFormSubmit } from "@/features/profile/components/profile-add-form";
 import { selectProfile } from "./select";
 import { updateProfile } from "./update";
+import { deleteProfile } from "./delete";
 
 export const useCreateProfile = () => {
   const queryClient = useQueryClient();
@@ -48,6 +49,16 @@ export const useUpdateProfile = () => {
       queryClient.invalidateQueries({
         queryKey: profileKeys.getProfiles,
       });
+    },
+  });
+};
+
+export const useDeleteProfile = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (profileId: number) => deleteProfile(profileId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: profileKeys.getProfiles });
     },
   });
 };

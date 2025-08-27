@@ -1,6 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import { useSelectProfile } from "@/entities/profile/api/mutations";
 import { Avatar, AvatarImage, AvatarFallback } from "@/shared/components/ui/avatar";
+import { X } from "lucide-react";
+import { Button } from "@/shared/components/ui/button";
+import { useProfileDeleteContext } from "../hooks";
 
 interface ProfileCardProps {
   id: number;
@@ -10,6 +13,7 @@ interface ProfileCardProps {
 
 export function ProfileCard({ id, name, image }: ProfileCardProps) {
   const { mutate: selectProfile } = useSelectProfile();
+  const { setOpen, setTargetId } = useProfileDeleteContext();
   const navigate = useNavigate();
 
   const handleClick = () => {
@@ -25,6 +29,12 @@ export function ProfileCard({ id, name, image }: ProfileCardProps) {
     }
   };
 
+  const handleDelete = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setTargetId(id);
+    setOpen(true);
+  };
+
   return (
     <div className="flex flex-col items-center group">
       <div className="relative mb-3">
@@ -35,9 +45,9 @@ export function ProfileCard({ id, name, image }: ProfileCardProps) {
           onClick={handleClick}
           onKeyDown={handleKeyDown}
           className="w-32 h-32 md:w-40 md:h-40 shadow-2xl 
-                     group-hover:shadow-3xl transition-all duration-300 
-                     ring-2 ring-transparent group-hover:ring-primary/50 
-                     cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/50"
+               group-hover:shadow-3xl transition-all duration-300 
+               ring-2 ring-transparent group-hover:ring-primary/50 
+               cursor-pointer focus:outline-none focus:ring-2 focus:ring-primary/50"
         >
           <AvatarImage
             src={image || "/default.webp"}
@@ -47,11 +57,15 @@ export function ProfileCard({ id, name, image }: ProfileCardProps) {
           <AvatarFallback aria-hidden>{name.charAt(0)}</AvatarFallback>
         </Avatar>
 
-        <div
-          className="absolute inset-0 rounded-full bg-gradient-to-t from-primary/20 to-transparent 
-                     opacity-0 group-hover:opacity-100 transition-opacity duration-300
-                     pointer-events-none"
-        />
+        <Button
+          variant="destructive"
+          size="icon"
+          className="absolute -top-2 -right-2 w-7 h-7 rounded-full shadow-md 
+               hover:bg-destructive/90 cursor-pointer"
+          onClick={handleDelete}
+        >
+          <X className="w-4 h-4" />
+        </Button>
       </div>
 
       <p
