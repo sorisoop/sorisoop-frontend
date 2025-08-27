@@ -13,33 +13,34 @@ export default function FairyTaleDetailMobile({
   similarTales: FairyTaleResponse[];
 }) {
   const navigate = useNavigate();
-
   return (
-    <div className="w-full min-h-screen bg-background text-foreground">
+    <div className="w-full bg-background text-foreground">
       <div className="relative w-full aspect-[5/4]">
         <img
           src={fairyTale.thumbnailImage}
           alt={fairyTale.title}
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
         />
-      </div>
 
-      <div className="absolute top-0 left-0 right-0 h-20 bg-gradient-to-b from-black/60 to-transparent z-10" />
+        <div
+          className="absolute top-0 left-0 right-0 z-10 
+                     bg-gradient-to-b from-black/60 to-transparent 
+                     h-16"
+        />
 
-      <div className="absolute top-2 left-2 z-20">
-        <Button variant="link" size="icon" onClick={() => navigate(-1)} className="cursor-pointer">
-          <ArrowLeft className="!w-5 !h-5 text-secondary" />
-        </Button>
+        <div className="absolute top-2 left-2 z-20">
+          <Button variant="link" size="icon" onClick={() => navigate(-1)} className="cursor-pointer">
+            <ArrowLeft className="!w-5 !h-5 text-secondary" />
+          </Button>
+        </div>
       </div>
 
       <div className="p-4">
         <h1 className="text-xl font-bold">{fairyTale.title}</h1>
-
         <div className="mt-2 flex items-center gap-2">
           <Badge variant="default">{fairyTale.categoryName}</Badge>
           <Badge variant="default">{fairyTale.author}</Badge>
         </div>
-
         <div className="mt-4 flex flex-col gap-3">
           <Button
             className="w-full h-10 rounded-md text-base font-semibold gap-2 cursor-pointer shadow-md text-secondary"
@@ -59,6 +60,7 @@ export default function FairyTaleDetailMobile({
         </div>
       </div>
 
+      {/* 비슷한 콘텐츠 섹션 */}
       <div className="p-4">
         <h2 className="text-base font-bold mb-3">비슷한 콘텐츠</h2>
         <FairyTaleCard.Grid tales={similarTales} className="mt-2" />
