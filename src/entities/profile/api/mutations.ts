@@ -3,6 +3,7 @@ import { createProfile } from "./create";
 import { profileKeys } from "./query-options";
 import type { AddProfileFormSubmit } from "@/features/profile/components/profile-add-form";
 import { selectProfile } from "./select";
+import { updateProfile } from "./update";
 
 export const useCreateProfile = () => {
   const queryClient = useQueryClient();
@@ -33,6 +34,19 @@ export const useSelectProfile = () => {
 
       queryClient.invalidateQueries({
         predicate: (query) => Array.isArray(query.queryKey) && query.queryKey[0] === "profile",
+      });
+    },
+  });
+};
+
+export const useUpdateProfile = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data: AddProfileFormSubmit & { id: number }) => updateProfile(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: profileKeys.getProfiles,
       });
     },
   });
