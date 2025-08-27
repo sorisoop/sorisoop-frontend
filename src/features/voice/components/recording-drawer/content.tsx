@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from "react";
 import { X, Play, Pause, CheckCircle2, RotateCcw } from "lucide-react";
-
 import { Button } from "@/shared/components/ui/button";
 import { DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@/shared/components/ui/drawer";
 import { DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/shared/components/ui/dialog";
 import { cn } from "@/shared/lib/utils";
-
 import { useAudioRecorder, useMicrophonePermission, useRecordingDrawer } from "@/features/voice/hooks";
+import type { VoiceFormValues } from "@/features/voice/types";
+import { useFormContext } from "react-hook-form";
 
 type Phase = "idle" | "recording" | "review";
 type ContentProps = {
@@ -16,6 +16,7 @@ type ContentProps = {
 
 export default function RecordingDrawerContent({ className, children }: ContentProps) {
   const { open, isDesktop, setOpen, setAudioBlob } = useRecordingDrawer();
+  const { setValue } = useFormContext<VoiceFormValues>();
 
   const { status, requestPermission } = useMicrophonePermission();
   const { audioBlob, audioObjectUrl, startRecording, stopRecording, resetRecording } = useAudioRecorder();
@@ -84,6 +85,8 @@ export default function RecordingDrawerContent({ className, children }: ContentP
     }
 
     setAudioBlob(audioBlob);
+    const file = new File([audioBlob], "voice.webm", { type: "audio/webm" });
+    setValue("voiceFile", file);
     setOpen(false);
   };
 

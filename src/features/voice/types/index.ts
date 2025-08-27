@@ -28,3 +28,9 @@ export type AudioRecorderHandle = {
   stopRecording: () => Promise<void>;
   resetRecording: () => void;
 };
+
+export type VoiceFormValues = {
+  title: string;
+  imageUrl: string;
+  voiceFile: File | null;
+};

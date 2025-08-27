@@ -1,59 +1,86 @@
-import { useState } from "react";
+import { useForm, Controller, FormProvider } from "react-hook-form";
 import CharacterSelector from "@/features/voice/components/character-selector";
 import NameField from "@/features/voice/components/name-field";
-import type { CharacterCandidate } from "@/features/voice/types";
+import type { CharacterCandidate, VoiceFormValues } from "@/features/voice/types";
 import RecordButton from "@/features/voice/components/record-button";
 import RecordingDrawer from "@/features/voice/components/recording-drawer";
 import BottomActionButton from "@/features/voice/components/bottom-action-button";
 import Preview from "@/features/voice/components/preview";
 import BackHeaderLayout from "@/shared/layouts/back-header-layout";
+import { useAddVoice } from "@/entities/voice/api/mutations";
 
 const CANDIDATES: CharacterCandidate[] = [
-  {
-    id: "mom",
-    name: "엄마",
-    avatar: "https://images.unsplash.com/photo-1589571894960-20bbe2828d0a?q=80&w=400&auto=format&fit=crop&h=400",
-  },
-  {
-    id: "kid",
-    name: "아이",
-    avatar: "https://images.unsplash.com/photo-1589571894960-20bbe2828d0a?q=80&w=400&auto=format&fit=crop&h=400",
-  },
-  {
-    id: "sis",
-    name: "누나",
-    avatar: "https://images.unsplash.com/photo-1544006659-f0b21884ce1d?q=80&w=400&auto=format&fit=crop&h=400",
-  },
-  {
-    id: "dad",
-    name: "아빠",
-    avatar: "https://images.unsplash.com/photo-1607746882042-944635dfe10e?q=80&w=400&auto=format&fit=crop&h=400",
-  },
+  { id: "mom", name: "엄마", avatar: "…" },
+  { id: "kid", name: "아이", avatar: "…" },
+  { id: "sis", name: "누나", avatar: "…" },
+  { id: "dad", name: "아빠", avatar: "…" },
 ];
 
 export default function VoiceAddPage() {
-  const [selectedId, setSelectedId] = useState<string>(CANDIDATES[0].id);
-  const [name, setName] = useState("");
-  const [recordOpen, setRecordOpen] = useState(false);
+  const { mutate: addVoice, isPending } = useAddVoice();
+  const methods = useForm<VoiceFormValues>({
+    defaultValues: {
+      title: "",
+      imageUrl: CANDIDATES[0].avatar,
+      voiceFile: null,
+    },
+  });
+  const { handleSubmit, control } = methods;
+
+  const onSubmit = (data: VoiceFormValues) => {
+    if (!data.voiceFile) return;
+    console.log("폼 제출 데이터", data);
+    addVoice({
+      voiceFile: data.voiceFile,
+      request: {
+        title: data.title,
+        imageUrl: data.imageUrl,
+      },
+    });
+  };
 
   return (
     <BackHeaderLayout title="목소리 추가하기">
-      <section className="pt-4">
-        <RecordingDrawer open={recordOpen} onOpenChange={setRecordOpen}>
-          <CharacterSelector items={CANDIDATES} selectedId={selectedId} onSelect={setSelectedId} />
-          <NameField value={name} onChange={setName} />
+      <FormProvider {...methods}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <section className="pt-4">
+            <RecordingDrawer>
+              <Controller
+                control={control}
+                name="imageUrl"
+                render={({ field }) => (
+                  <CharacterSelector
+                    items={CANDIDATES}
+                    selectedId={CANDIDATES.find((c) => c.avatar === field.value)?.id ?? ""}
+                    onSelect={(id) => {
+                      const candidate = CANDIDATES.find((c) => c.id === id);
+                      if (candidate) field.onChange(candidate.avatar);
+                    }}
+                  />
+                )}
+              />
 
-          <RecordingDrawer.IfRecorded>
-            <Preview />
-          </RecordingDrawer.IfRecorded>
+              <Controller
+                control={control}
+                name="title"
+                rules={{ required: true }}
+                render={({ field }) => <NameField value={field.value} onChange={field.onChange} />}
+              />
 
-          <RecordingDrawer.Trigger>
-            <RecordButton />
-          </RecordingDrawer.Trigger>
-          <RecordingDrawer.Content />
-        </RecordingDrawer>
-      </section>
-      <BottomActionButton />
+              <RecordingDrawer.IfRecorded>
+                <Preview />
+              </RecordingDrawer.IfRecorded>
+
+              <RecordingDrawer.Trigger>
+                <RecordButton />
+              </RecordingDrawer.Trigger>
+              <RecordingDrawer.Content />
+            </RecordingDrawer>
+          </section>
+
+          <BottomActionButton isPending={isPending} />
+        </form>
+      </FormProvider>
     </BackHeaderLayout>
   );
 }
