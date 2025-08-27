@@ -1,8 +1,6 @@
-"use client";
-
 import { useMemo } from "react";
-import { Button } from "@/shared/components/ui/button";
 import { cn } from "@/shared/lib/utils";
+import { Avatar, AvatarImage, AvatarFallback } from "@/shared/components/ui/avatar";
 import type { CharacterCandidate } from "../types";
 
 type CharacterSelectorProps = {
@@ -16,18 +14,12 @@ export default function CharacterSelector({ items, selectedId, onSelect }: Chara
 
   return (
     <>
-      {/* 모바일: 프리뷰 + 리스트 */}
       <div className="sm:hidden flex flex-col items-center gap-6">
         {selected && (
-          <div className="grid h-32 w-32 sm:h-40 sm:w-40 place-items-center rounded-full bg-secondary overflow-hidden">
-            <img
-              src={selected.avatar}
-              alt={selected.name}
-              className="h-full w-full object-cover"
-              loading="lazy"
-              decoding="async"
-            />
-          </div>
+          <Avatar className="h-32 w-32 sm:h-40 sm:w-40 ring-2 ring-primary">
+            <AvatarImage src={selected.avatar} alt={selected.name} />
+            <AvatarFallback>{selected.name[0]}</AvatarFallback>
+          </Avatar>
         )}
 
         <ul className="flex items-center gap-3 sm:gap-4">
@@ -35,30 +27,27 @@ export default function CharacterSelector({ items, selectedId, onSelect }: Chara
             const active = selectedId === c.id;
             return (
               <li key={c.id}>
-                <Button
-                  variant="outline"
+                <button
                   type="button"
                   onClick={() => onSelect(c.id)}
                   className={cn(
-                    "!inline-grid place-items-center !p-0 !h-12 !w-12 lg:!h-14 lg:!w-14",
-                    "!bg-transparent hover:!bg-transparent !border-0",
-                    "rounded-full overflow-hidden cursor-pointer",
-                    "ring-2 ring-transparent ring-offset-2 ring-offset-background",
-                    "focus-visible:ring-primary transition-all duration-200",
-                    active && "ring-primary scale-105"
+                    "rounded-full cursor-pointer transition-transform duration-200",
+                    active && "ring-2 ring-primary scale-105"
                   )}
                   aria-pressed={active}
                   aria-label={`${c.name} 선택`}
                 >
-                  <img src={c.avatar} alt={c.name} className="h-full w-full object-cover" />
-                </Button>
+                  <Avatar className="h-12 w-12 lg:h-14 lg:w-14">
+                    <AvatarImage src={c.avatar} alt={c.name} />
+                    <AvatarFallback>{c.name[0]}</AvatarFallback>
+                  </Avatar>
+                </button>
               </li>
             );
           })}
         </ul>
       </div>
 
-      {/* 데스크탑: 라벨 + 리스트 */}
       <div className="hidden sm:grid sm:grid-cols-12 sm:items-center">
         <div className="sm:col-span-4 self-center">
           <h2 className="text-lg lg:text-xl font-semibold">캐릭터 선택</h2>
@@ -71,23 +60,21 @@ export default function CharacterSelector({ items, selectedId, onSelect }: Chara
               const active = selectedId === c.id;
               return (
                 <li key={c.id}>
-                  <Button
-                    variant="outline"
+                  <button
                     type="button"
                     onClick={() => onSelect(c.id)}
                     className={cn(
-                      "!inline-grid place-items-center !p-0 !h-12 !w-12 lg:!h-14 lg:!w-14",
-                      "!bg-transparent hover:!bg-transparent !border-0",
-                      "rounded-full overflow-hidden cursor-pointer",
-                      "ring-2 ring-transparent ring-offset-2 ring-offset-background",
-                      "focus-visible:ring-primary transition-all duration-200",
-                      active && "ring-primary scale-105"
+                      "rounded-full cursor-pointer transition-transform duration-200",
+                      active && "ring-2 ring-primary scale-105"
                     )}
                     aria-pressed={active}
                     aria-label={`${c.name} 선택`}
                   >
-                    <img src={c.avatar} alt={c.name} className="h-full w-full object-cover" />
-                  </Button>
+                    <Avatar className="h-12 w-12 lg:h-14 lg:w-14">
+                      <AvatarImage src={c.avatar} alt={c.name} />
+                      <AvatarFallback>{c.name[0]}</AvatarFallback>
+                    </Avatar>
+                  </button>
                 </li>
               );
             })}

@@ -14,3 +14,15 @@ export const getProfiles = async (displayMode: "toast" | "fallback" = "fallback"
     throw err;
   }
 };
+
+export const getProfile = async (displayMode: "toast" | "fallback" = "fallback"): Promise<ProfileResponse> => {
+  try {
+    const res = await api.get("profiles/details").json<ApiResponse<ProfileResponse>>();
+    return res.data;
+  } catch (err) {
+    if (err instanceof BaseApiError) {
+      err.displayMode = displayMode;
+    }
+    throw err;
+  }
+};

@@ -58,7 +58,7 @@ export default function VoicePage() {
           <Link
             to="/voice/add"
             className={cn(
-              "flex items-center gap-4 md:gap-6 rounded-md px-2 md:px-3 py-3 md:py-4",
+              "flex items-center gap-4 md:gap-6 rounded-md py-3 md:py-4",
               "text-left text-muted-foreground",
               "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
             )}

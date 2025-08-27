@@ -18,7 +18,22 @@ export const useCreateProfile = () => {
 };
 
 export const useSelectProfile = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: (profileId: number) => selectProfile(profileId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        predicate: (query) => Array.isArray(query.queryKey) && query.queryKey[0] === "fairy-tale",
+      });
+
+      queryClient.invalidateQueries({
+        predicate: (query) => Array.isArray(query.queryKey) && query.queryKey[0] === "custom",
+      });
+
+      queryClient.invalidateQueries({
+        predicate: (query) => Array.isArray(query.queryKey) && query.queryKey[0] === "profile",
+      });
+    },
   });
 };

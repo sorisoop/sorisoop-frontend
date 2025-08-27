@@ -10,10 +10,10 @@ import BackHeaderLayout from "@/shared/layouts/back-header-layout";
 import { useAddVoice } from "@/entities/voice/api/mutations";
 
 const CANDIDATES: CharacterCandidate[] = [
-  { id: "mom", name: "엄마", avatar: "…" },
-  { id: "kid", name: "아이", avatar: "…" },
-  { id: "sis", name: "누나", avatar: "…" },
-  { id: "dad", name: "아빠", avatar: "…" },
+  { id: "mom", name: "엄마", avatar: "/assets/family/mom.webp" },
+  { id: "kid", name: "아이", avatar: "/assets/family/kid.webp" },
+  { id: "sis", name: "누나", avatar: "/assets/family/sis.webp" },
+  { id: "dad", name: "아빠", avatar: "/assets/family/dad.webp" },
 ];
 
 export default function VoiceAddPage() {

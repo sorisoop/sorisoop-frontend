@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { Loader2 } from "lucide-react";
-import { Mypage } from "@/features/my/components";
+import { Mypage, MyPageProfileFallback } from "@/features/my/components";
 import { SubscriptionDialog } from "@/features/subscription/components";
 import { useManageCard } from "@/features/subscription/hooks";
 import { SubscriptionProvider } from "@/features/subscription/providers/subscription-provider";
@@ -12,13 +12,11 @@ export default function MypageScreen() {
 
   return (
     <Mypage>
-      <Mypage.Profile
-        name="하하"
-        gender="남자"
-        ageRange="7~10세"
-        avatar="https://images.unsplash.com/photo-1549880338-65ddcdfd017b?q=80&w=1600&auto=format&fit=crop"
-        onEditProfile={() => console.log("프로필 변경")}
-      />
+      <Suspense fallback={<MyPageProfileFallback />}>
+        <Mypage.Profile>
+          <Mypage.EditDialog />
+        </Mypage.Profile>
+      </Suspense>
 
       <Mypage.SubscribeBanner>
         <SubscriptionProvider>
