@@ -10,18 +10,17 @@ export default function FairyTaleReaderPage() {
   if (!fairyTaleId) return null;
 
   return (
-    <FullScreenBackHeaderLayout>
-      <FairyTaleReaderProvider id={fairyTaleId} custom>
+    <FairyTaleReaderProvider id={fairyTaleId}>
+      <FullScreenBackHeaderLayout rightSlot={<FairyTaleReader.ToggleTextButton />}>
         <FairyTaleReader>
           <FairyTaleReader.Book />
           <FairyTaleReader.Navigation />
           <FairyTaleReader.Indicator />
           <FairyTaleReader.Hint />
           <FairyTaleReader.Overlay />
-          <FairyTaleReader.ToggleTextButton />
           <FairyTaleReader.EndDialog />
         </FairyTaleReader>
-      </FairyTaleReaderProvider>
-    </FullScreenBackHeaderLayout>
+      </FullScreenBackHeaderLayout>
+    </FairyTaleReaderProvider>
   );
 }

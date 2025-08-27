@@ -28,13 +28,11 @@ const Page = forwardRef<HTMLDivElement, { pageData: FairyTaleContentResponse }>(
           showText ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"
         }`}
       >
-        <div className="bg-black/50 py-6">
+        <div className="bg-black/50 py-6 pb-[env(safe-area-inset-bottom)]">
           <div className="px-6 md:px-8 lg:px-12">
-            <div className="max-w-screen-lg mx-auto">
-              <p className="text-white text-xl md:text-xl lg:text-2xl leading-relaxed font-semibold tracking-wide break-keep whitespace-pre-wrap">
-                {pageData.script}
-              </p>
-            </div>
+            <p className="text-white text-xl md:text-xl lg:text-2xl leading-relaxed font-semibold tracking-wide break-keep whitespace-pre-wrap">
+              {pageData.script}
+            </p>
           </div>
         </div>
       </div>
@@ -78,8 +76,7 @@ export function FairyTaleBook() {
       disableFlipByClick={false}
       ref={flipBookRef}
       onFlip={(e: { data: number }) => setCurrentPage(e.data)}
-      className="max-w-screen-lg"
-      style={{ width: "100vw", height: "100vh" }}
+      className="max-w-screen-lg !h-dvh"
     >
       {data.map((pageData, index) => (
         <Page key={`${pageData.id}-${index}`} pageData={pageData} />

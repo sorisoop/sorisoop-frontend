@@ -9,7 +9,7 @@ import { type FlipBookRef } from "react-pageflip";
  * - 현재 페이지, 텍스트 표시 여부, 오버레이 상태, flipBook Ref를 관리
  * - 다음/이전/특정 페이지 이동 API 제공
  */
-export function FairyTaleReaderProvider({ id, children }: { id: number; custom: boolean; children: React.ReactNode }) {
+export function FairyTaleReaderProvider({ id, children }: { id: number; children: React.ReactNode }) {
   const { data } = useFairyTaleContents(id);
 
   const [currentPage, setCurrentPage] = useState(0);
