@@ -29,7 +29,7 @@ export default function MypageProfile({ children }: { children: React.ReactEleme
             </p>
           </div>
         </div>
-        <Button variant="outline" size="sm" className="text-sm" onClick={() => setOpen(true)}>
+        <Button variant="outline" size="sm" className="text-sm border-border rounded" onClick={() => setOpen(true)}>
           프로필 변경
         </Button>
       </div>

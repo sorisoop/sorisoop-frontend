@@ -76,7 +76,7 @@ export default function ProfileManageDialogUpdate({ profile }: { profile: Profil
     );
   };
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6 w-full">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6 w-full px-2">
       <div className="flex justify-center">
         <div className="relative w-24 h-24 mb-2">
           <Avatar className="w-24 h-24">
@@ -107,7 +107,7 @@ export default function ProfileManageDialogUpdate({ profile }: { profile: Profil
               type="button"
               variant="outline"
               onClick={() => setValue("role", v as "PARENT" | "CHILD", { shouldValidate: true })}
-              className={cn("cursor-pointer h-10", role === v && "border-primary text-primary")}
+              className={cn("cursor-pointer h-10 border-border", role === v && "border-primary text-primary")}
             >
               {v === "PARENT" ? "부모" : "아이"}
             </Button>
@@ -124,7 +124,7 @@ export default function ProfileManageDialogUpdate({ profile }: { profile: Profil
               type="button"
               variant="outline"
               onClick={() => setValue("gender", v as "M" | "F", { shouldValidate: true })}
-              className={cn("cursor-pointer h-10", gender === v && "border-primary text-primary")}
+              className={cn("cursor-pointer h-10 border-border", gender === v && "border-primary text-primary")}
             >
               {v === "M" ? "남" : "여"}
             </Button>
@@ -153,7 +153,7 @@ export default function ProfileManageDialogUpdate({ profile }: { profile: Profil
           variant="outline"
           onClick={() => setSelectedProfile(null)}
           disabled={isPending}
-          className="cursor-pointer"
+          className="cursor-pointer border-border"
         >
           뒤로
         </Button>

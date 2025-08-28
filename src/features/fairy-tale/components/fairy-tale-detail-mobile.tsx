@@ -38,8 +38,12 @@ export default function FairyTaleDetailMobile({
       <div className="p-4">
         <h1 className="text-xl font-bold">{fairyTale.title}</h1>
         <div className="mt-2 flex items-center gap-2">
-          <Badge variant="default">{fairyTale.categoryName}</Badge>
-          <Badge variant="default">{fairyTale.author}</Badge>
+          <Badge variant="default" className="text-secondary font-semibold">
+            {fairyTale.categoryName}
+          </Badge>
+          <Badge variant="default" className="text-secondary font-semibold">
+            {fairyTale.author}
+          </Badge>
         </div>
         <div className="mt-4 flex flex-col gap-3">
           <Button
@@ -50,10 +54,16 @@ export default function FairyTaleDetailMobile({
             보기
           </Button>
           <div className="flex gap-3">
-            <Button variant="outline" className="flex-1 h-10 text-foreground text-sm font-medium cursor-pointer">
+            <Button
+              variant="outline"
+              className="flex-1 h-10 text-foreground text-sm font-medium cursor-pointer border-border"
+            >
               내 책장에 저장
             </Button>
-            <Button variant="outline" className="flex-1 h-10 text-foreground text-sm font-medium cursor-pointer">
+            <Button
+              variant="outline"
+              className="flex-1 h-10 text-foreground text-sm font-medium cursor-pointer border-border"
+            >
               내 책장 보기
             </Button>
           </div>

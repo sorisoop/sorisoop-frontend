@@ -23,6 +23,7 @@ export function ProfileDeleteDialog() {
         setTargetId(null);
       },
       onError: () => {
+        setOpen(false);
         toast.error("프로필 삭제에 실패했습니다");
       },
     });
@@ -52,8 +53,8 @@ export function ProfileDeleteDialog() {
           </Description>
         </Header>
 
-        <div className="flex flex-col gap-2 pt-4 sm:flex-row sm:justify-end">
-          <Button variant="outline" onClick={handleCancel} disabled={isPending} className="sm:order-1">
+        <div className="flex flex-col gap-2 sm:flex-row sm:justify-end">
+          <Button variant="outline" onClick={handleCancel} disabled={isPending} className="sm:order-1 border-border">
             취소
           </Button>
           <Button variant="destructive" onClick={handleDelete} disabled={isPending} className="sm:order-2">

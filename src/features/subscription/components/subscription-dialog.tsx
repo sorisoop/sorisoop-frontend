@@ -17,11 +17,11 @@ function SubscriptionDialog({ children }: { children: ReactNode }) {
   return (
     <DialogContent
       className={cn(
-        "p-0 w-screen h-dvh max-w-none rounded-none sm:h-auto sm:max-w-md sm:rounded-lg sm:p-6",
+        "p-0 w-screen h-dvh max-w-none rounded-none sm:h-auto sm:max-w-md sm:rounded-lg sm:p-6 border-none",
         "flex flex-col pt-[env(safe-area-inset-top)] [&>button]:hidden"
       )}
     >
-      <div className="sticky top-0 z-10 flex items-center justify-end h-14 px-4 border-b bg-background sm:hidden">
+      <div className="sticky top-0 z-10 flex items-center justify-end h-14 px-4 bg-background sm:hidden">
         <DialogTitle className="text-xl font-bold sr-only">소리숲</DialogTitle>
         <DialogClose asChild>
           <Button variant="ghost" size="icon" className="h-8 w-8 cursor-pointer" aria-label="닫기">
