@@ -65,7 +65,7 @@ export default function FairyTaleHighlightRow({ tales, className = "", custom = 
               </p>
             </div>
 
-            <div className="absolute right-2 bottom-2 z-20 pointer-events-auto">
+            <div className="absolute right-2 bottom-2 z-10 pointer-events-auto">
               <Button
                 type="button"
                 size="icon"
