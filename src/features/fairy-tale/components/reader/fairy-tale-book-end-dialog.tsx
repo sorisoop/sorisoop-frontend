@@ -46,7 +46,7 @@ export function FairyTaleBookEndDialog() {
           </DialogHeader>
 
           <DialogFooter className="flex gap-2 mt-6 justify-end">
-            <Button variant="outline" onClick={() => setIsBookEndOpen(false)} className="cursor-pointer">
+            <Button variant="outline" onClick={() => setIsBookEndOpen(false)} className="cursor-pointer border-border">
               다시보기
             </Button>
             <Button onClick={goHome} className="cursor-pointer bg-primary text-secondary font-semibold">
@@ -81,7 +81,7 @@ export function FairyTaleBookEndDialog() {
             홈으로
           </Button>
           <DrawerClose asChild>
-            <Button type="button" variant="outline" className="w-full cursor-pointer">
+            <Button type="button" variant="outline" className="w-full cursor-pointer border-border">
               돌아가기
             </Button>
           </DrawerClose>

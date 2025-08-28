@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Play } from "lucide-react";
+import { ArrowLeft, Home, Play } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 import type { FairyTaleResponse } from "@/entities/fairy-tale/model";
 import { Badge } from "@/shared/components/ui/badge";
@@ -31,6 +31,12 @@ export default function FairyTaleDetailMobile({
         <div className="absolute top-2 left-2 z-20">
           <Button variant="link" size="icon" onClick={() => navigate(-1)} className="cursor-pointer">
             <ArrowLeft className="!w-5 !h-5 text-secondary" />
+          </Button>
+        </div>
+
+        <div className="absolute top-2 right-2 z-20">
+          <Button variant="link" size="icon" onClick={() => navigate("/")} className="cursor-pointer">
+            <Home className="!w-5 !h-5 text-secondary" />
           </Button>
         </div>
       </div>

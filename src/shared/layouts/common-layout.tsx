@@ -23,7 +23,7 @@ export default function CommonLayout({ children, title = "" }: CommonLayoutProps
         <SearchSidebar.Content />
       </SearchSidebar>
 
-      <header className="sticky top-0 z-20 w-full border-b border-border bg-background/90 backdrop-blur pt-[env(safe-area-inset-top)]">
+      <header className="sticky top-0 z-20 w-full border-b border-border bg-background pt-[env(safe-area-inset-top)]">
         <div className="mx-auto max-w-screen-lg h-[52px] px-4 flex items-center justify-between gap-4">
           <Link to="/" className="inline-flex items-center">
             <span className="sr-only">Home</span>

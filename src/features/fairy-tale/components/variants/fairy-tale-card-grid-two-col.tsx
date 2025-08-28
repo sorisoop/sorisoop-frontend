@@ -47,7 +47,7 @@ export default function FairyTaleCardGridTwoCol({
             <Badge className="rounded-full bg-primary text-secondary h-5 px-2 text-xs">{tale.categoryName}</Badge>
           </div>
 
-          <div className="absolute right-2 bottom-2 z-20 pointer-events-auto">
+          <div className="absolute right-2 bottom-2 z-10 pointer-events-auto">
             <Button
               type="button"
               size="icon"

@@ -52,7 +52,7 @@ export default function FairyTaleCardGrid({
           </div>
 
           {!custom && (
-            <div className="absolute right-2 bottom-2 z-20 pointer-events-auto">
+            <div className="absolute right-2 bottom-2 z-10 pointer-events-auto">
               <Button
                 type="button"
                 size="icon"

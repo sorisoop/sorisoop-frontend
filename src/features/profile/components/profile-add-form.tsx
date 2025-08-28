@@ -8,6 +8,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/shared/components/ui/avat
 import { Camera } from "lucide-react";
 import { cn } from "@/shared/lib/utils";
 import { useState } from "react";
+import { DrawerClose } from "@/shared/components/ui/drawer";
 
 const addProfileSchema = z.object({
   nickname: z.string().min(1, "닉네임을 입력해주세요"),
@@ -116,7 +117,7 @@ export function ProfileAddForm({
               type="button"
               variant="outline"
               onClick={() => setValue("role", value, { shouldValidate: true })}
-              className={cn("cursor-pointer h-10", role === value && "border-primary text-primary")}
+              className={cn("cursor-pointer h-10 border-border", role === value && "border-primary text-primary")}
             >
               {label}
             </Button>
@@ -133,7 +134,7 @@ export function ProfileAddForm({
               type="button"
               variant="outline"
               onClick={() => setValue("gender", value, { shouldValidate: true })}
-              className={cn("cursor-pointer h-10", gender === value && "border-primary text-primary")}
+              className={cn("cursor-pointer h-10 border-border", gender === value && "border-primary text-primary")}
             >
               {label}
             </Button>
@@ -156,9 +157,16 @@ export function ProfileAddForm({
         />
       </div>
 
-      <Button type="submit" disabled={!isValid || isPending} className="w-full">
-        {isPending ? "추가 중..." : "추가하기"}
-      </Button>
+      <div className="flex flex-col gap-2 mt-4">
+        <Button type="submit" disabled={!isValid || isPending} className="w-full">
+          {isPending ? "추가 중..." : "추가하기"}
+        </Button>
+        <DrawerClose asChild>
+          <Button variant="outline" className="border-border w-full">
+            취소
+          </Button>
+        </DrawerClose>
+      </div>
     </form>
   );
 }

@@ -28,8 +28,8 @@ const Page = forwardRef<HTMLDivElement, { pageData: FairyTaleContentResponse }>(
           showText ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"
         }`}
       >
-        <div className="bg-black/50 py-6 pb-[env(safe-area-inset-bottom)]">
-          <div className="px-6 md:px-8 lg:px-12">
+        <div className="bg-black/50 pb-[env(safe-area-inset-bottom)]">
+          <div className="p-4 md:p-6 lg:px-8">
             <p className="text-white text-xl md:text-xl lg:text-2xl leading-relaxed font-semibold tracking-wide break-keep whitespace-pre-wrap">
               {pageData.script}
             </p>

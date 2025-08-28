@@ -65,7 +65,7 @@ export function FairyTaleOverlay() {
       className="absolute inset-0 z-50 flex flex-col justify-between bg-black/30 backdrop-blur-sm"
       onClick={() => setIsOverlayOpen(false)}
     >
-      <header className="absolute top-0 left-0 right-0 px-6 py-4 flex justify-between items-center text-white bg-gradient-to-b from-black/70 to-transparent">
+      <header className="absolute top-0 left-0 right-0 px-6 py-4 flex justify-between items-center text-secondary bg-gradient-to-b from-black/70 to-transparent">
         <div>
           <h2 className="text-lg font-semibold">{title}</h2>
           <p className="text-sm text-white/80">현재 페이지: {currentPageNumber}</p>
@@ -79,11 +79,8 @@ export function FairyTaleOverlay() {
       <footer
         className="absolute bottom-0 left-0 right-0 bg-foreground/95 pb-4 pt-3"
         onClick={(e) => e.stopPropagation()}
+        style={{ paddingBottom: "calc(env(safe-area-inset-bottom)" }}
       >
-        <div className="px-6 mb-2">
-          <p className="text-white text-sm font-medium">전체 페이지 {totalPages}</p>
-        </div>
-
         <div className="px-6">
           <div
             ref={thumbnailContainerRef}
