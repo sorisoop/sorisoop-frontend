@@ -16,6 +16,12 @@ export const useAddFavorite = () => {
       );
 
       queryClient.invalidateQueries({
+        queryKey: ["fairy-tale"],
+        exact: false,
+        predicate: (query) => query.queryKey.toString() !== fairyTaleKeys.getFairyTaleByRandom().toString(),
+      });
+
+      queryClient.invalidateQueries({
         queryKey: fairyTaleKeys.getFavoriteFairyTales(),
       });
     },
@@ -34,11 +40,18 @@ export const useDeleteFavorite = () => {
       );
 
       queryClient.invalidateQueries({
+        queryKey: ["fairy-tale"],
+        exact: false,
+        predicate: (query) => query.queryKey.toString() !== fairyTaleKeys.getFairyTaleByRandom().toString(),
+      });
+
+      queryClient.invalidateQueries({
         queryKey: fairyTaleKeys.getFavoriteFairyTales(),
       });
     },
   });
 };
+
 export const useCreateCustomSynopsis = () => {
   return useMutation({
     mutationFn: (file: Blob) => createCustomSynopsis(file),
