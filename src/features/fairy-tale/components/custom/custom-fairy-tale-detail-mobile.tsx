@@ -49,10 +49,11 @@ export default function CustomFairyTaleDetailMobile({
             보기
           </Button>
           <div className="flex gap-3">
-            <Button variant="outline" className="flex-1 h-10 text-foreground text-sm font-medium cursor-pointer">
-              내 책장에 저장
-            </Button>
-            <Button variant="outline" className="flex-1 h-10 text-foreground text-sm font-medium cursor-pointer">
+            <Button
+              variant="outline"
+              className="flex-1 h-10 text-foreground text-sm font-medium cursor-pointer"
+              onClick={() => navigate("/lib")}
+            >
               내 책장 보기
             </Button>
           </div>

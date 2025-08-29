@@ -50,12 +50,7 @@ export default function CustomFairyTaleDetailDesktop({ fairyTale }: { fairyTale:
             <Button
               variant="secondary"
               className="flex-1 h-12 rounded-md text-sm font-medium cursor-pointer backdrop-blur-sm shadow-md"
-            >
-              내 책장에 저장
-            </Button>
-            <Button
-              variant="secondary"
-              className="flex-1 h-12 rounded-md text-sm font-medium cursor-pointer backdrop-blur-sm shadow-md"
+              onClick={() => navigate("/lib")}
             >
               내 책장 보기
             </Button>

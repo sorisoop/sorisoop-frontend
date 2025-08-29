@@ -1,9 +1,11 @@
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Home, Play } from "lucide-react";
+import { ArrowLeft, BookOpen, Heart, Home, Play } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 import type { FairyTaleResponse } from "@/entities/fairy-tale/model";
 import { Badge } from "@/shared/components/ui/badge";
 import { FairyTaleCard } from "./variants";
+import { useAddFavorite, useDeleteFavorite } from "@/entities/fairy-tale/api/mutations";
+import { cn } from "@/shared/lib/utils";
 
 export default function FairyTaleDetailMobile({
   fairyTale,
@@ -13,6 +15,14 @@ export default function FairyTaleDetailMobile({
   similarTales: FairyTaleResponse[];
 }) {
   const navigate = useNavigate();
+  const addFavroite = useAddFavorite();
+  const deleteFavorite = useDeleteFavorite();
+
+  const handleToggleFavorite = () => {
+    if (fairyTale.isFavorite) deleteFavorite.mutate({ fairyTaleId: fairyTale.id });
+    else addFavroite.mutate({ fairyTaleId: fairyTale.id });
+  };
+
   return (
     <div className="w-full bg-background text-foreground">
       <div className="relative w-full aspect-[5/4]">
@@ -22,11 +32,7 @@ export default function FairyTaleDetailMobile({
           className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none"
         />
 
-        <div
-          className="absolute top-0 left-0 right-0 z-10 
-                     bg-gradient-to-b from-black/60 to-transparent 
-                     h-16"
-        />
+        <div className="absolute top-0 left-0 right-0 z-10  bg-gradient-to-b from-black/60 to-transparent  h-16" />
 
         <div className="absolute top-2 left-2 z-20">
           <Button variant="link" size="icon" onClick={() => navigate(-1)} className="cursor-pointer">
@@ -63,20 +69,28 @@ export default function FairyTaleDetailMobile({
             <Button
               variant="outline"
               className="flex-1 h-10 text-foreground text-sm font-medium cursor-pointer border-border"
+              onClick={handleToggleFavorite}
             >
-              내 책장에 저장
+              {fairyTale.isFavorite ? "내 책장에서 제거" : "내 책장에 저장"}
+              <Heart
+                className={cn(
+                  "w-4 h-4 transition",
+                  fairyTale.isFavorite ? "fill-destructive text-destructive" : "text-foreground"
+                )}
+              />
             </Button>
             <Button
               variant="outline"
               className="flex-1 h-10 text-foreground text-sm font-medium cursor-pointer border-border"
+              onClick={() => navigate("/lib")}
             >
               내 책장 보기
+              <BookOpen className="w-4 h-4 text-primary" />
             </Button>
           </div>
         </div>
       </div>
 
-      {/* 비슷한 콘텐츠 섹션 */}
       <div className="p-4">
         <h2 className="text-base font-bold mb-3">비슷한 콘텐츠</h2>
         <FairyTaleCard.Grid tales={similarTales} className="mt-2" />

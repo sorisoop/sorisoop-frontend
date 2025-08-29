@@ -1,11 +1,20 @@
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Play } from "lucide-react";
+import { ArrowLeft, BookOpen, Heart, Play } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 import type { FairyTaleResponse } from "@/entities/fairy-tale/model";
 import { Badge } from "@/shared/components/ui/badge";
+import { useAddFavorite, useDeleteFavorite } from "@/entities/fairy-tale/api/mutations";
+import { cn } from "@/shared/lib/utils";
 
 export default function FairyTaleDetailDesktop({ fairyTale }: { fairyTale: FairyTaleResponse }) {
   const navigate = useNavigate();
+  const addFavroite = useAddFavorite();
+  const deleteFavorite = useDeleteFavorite();
+
+  const handleToggleFavorite = () => {
+    if (fairyTale.isFavorite) deleteFavorite.mutate({ fairyTaleId: fairyTale.id });
+    else addFavroite.mutate({ fairyTaleId: fairyTale.id });
+  };
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
@@ -49,14 +58,23 @@ export default function FairyTaleDetailDesktop({ fairyTale }: { fairyTale: Fairy
             <Button
               variant="secondary"
               className="flex-1 h-12 rounded-md text-sm font-medium cursor-pointer backdrop-blur-sm shadow-md"
+              onClick={handleToggleFavorite}
             >
-              내 책장에 저장
+              {fairyTale.isFavorite ? "내 책장에서 제거" : "내 책장에 저장"}
+              <Heart
+                className={cn(
+                  "w-4 h-4 transition",
+                  fairyTale.isFavorite ? "fill-destructive text-destructive" : "text-foreground"
+                )}
+              />
             </Button>
             <Button
               variant="secondary"
               className="flex-1 h-12 rounded-md text-sm font-medium cursor-pointer backdrop-blur-sm shadow-md"
+              onClick={() => navigate("/lib")}
             >
               내 책장 보기
+              <BookOpen className="w-4 h-4 text-primary" />
             </Button>
           </div>
         </div>
