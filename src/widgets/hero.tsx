@@ -11,7 +11,7 @@ type HeroProps = {
 export default function Hero({ title, description, image, alt }: HeroProps) {
   return (
     <section className="pt-4">
-      <div className="mx-auto max-w-screen-lg">
+      <div className="mx-auto max-w-screen-xl">
         <div className="relative overflow-hidden rounded-lg shadow h-[280px] md:h-[180px] lg:h-[240px] bg-muted">
           <picture>
             {image.tablet && <source srcSet={image.tablet} media="(min-width: 768px)" />}

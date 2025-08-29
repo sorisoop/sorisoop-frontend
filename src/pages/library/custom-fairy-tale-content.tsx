@@ -14,7 +14,7 @@ export default function CustomFairyTaleContent() {
   return (
     <div className="space-y-4">
       <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen">
-        <div className="mx-auto max-w-screen-lg border-border bro overflow-x-auto scrollbar-hide">
+        <div className="mx-auto max-w-screen-xl border-border bro overflow-x-auto scrollbar-hide">
           <nav
             className="flex space-x-4 min-w-max px-4"
             onMouseDown={onMouseDown}

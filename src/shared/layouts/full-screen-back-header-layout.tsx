@@ -14,7 +14,7 @@ export default function FullScreenBackHeaderLayout({ children, rightSlot }: Full
   return (
     <div
       id="main-container"
-      className="relative flex h-dvh w-full max-w-screen-lg mx-auto flex-col items-center bg-background text-foreground"
+      className="relative flex h-dvh w-full max-w-screen-xl mx-auto flex-col items-center bg-background text-foreground"
     >
       <header
         className={`absolute z-50 flex items-center justify-between 
@@ -31,12 +31,12 @@ export default function FullScreenBackHeaderLayout({ children, rightSlot }: Full
         <div className="flex items-center">{rightSlot}</div>
       </header>
       <main id="main-content" className="w-full flex-1">
-        <div className="mx-auto max-w-screen-lg">{children}</div>
+        <div className="mx-auto max-w-screen-xl">{children}</div>
       </main>
 
       <div aria-hidden className="pointer-events-none -z-50">
         <div className="fixed inset-0 -z-50 bg-muted" />
-        <div className="fixed inset-y-0 left-1/2 -translate-x-1/2 -z-40 w-full max-w-screen-lg bg-background" />
+        <div className="fixed inset-y-0 left-1/2 -translate-x-1/2 -z-40 w-full max-w-screen-xl bg-background" />
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ const Page = forwardRef<HTMLDivElement, { pageData: FairyTaleContentResponse }>(
   const { showText } = useCustomFairyTaleReaderContext();
 
   return (
-    <div ref={ref} className="relative w-full h-full max-w-screen-lg bg-foreground overflow-hidden">
+    <div ref={ref} className="relative w-full h-full max-w-screen-xl bg-foreground overflow-hidden">
       {!imageLoaded && (
         <div className="absolute inset-0 flex items-center justify-center bg-muted">
           <div className="animate-spin h-8 w-8 border-2 border-primary border-t-transparent rounded-full" />
@@ -30,7 +30,7 @@ const Page = forwardRef<HTMLDivElement, { pageData: FairyTaleContentResponse }>(
       >
         <div className="bg-black/50 py-6">
           <div className="px-6 md:px-8 lg:px-12">
-            <div className="max-w-screen-lg mx-auto">
+            <div className="max-w-screen-xl mx-auto">
               <p className="text-white text-xl md:text-xl lg:text-2xl leading-relaxed font-semibold tracking-wide break-keep whitespace-pre-wrap">
                 {pageData.script}
               </p>
@@ -78,7 +78,7 @@ export function CustomFairyTaleBook() {
       disableFlipByClick={false}
       ref={flipBookRef}
       onFlip={(e: { data: number }) => setCurrentPage(e.data)}
-      className="max-w-screen-lg"
+      className="max-w-screen-xl"
       style={{ width: "100vw", height: "100vh" }}
     >
       {data.map((pageData, index) => (

@@ -10,7 +10,7 @@ export default function BottomActionButton({ isPending }: { isPending: boolean }
   const isDisabled = !title || !voiceFile;
 
   return (
-    <div className="fixed left-0 right-0 bottom-8 sm:bottom-12 mx-auto w-full max-w-screen-lg px-4 md:px-8">
+    <div className="fixed left-0 right-0 bottom-8 sm:bottom-12 mx-auto w-full max-w-screen-xl px-4 md:px-8">
       <Button
         type="submit"
         size="sm"

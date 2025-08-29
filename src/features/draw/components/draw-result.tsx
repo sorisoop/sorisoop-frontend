@@ -40,7 +40,7 @@ export default function DrawResult() {
 
   return (
     <BackHeaderLayout title="그림 분석 결과">
-      <div className="flex flex-col md:flex-row gap-8 p-6 max-w-screen-lg mx-auto w-full">
+      <div className="flex flex-col md:flex-row gap-8 p-6 max-w-screen-xl mx-auto w-full">
         <div className="md:w-1/2 flex flex-col">
           <div className="bg-card rounded-2xl p-4 shadow-sm border">
             <h2 className="text-base font-semibold mb-3 text-center">그림</h2>

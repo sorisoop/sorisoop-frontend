@@ -1,6 +1,6 @@
 export default function FloatingShapesBackground() {
   return (
-    <div className="absolute inset-0 pointer-events-none max-w-screen-lg mx-auto z-0">
+    <div className="absolute inset-0 pointer-events-none max-w-screen-xl mx-auto z-0">
       <div className="absolute top-[70%] sm:top-10 left-6 w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 rounded-full bg-gradient-to-br from-green-100 to-green-200 opacity-30 animate-pulse" />
       <div
         className="absolute top-[75%] sm:top-32 right-8 w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 rounded-full bg-gradient-to-br from-blue-100 to-blue-200 opacity-40 animate-bounce"

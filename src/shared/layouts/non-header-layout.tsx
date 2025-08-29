@@ -7,10 +7,10 @@ export default function NonHeaderLayout({ children, title = "" }: NonHeaderLayou
   return (
     <div
       id="main-container"
-      className="flex min-h-screen w-full max-w-screen-lg mx-auto flex-col items-center bg-background text-foreground"
+      className="flex min-h-screen w-full max-w-screen-xl mx-auto flex-col items-center bg-background text-foreground"
     >
       <header className="sticky top-0 z-0 w-full bg-background/90 backdrop-blur">
-        <div className="mx-auto max-w-screen-lg h-[52px] px-4 flex items-center justify-between gap-4">
+        <div className="mx-auto max-w-screen-xl h-[52px] px-4 flex items-center justify-between gap-4">
           <div className="flex-1 truncate text-center text-sm font-bold text-muted-foreground">{title}</div>
           <div className="h-6 w-6" />
         </div>
@@ -18,14 +18,14 @@ export default function NonHeaderLayout({ children, title = "" }: NonHeaderLayou
 
       <div
         id="main-content"
-        className="flex w-full max-w-screen-lg flex-1 flex-col items-stretch justify-start pb-safe-bottom"
+        className="flex w-full max-w-screen-xl flex-1 flex-col items-stretch justify-start pb-safe-bottom"
       >
         {children}
       </div>
 
       <div aria-hidden className="pointer-events-none -z-50">
         <div className="fixed inset-0 -z-50 bg-muted" />
-        <div className="fixed inset-y-0 left-1/2 -translate-x-1/2 -z-40 w-full max-w-screen-lg bg-background" />
+        <div className="fixed inset-y-0 left-1/2 -translate-x-1/2 -z-40 w-full max-w-screen-xl bg-background" />
       </div>
     </div>
   );

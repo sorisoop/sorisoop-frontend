@@ -20,10 +20,10 @@ export default function BackHeaderLayout({
   return (
     <div
       id="main-container"
-      className="flex min-h-dvh w-full max-w-screen-lg mx-auto flex-col items-center bg-background text-foreground"
+      className="flex min-h-dvh w-full max-w-screen-xl mx-auto flex-col items-center bg-background text-foreground"
     >
-      <header className="sticky top-0 z-20 w-full border-b border-border bg-background/90 backdrop-blur pt-[env(safe-area-inset-top)]">
-        <div className="mx-auto max-w-screen-lg h-[52px] px-4 flex items-center justify-between gap-4">
+      <header className="sticky top-0 z-20 w-full border-b border-border bg-background pt-[env(safe-area-inset-top)]">
+        <div className="mx-auto max-w-screen-xl h-[52px] px-4 flex items-center justify-between gap-4">
           <Button
             variant="ghost"
             size="icon"
@@ -52,13 +52,13 @@ export default function BackHeaderLayout({
       </header>
 
       <main id="main-content" className="w-full flex-1">
-        <div className="mx-auto max-w-screen-lg px-4 pb-safe-bottom">{children}</div>
+        <div className="mx-auto max-w-screen-xl px-4 pb-safe-bottom">{children}</div>
       </main>
 
       {/* Background layers */}
       <div aria-hidden className="pointer-events-none -z-50">
         <div className="fixed inset-0 -z-50 bg-muted" />
-        <div className="fixed inset-y-0 left-1/2 -translate-x-1/2 -z-40 w-full max-w-screen-lg bg-background" />
+        <div className="fixed inset-y-0 left-1/2 -translate-x-1/2 -z-40 w-full max-w-screen-xl bg-background" />
       </div>
     </div>
   );

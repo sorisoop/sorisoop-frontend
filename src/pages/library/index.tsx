@@ -10,7 +10,7 @@ export default function LibraryPage() {
     <CommonLayout title="내 책장">
       <Tabs defaultValue="favorite" className="w-full">
         <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen">
-          <div className="mx-auto max-w-screen-lg">
+          <div className="mx-auto max-w-screen-xl">
             <TabsList className="grid grid-cols-2 w-full p-0 bg-transparent h-auto rounded-none shadow-none !border-0 !border-transparent !divide-x-0">
               <TabsTrigger
                 value="favorite"

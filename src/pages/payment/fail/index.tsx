@@ -7,7 +7,7 @@ export default function PaymentFailPage() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-background px-4 max-w-screen-lg w-full">
+    <div className="flex flex-col items-center justify-center h-screen bg-background px-4 max-w-screen-xl w-full">
       <Lottie animationData={failCardAnimation} loop={false} play className="w-64 h-64" />
 
       <h1 className="mt-6 text-2xl font-bold text-destructive">결제가 실패했습니다</h1>
