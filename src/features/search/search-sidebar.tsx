@@ -20,7 +20,9 @@ function Root({ children }: { children: React.ReactNode }) {
 
       <div
         className={cn(
-          "fixed top-0 right-0 h-full w-full max-w-lg bg-background border-l border-border z-50 transform transition-transform duration-300 ease-out shadow-xl pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)]",
+          "fixed top-0 right-0 h-full w-full sm:w-[512px] bg-background border-l border-border z-50",
+          "transform transition-transform duration-300 ease-out shadow-xl",
+          "pt-[env(safe-area-inset-top)] pb-[env(safe-area-inset-bottom)] overflow-y-auto",
           isOpen ? "translate-x-0" : "translate-x-full"
         )}
       >

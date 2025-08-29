@@ -9,14 +9,21 @@ export function SearchSidebarHeader() {
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (isOpen && searchInputRef.current) {
-      searchInputRef.current.focus();
+    if (!isOpen && searchInputRef.current) {
+      searchInputRef.current.blur();
     }
   }, [isOpen]);
 
+  const handleClose = () => {
+    if (searchInputRef.current) {
+      searchInputRef.current.blur();
+    }
+    close();
+  };
+
   return (
     <div className="flex items-center gap-3 p-4 border-b border-border bg-background">
-      <Button type="button" variant="ghost" size="sm" className="h-8 w-8 p-0 cursor-pointer" onClick={close}>
+      <Button type="button" variant="ghost" size="sm" className="h-8 w-8 p-0 cursor-pointer" onClick={handleClose}>
         <ArrowLeft className="!h-5 !w-5" />
       </Button>
 
