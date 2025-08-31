@@ -30,8 +30,9 @@ export default function CommonLayout({ children, title = "" }: CommonLayoutProps
             <img src="/logo.webp" width={62} height={62} alt="logo" className="h-[56px] pt-1" />
           </Link>
 
-          <div className="flex-1 truncate text-center text-sm font-bold text-muted-foreground">{title}</div>
-
+          <div className="absolute left-1/2 -translate-x-1/2 truncate text-sm font-bold text-muted-foreground">
+            {title}
+          </div>
           <div className="flex items-center gap-1">
             <Button
               type="button"
