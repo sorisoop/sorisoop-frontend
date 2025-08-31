@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, BookOpen, Heart, Home, Play } from "lucide-react";
+import { ArrowLeft, BookOpen, Heart, Home } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 import type { FairyTaleResponse } from "@/entities/fairy-tale/model";
 import { Badge } from "@/shared/components/ui/badge";
@@ -10,9 +10,11 @@ import { cn } from "@/shared/lib/utils";
 export default function FairyTaleDetailMobile({
   fairyTale,
   similarTales,
+  children,
 }: {
   fairyTale: FairyTaleResponse;
   similarTales: FairyTaleResponse[];
+  children: React.ReactNode;
 }) {
   const navigate = useNavigate();
   const addFavroite = useAddFavorite();
@@ -58,13 +60,8 @@ export default function FairyTaleDetailMobile({
           </Badge>
         </div>
         <div className="mt-4 flex flex-col gap-3">
-          <Button
-            className="w-full h-10 rounded-md text-base font-semibold gap-2 cursor-pointer shadow-md text-secondary"
-            onClick={() => navigate(`/fairy-tale/${fairyTale.id}/read`)}
-          >
-            <Play className="!w-5 !h-5" />
-            보기
-          </Button>
+          {children}
+
           <div className="flex gap-3">
             <Button
               variant="outline"
