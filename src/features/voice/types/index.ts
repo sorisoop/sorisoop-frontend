@@ -1,3 +1,5 @@
+export type Phase = "idle" | "recording" | "review";
+
 export type CharacterCandidate = {
   id: string;
   name: string;
@@ -13,12 +15,9 @@ export type UseMicrophonePermission = {
   requestPermission: () => Promise<MicPermissionStatus>;
 };
 
-export type StartRecordingParams = {
-  getMediaStream: () => Promise<MediaStream>;
-};
+export type StartRecordingParams = { getMediaStream: () => Promise<MediaStream> } | undefined;
 
 export type AudioRecorderHandle = {
-  isMediaRecorderSupported: boolean;
   isRecording: boolean;
 
   audioBlob: Blob | null;
