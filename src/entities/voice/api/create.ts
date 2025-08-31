@@ -21,3 +21,18 @@ export const addVoice = async (
     throw err;
   }
 };
+
+export const selectVoice = async (
+  voiceId: number,
+  displayMode: "toast" | "fallback" = "toast"
+): Promise<{ voiceUuid: string }> => {
+  try {
+    const res = await api.post(`tts/speakers/${voiceId}`).json<ApiResponse<{ voiceUuid: string }>>();
+    return res.data;
+  } catch (err) {
+    if (err instanceof BaseApiError) {
+      err.displayMode = displayMode;
+    }
+    throw err;
+  }
+};

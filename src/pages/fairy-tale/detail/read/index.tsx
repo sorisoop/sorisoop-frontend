@@ -4,13 +4,9 @@ import { FairyTaleReaderProvider } from "@/features/fairy-tale/providers";
 import { FairyTaleReader } from "@/features/fairy-tale/components/reader";
 
 export default function FairyTaleReaderPage() {
-  const { id, voiceId } = useParams<{ id: string; voiceId: string }>();
+  const { id, voiceUuid } = useParams<{ id: string; voiceUuid: string }>();
   const fairyTaleId = id ? Number(id) : undefined;
-  const selectedVoiceId = voiceId ? Number(voiceId) : undefined;
-
-  if (!fairyTaleId || !selectedVoiceId) {
-    return <div className="p-4">잘못된 접근입니다.</div>;
-  }
+  const voiceId = voiceUuid ? Number(voiceUuid) : undefined;
 
   return (
     <FairyTaleReaderProvider id={fairyTaleId}>

@@ -35,7 +35,7 @@ export default function App() {
 
         <Route path="/my" element={<MyPage />} />
         <Route path="/fairy-tale/:id" element={<FairyTaleDetailPage />} />
-        <Route path="/fairy-tale/:id/read/:voiceId" element={<FairyTaleReaderPage />} />
+        <Route path="/fairy-tale/:id/read/:voiceUuid" element={<FairyTaleReaderPage />} />
         <Route path="/fairy-tale/category/:id" element={<FairyTaleByCategoryPage />} />
         <Route path="/fairy-tale/custom/:id" element={<CustomFairyTaleDetailPage />} />
         <Route path="/fairy-tale/custom/:id/read" element={<CustomFairyTaleReaderPage />} />
@@ -47,7 +47,7 @@ export default function App() {
         <Route path="/auth/signup" element={<SignupPage />} />
         <Route path="/profile" element={<ProfilePage />} />
 
-        {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
+        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </BrowserRouter>
   );
