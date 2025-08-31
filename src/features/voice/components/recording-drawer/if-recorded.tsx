@@ -1,13 +1,13 @@
 import type { ReactNode } from "react";
-import { useRecordingDrawer } from "@/features/voice/hooks/use-recording-drawer";
+import { useRecordingSessionContext } from "../../hooks";
 
 type Props = {
   children: ReactNode;
 };
 
 export default function IfRecorded({ children }: Props) {
-  const { audioBlob } = useRecordingDrawer();
+  const { finalBlob } = useRecordingSessionContext();
 
-  if (!audioBlob) return null;
+  if (!finalBlob) return null;
   return <>{children}</>;
 }

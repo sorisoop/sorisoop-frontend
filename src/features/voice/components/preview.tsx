@@ -1,16 +1,14 @@
 import { useEffect, useRef, useState } from "react";
-
 import { Play, Pause } from "lucide-react";
 
-import { useRecordingDrawer } from "@/features/voice/hooks";
+import { useRecordingSessionContext } from "@/features/voice/hooks";
 import { Button } from "@/shared/components/ui/button";
 import { cn } from "@/shared/lib/utils";
 
 export default function Preview() {
-  const { audioBlob, open: isDrawerOpen } = useRecordingDrawer();
+  const { finalBlob, finalUrl } = useRecordingSessionContext();
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [audioUrl, setAudioUrl] = useState<string | null>(null);
 
   const stopAudio = () => {
     const audio = audioRef.current;
@@ -20,25 +18,15 @@ export default function Preview() {
     setIsPlaying(false);
   };
 
+  // 🔹 finalBlob 변화에 따라 URL 세팅
   useEffect(() => {
-    if (!audioBlob || audioBlob.size === 0) {
-      setAudioUrl(null);
+    if (!finalBlob || finalBlob.size === 0) {
+      stopAudio();
       return;
     }
+  }, [finalBlob]);
 
-    const url = URL.createObjectURL(audioBlob);
-    setAudioUrl(url);
-    stopAudio();
-
-    return () => {
-      URL.revokeObjectURL(url);
-    };
-  }, [audioBlob]);
-
-  useEffect(() => {
-    if (isDrawerOpen) stopAudio();
-  }, [isDrawerOpen]);
-
+  // 재생 끝나면 상태 리셋
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -49,7 +37,7 @@ export default function Preview() {
     return () => {
       audio.removeEventListener("ended", handleEnded);
     };
-  }, [audioUrl]);
+  }, [finalUrl]);
 
   const togglePlay = () => {
     const audio = audioRef.current;
@@ -66,7 +54,7 @@ export default function Preview() {
     }
   };
 
-  if (!audioUrl) return null;
+  if (!finalUrl) return null;
 
   return (
     <>
@@ -78,6 +66,7 @@ export default function Preview() {
 
         <div className="sm:col-span-8 flex sm:justify-end">
           <Button
+            type="button"
             variant="outline"
             onClick={togglePlay}
             className={cn("w-full sm:w-auto flex items-center justify-center gap-2")}
@@ -85,7 +74,7 @@ export default function Preview() {
             {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
             {isPlaying ? "정지" : "재생"}
           </Button>
-          <audio ref={audioRef} src={audioUrl} preload="auto" hidden />
+          <audio ref={audioRef} src={finalUrl} preload="auto" hidden />
         </div>
       </div>
 

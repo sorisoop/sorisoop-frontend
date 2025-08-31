@@ -1,95 +1,45 @@
-import { useEffect, useRef, useState } from "react";
 import { X, Play, Pause, CheckCircle2, RotateCcw } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 import { DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@/shared/components/ui/drawer";
 import { DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/shared/components/ui/dialog";
 import { cn } from "@/shared/lib/utils";
-import { useAudioRecorder, useMicrophonePermission, useRecordingDrawer } from "@/features/voice/hooks";
+import { useRecordingDrawer } from "@/features/voice/hooks";
 import type { VoiceFormValues } from "@/features/voice/types";
 import { useFormContext } from "react-hook-form";
 
-type Phase = "idle" | "recording" | "review";
 type ContentProps = {
   className?: string;
   children?: React.ReactNode;
 };
 
 export default function RecordingDrawerContent({ className, children }: ContentProps) {
-  const { open, isDesktop, setOpen, setAudioBlob } = useRecordingDrawer();
+  const {
+    isDesktop,
+    setOpen,
+    phase,
+    startRecording,
+    stopRecording,
+    resetRecording,
+    completeRecording,
+    tempBlob,
+    isPlaying,
+    togglePlay,
+  } = useRecordingDrawer();
+
   const { setValue } = useFormContext<VoiceFormValues>();
 
-  const { status, requestPermission } = useMicrophonePermission();
-  const { audioBlob, audioObjectUrl, startRecording, stopRecording, resetRecording } = useAudioRecorder();
-
-  const [phase, setPhase] = useState<Phase>("idle");
-  const [playing, setPlaying] = useState(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  useEffect(() => {
-    const element = audioRef.current;
-    if (!element) return;
-
-    const onEnded = () => setPlaying(false);
-    element.addEventListener("ended", onEnded);
-    return () => element.removeEventListener("ended", onEnded);
-  }, [audioObjectUrl]);
-
-  useEffect(() => {
-    if (!open) {
-      audioRef.current?.pause();
-      setPlaying(false);
-      resetRecording();
-      setPhase("idle");
-    }
-  }, [open, resetRecording]);
-
-  const handleStart = async () => {
-    if (status !== "granted") {
-      const granted = await requestPermission();
-      if (granted !== "granted") return;
-    }
-    await startRecording({
-      getMediaStream: () => navigator.mediaDevices.getUserMedia({ audio: true }),
-    });
-    setPhase("recording");
-  };
-
-  const handleStop = async () => {
-    await stopRecording();
-    setPhase("review");
-  };
-
-  const handleReset = () => {
-    audioRef.current?.pause();
-    setPlaying(false);
-    resetRecording();
-    setPhase("idle");
-  };
-
-  const handlePlayToggle = () => {
-    if (!audioRef.current) return;
-    if (playing) {
-      audioRef.current.pause();
-      setPlaying(false);
-    } else {
-      audioRef.current.currentTime = 0;
-      audioRef.current.play();
-      setPlaying(true);
-    }
-  };
-
+  /** 녹음 완료 → react-hook-form에 File 주입 */
   const handleComplete = () => {
-    if (!audioBlob || !audioObjectUrl) {
-      console.log("[record] audioBlob 또는 audioObjectUrl 없음");
+    if (!tempBlob) {
+      console.log("[record] tempBlob 없음");
       return;
     }
-
-    setAudioBlob(audioBlob);
-    const file = new File([audioBlob], "voice.webm", { type: "audio/webm" });
+    const file = new File([tempBlob], "voice.webm", { type: tempBlob.type || "audio/webm" });
     setValue("voiceFile", file);
-    setOpen(false);
+    completeRecording(); // ✅ temp → final 이동
   };
 
+  /** 안내 문구 */
   const GuideBlock = (
     <div className="space-y-3">
       <p className="text-sm font-semibold text-muted-foreground">녹음 문장</p>
@@ -117,7 +67,7 @@ export default function RecordingDrawerContent({ className, children }: ContentP
         <Button
           type="button"
           aria-label="녹음 시작"
-          onClick={handleStart}
+          onClick={startRecording}
           className={cn(
             "relative grid place-items-center h-16 w-16 rounded-full cursor-pointer",
             "border-2 border-border bg-background hover:bg-accent hover:border-border",
@@ -127,7 +77,6 @@ export default function RecordingDrawerContent({ className, children }: ContentP
         >
           <span className="block h-6 w-6 rounded-full bg-destructive shadow-sm" />
         </Button>
-        <div className="mt-3 h-5 leading-5" />
       </div>
     ),
     recording: (
@@ -135,7 +84,7 @@ export default function RecordingDrawerContent({ className, children }: ContentP
         <Button
           type="button"
           aria-label="녹음 정지"
-          onClick={handleStop}
+          onClick={stopRecording}
           className={cn(
             "relative grid place-items-center h-16 w-16 rounded-full cursor-pointer",
             "border-2 border-border bg-background hover:bg-accent hover:border-border",
@@ -145,17 +94,16 @@ export default function RecordingDrawerContent({ className, children }: ContentP
         >
           <span className="block h-6 w-6 rounded bg-destructive shadow-sm" />
         </Button>
-        <div className="mt-3 h-5 leading-5"></div>
       </div>
     ),
     review: (
       <div className="pt-4">
-        <div className="grid grid-cols-3 items- gap-4">
+        <div className="grid grid-cols-3 gap-4">
           <div className="flex flex-col items-center">
             <Button
               type="button"
               variant="ghost"
-              onClick={handleReset}
+              onClick={resetRecording}
               className={cn(
                 "h-16 w-16 rounded-full p-0 cursor-pointer",
                 "border-2 border-border hover:border-border hover:bg-accent",
@@ -165,22 +113,22 @@ export default function RecordingDrawerContent({ className, children }: ContentP
             >
               <RotateCcw className="h-5 w-5 text-muted-foreground" />
             </Button>
-            <span className="mt-3 text-xs text-muted-foreground h-5 leading-5">다시 녹음</span>
+            <span className="mt-3 text-xs text-muted-foreground">다시 녹음</span>
           </div>
 
           <div className="flex flex-col items-center">
             <Button
               type="button"
-              onClick={handlePlayToggle}
+              onClick={togglePlay}
               className={cn(
                 "h-16 w-16 rounded-full grid place-items-center cursor-pointer",
                 "bg-destructive text-destructive-foreground hover:bg-destructive/90",
                 "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-destructive/40",
                 "shadow-lg transition-all duration-200"
               )}
-              aria-label={playing ? "일시정지" : "재생"}
+              aria-label={isPlaying ? "일시정지" : "재생"}
             >
-              {playing ? <Pause className="!h-8 !w-8 text-white" /> : <Play className="!h-8 !w-8 text-white" />}
+              {isPlaying ? <Pause className="!h-8 !w-8 text-white" /> : <Play className="!h-8 !w-8 text-white" />}
             </Button>
           </div>
 
@@ -198,15 +146,14 @@ export default function RecordingDrawerContent({ className, children }: ContentP
             >
               <CheckCircle2 className="h-5 w-5 text-muted-foreground" />
             </Button>
-            <span className="mt-3 text-xs text-muted-foreground h-5 leading-5">녹음 완료</span>
+            <span className="mt-3 text-xs text-muted-foreground">녹음 완료</span>
           </div>
         </div>
-
-        <audio ref={audioRef} src={audioObjectUrl ?? undefined} preload="metadata" className="hidden" />
       </div>
     ),
   }[phase];
 
+  /** body */
   const body = children ?? (
     <div className="relative">
       {!isDesktop && (
@@ -219,7 +166,6 @@ export default function RecordingDrawerContent({ className, children }: ContentP
           <X className="h-5 w-5" />
         </Button>
       )}
-
       <div className="mt-2 space-y-2">
         {GuideBlock}
         {Instruction}
@@ -228,6 +174,7 @@ export default function RecordingDrawerContent({ className, children }: ContentP
     </div>
   );
 
+  /** Desktop vs Mobile */
   return isDesktop ? (
     <DialogContent className={cn("sm:max-w-md rounded-2xl p-6", className)}>
       <DialogHeader className="hidden">
