@@ -14,3 +14,8 @@ export interface AddVoiceRequest {
   voiceFile: File;
   request: AddVoicePayload;
 }
+
+export interface UpdateVoiceRequest {
+  title: string;
+  imageUrl: string;
+}
