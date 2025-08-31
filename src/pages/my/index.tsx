@@ -42,7 +42,7 @@ export default function MypageScreen() {
       </Mypage.MenuSection>
 
       <Mypage.MenuSection title="고객지원">
-        <Mypage.MenuItem to="#">알림 설정</Mypage.MenuItem>
+        <Mypage.MenuItem to="/settings/notification">알림 설정</Mypage.MenuItem>
         <Mypage.MenuItem to="#">고객센터</Mypage.MenuItem>
         <Mypage.MenuItem to="#">약관 및 정책</Mypage.MenuItem>
       </Mypage.MenuSection>

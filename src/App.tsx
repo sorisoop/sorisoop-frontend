@@ -20,6 +20,7 @@ const SignupPage = lazy(() => import("@/pages/auth/signup"));
 const ProfilePage = lazy(() => import("@/pages/profile"));
 const CustomFairyTaleDetailPage = lazy(() => import("@/pages/fairy-tale/custom"));
 const CustomFairyTaleReaderPage = lazy(() => import("@/pages/fairy-tale/custom/read"));
+const NotificationSettingsPage = lazy(() => import("@/pages/settings/notification"));
 
 export default function App() {
   return (
@@ -46,6 +47,8 @@ export default function App() {
         <Route path="/auth/login" element={<LoginPage />} />
         <Route path="/auth/signup" element={<SignupPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+
+        <Route path="/settings/notification" element={<NotificationSettingsPage />} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
