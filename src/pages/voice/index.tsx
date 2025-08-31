@@ -1,6 +1,6 @@
 import CommonLayout from "@/shared/layouts/common-layout";
 import { Button } from "@/shared/components/ui/button";
-import { Pencil, Trash2, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import { cn } from "@/shared/lib/utils";
 import { useGetVoices } from "@/entities/voice/api/hooks";
@@ -32,22 +32,14 @@ export default function VoicePage() {
 
               <div className="flex items-center gap-2 md:gap-3 pr-1">
                 <Button
-                  type="button"
-                  variant="secondary"
-                  size="icon"
-                  aria-label={`${v.title} 편집`}
-                  className="rounded-md p-2 cursor-pointer"
+                  asChild
+                  variant="default"
+                  size="sm"
+                  className="rounded-md px-3 cursor-pointer text-secondary font-semibold"
                 >
-                  <Pencil className="w-5 h-5 opacity-90" />
-                </Button>
-                <Button
-                  type="button"
-                  variant="secondary"
-                  size="icon"
-                  aria-label={`${v.title} 삭제`}
-                  className="rounded-md p-2 cursor-pointer"
-                >
-                  <Trash2 className="w-5 h-5 text-foreground" />
+                  <Link to={`/voice/${v.id}/edit`} state={{ voice: v }}>
+                    관리
+                  </Link>
                 </Button>
               </div>
             </div>
