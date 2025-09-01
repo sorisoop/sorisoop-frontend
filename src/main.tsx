@@ -4,10 +4,10 @@ import { MutationCache, QueryClient, QueryClientProvider } from "@tanstack/react
 import { BaseApiError } from "./shared/lib/api/errors/base-api-error.ts";
 import { toast } from "sonner";
 import { Toaster } from "@/shared/components/ui/sonner.tsx";
-<Toaster />;
 
 import "./index.css";
 import App from "./App.tsx";
+import { NotificationProvider } from "./features/notification/providers/notification-provider.tsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -43,9 +43,11 @@ else document.documentElement.style.setProperty("--safe-area-top", "env(safe-are
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <App />
-    </QueryClientProvider>
-    <Toaster />
+    <NotificationProvider>
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
+      <Toaster />
+    </NotificationProvider>
   </StrictMode>
 );
