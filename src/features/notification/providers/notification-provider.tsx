@@ -7,6 +7,9 @@ import { NotificationContext } from "@/features/notification/contexts";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export function NotificationProvider({ children }: { children: React.ReactNode }) {
+  //TODO: 알림 여부
+  //   const { serverEnabled, setServerEnabled } = useNotificationEnabled();
+
   const [enabled, setEnabled] = useState(false);
   const [messages, setMessages] = useState<string[]>([]);
   const { isWebView } = useIsWebview();
