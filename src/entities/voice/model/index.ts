@@ -19,3 +19,8 @@ export interface UpdateVoiceRequest {
   title: string;
   imageUrl: string;
 }
+
+export interface TtsResponse {
+  page: number;
+  audio: string;
+}

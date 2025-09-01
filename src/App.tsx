@@ -1,6 +1,7 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Navigate, Route } from "react-router-dom";
 import { ScrollToTop } from "./widgets";
 import { lazy } from "react";
+import { Page, PageTransition } from "./shared/transitions";
 
 const HomePage = lazy(() => import("@/pages/home"));
 const LibraryPage = lazy(() => import("@/pages/library"));
@@ -26,32 +27,166 @@ export default function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/lib" element={<LibraryPage />} />
-        <Route path="/voice" element={<VoicePage />} />
-        <Route path="/draw" element={<DrawPage />} />
-        <Route path="/voice/add" element={<VoiceAddPage />} />
-        <Route path="/voice/:id/edit" element={<VoiceEditPage />} />
+      <PageTransition>
+        <Route
+          path="/"
+          element={
+            <Page type="basic">
+              <HomePage />
+            </Page>
+          }
+        />
+        <Route
+          path="/lib"
+          element={
+            <Page type="basic">
+              <LibraryPage />
+            </Page>
+          }
+        />
+        <Route
+          path="/voice"
+          element={
+            <Page type="basic">
+              <VoicePage />
+            </Page>
+          }
+        />
+        <Route
+          path="/draw"
+          element={
+            <Page type="basic">
+              <DrawPage />
+            </Page>
+          }
+        />
+        <Route
+          path="/my"
+          element={
+            <Page type="basic">
+              <MyPage />
+            </Page>
+          }
+        />
 
-        <Route path="/my" element={<MyPage />} />
-        <Route path="/fairy-tale/:id" element={<FairyTaleDetailPage />} />
-        <Route path="/fairy-tale/:id/read/:voiceUuid" element={<FairyTaleReaderPage />} />
-        <Route path="/fairy-tale/category/:id" element={<FairyTaleByCategoryPage />} />
-        <Route path="/fairy-tale/custom/:id" element={<CustomFairyTaleDetailPage />} />
-        <Route path="/fairy-tale/custom/:id/read" element={<CustomFairyTaleReaderPage />} />
+        <Route
+          path="/voice/add"
+          element={
+            <Page type="slide">
+              <VoiceAddPage />
+            </Page>
+          }
+        />
+        <Route
+          path="/voice/:id/edit"
+          element={
+            <Page type="slide">
+              <VoiceEditPage />
+            </Page>
+          }
+        />
 
-        <Route path="/subscription/manage" element={<SubscribeManagePage />} />
-        <Route path="/payment/success" element={<PaymentSuccessPage />} />
-        <Route path="/payment/fail" element={<PaymentFailPage />} />
-        <Route path="/auth/login" element={<LoginPage />} />
-        <Route path="/auth/signup" element={<SignupPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route
+          path="/fairy-tale/:id"
+          element={
+            <Page type="slide">
+              <FairyTaleDetailPage />
+            </Page>
+          }
+        />
+        <Route
+          path="/fairy-tale/:id/read/:voiceUuid"
+          element={
+            <Page key={location.pathname} type="slide">
+              <FairyTaleReaderPage />
+            </Page>
+          }
+        />
 
-        <Route path="/settings/notification" element={<NotificationSettingsPage />} />
+        <Route
+          path="/fairy-tale/category/:id"
+          element={
+            <Page type="slide">
+              <FairyTaleByCategoryPage />
+            </Page>
+          }
+        />
+        <Route
+          path="/fairy-tale/custom/:id"
+          element={
+            <Page type="slide">
+              <CustomFairyTaleDetailPage />
+            </Page>
+          }
+        />
+        <Route
+          path="/fairy-tale/custom/:id/read"
+          element={
+            <Page type="slide">
+              <CustomFairyTaleReaderPage />
+            </Page>
+          }
+        />
+
+        <Route
+          path="/subscription/manage"
+          element={
+            <Page type="slide">
+              <SubscribeManagePage />
+            </Page>
+          }
+        />
+        <Route
+          path="/payment/success"
+          element={
+            <Page type="slide">
+              <PaymentSuccessPage />
+            </Page>
+          }
+        />
+        <Route
+          path="/payment/fail"
+          element={
+            <Page type="slide">
+              <PaymentFailPage />
+            </Page>
+          }
+        />
+        <Route
+          path="/auth/login"
+          element={
+            <Page type="slide">
+              <LoginPage />
+            </Page>
+          }
+        />
+        <Route
+          path="/auth/signup"
+          element={
+            <Page type="slide">
+              <SignupPage />
+            </Page>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <Page type="slide">
+              <ProfilePage />
+            </Page>
+          }
+        />
+        <Route
+          path="/settings/notification"
+          element={
+            <Page type="slide">
+              <NotificationSettingsPage />
+            </Page>
+          }
+        />
 
         <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
+      </PageTransition>
     </BrowserRouter>
   );
 }

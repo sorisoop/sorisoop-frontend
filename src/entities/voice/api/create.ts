@@ -1,5 +1,5 @@
 import type { ApiResponse } from "@/shared/lib/model/common-api-response";
-import type { AddVoicePayload } from "../model";
+import type { AddVoicePayload, TtsResponse } from "../model";
 import { api } from "@/shared/lib/api/ky";
 import { BaseApiError } from "@/shared/lib/api/errors";
 
@@ -27,7 +27,26 @@ export const selectVoice = async (
   displayMode: "toast" | "fallback" = "toast"
 ): Promise<{ voiceUuid: string }> => {
   try {
-    const res = await api.post(`tts/speakers/${voiceId}`).json<ApiResponse<{ voiceUuid: string }>>();
+    const res = await api.post(`tts/voices/${voiceId}`).json<ApiResponse<{ voiceUuid: string }>>();
+    return res.data;
+  } catch (err) {
+    if (err instanceof BaseApiError) {
+      err.displayMode = displayMode;
+    }
+    throw err;
+  }
+};
+
+/**
+ * 첫 페이지 TTS 생성 요청
+ */
+export const createTts = async (
+  voiceUuid: string,
+  fairyTaleId: number,
+  displayMode: "toast" | "fallback" = "toast"
+): Promise<TtsResponse> => {
+  try {
+    const res = await api.post("tts", { json: { voiceUuid, fairyTaleId } }).json<ApiResponse<TtsResponse>>();
     return res.data;
   } catch (err) {
     if (err instanceof BaseApiError) {
