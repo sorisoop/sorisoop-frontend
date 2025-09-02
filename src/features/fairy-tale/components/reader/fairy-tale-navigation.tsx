@@ -1,10 +1,11 @@
-import { Button } from "@/shared/components/ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useFairyTaleReaderContext } from "@/features/fairy-tale/hooks";
+import { Button } from "@/shared/components/ui/button";
+import { useFairyTaleReaderContext, useTtsContext } from "@/features/fairy-tale/hooks";
 import { useIsWebview } from "@/shared/hooks/use-is-webview";
 
 export function FairyTaleNavigation() {
-  const { currentPage, nextPage, prevPage } = useFairyTaleReaderContext();
+  const { currentPage } = useTtsContext();
+  const { nextPage, prevPage } = useFairyTaleReaderContext();
   const { isWebView } = useIsWebview();
 
   if (isWebView) return null;

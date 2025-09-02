@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+import { useMemo } from "react";
 import { Button } from "@/shared/components/ui/button";
 import {
   Dialog,
@@ -18,8 +20,6 @@ import {
 } from "@/shared/components/ui/drawer";
 import { useIsDeskTop } from "@/shared/hooks";
 import { useFairyTaleReaderContext } from "@/features/fairy-tale/hooks";
-import { useNavigate } from "react-router-dom";
-import { useMemo } from "react";
 
 const messages = ["끝까지 읽었어요!", "훌륭해요  마지막 장까지 완주했네요!", "대단해요  책 한 권을 다 읽었어요!"];
 

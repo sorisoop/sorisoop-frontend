@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
+import { Play, Pause } from "lucide-react";
 import { useFairyTaleReaderContext, useTtsContext } from "@/features/fairy-tale/hooks";
 import { useDragScroll } from "@/shared/hooks";
 import { useDragPreventClick } from "@/shared/hooks";
-import { Play, Pause } from "lucide-react";
-import { Button } from "@/shared/components/ui/button"; // shadcn 버튼
+import { Button } from "@/shared/components/ui/button";
 
 export function FairyTaleOverlay() {
   const { data, goToPage, isOverlayOpen, setIsOverlayOpen } = useFairyTaleReaderContext();
