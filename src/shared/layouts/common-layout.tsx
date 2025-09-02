@@ -1,9 +1,11 @@
 import { Link } from "react-router-dom";
 import { Search, Bell } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
+import { Badge } from "@/shared/components/ui/badge";
 import { useSearchStore } from "@/store/search";
-import BottomNavigation from "./bottom-navigation";
 import { SearchSidebar } from "@/features/search";
+import { useUnreadNotifications } from "@/entities/notification/api/hooks";
+import BottomNavigation from "./bottom-navigation";
 
 interface CommonLayoutProps {
   children: React.ReactNode;
@@ -12,6 +14,7 @@ interface CommonLayoutProps {
 
 export default function CommonLayout({ children, title = "" }: CommonLayoutProps) {
   const open = useSearchStore((s) => s.open);
+  const hasUnread = useUnreadNotifications();
 
   return (
     <div
@@ -43,7 +46,8 @@ export default function CommonLayout({ children, title = "" }: CommonLayoutProps
             >
               <Search className="!h-6 !w-6 text-foreground" />
             </Button>
-            <Button type="button" variant="link" className="h-8 w-8 p-0" aria-label="알림">
+            <Button type="button" variant="link" className="relative h-8 w-8 p-0" aria-label="알림">
+              {hasUnread && <Badge variant="destructive" className="absolute top-0 right-0 h-2 w-2 rounded-full p-0" />}{" "}
               <Bell className="!h-6 !w-6 text-foreground cursor-pointer" />
             </Button>
           </div>

@@ -17,3 +17,19 @@ export const getNotificationStatus = async (displayMode: "toast" | "fallback" = 
     throw err;
   }
 };
+
+/**
+ * 안 읽은 알림 여부 조회
+ * @returns true | false
+ */
+export const getUnreadNotifications = async (displayMode: "toast" | "fallback" = "toast"): Promise<boolean> => {
+  try {
+    const res = await api.get("notifications/unread").json<ApiResponse<boolean>>();
+    return res.data;
+  } catch (err) {
+    if (err instanceof BaseApiError) {
+      err.displayMode = displayMode;
+    }
+    throw err;
+  }
+};
