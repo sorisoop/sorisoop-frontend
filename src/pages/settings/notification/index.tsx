@@ -3,10 +3,21 @@ import { toast } from "sonner";
 import { BackHeaderLayout } from "@/shared/layouts";
 import { Switch } from "@/shared/components/ui/switch";
 import { useIsWebview } from "@/shared/hooks/use-is-webview";
-import { WebViewFacade } from "@/shared/webview";
+import { useWebViewMessage, WebViewFacade, type AppToWebMessage } from "@/shared/webview";
+import { useNotificationStatus } from "@/entities/notification/api/hooks";
+import { useUpdateNotificationStatus } from "@/entities/notification/api/mutations";
 
 export default function NotificationSettingsPage() {
   const { isWebView } = useIsWebview();
+  const enabled = useNotificationStatus();
+  const { mutate: toggleNotification } = useUpdateNotificationStatus();
+
+  useWebViewMessage((msg: AppToWebMessage) => {
+    if (msg.type === "NOTIFICATION_PERMISSION_RESULT") {
+      if (msg.granted) toggleNotification();
+      else toast.error("알림 권한이 거부되어 알림을 켤 수 없습니다");
+    }
+  });
 
   const handleToggle = (next: boolean) => {
     if (!isWebView) {
@@ -15,7 +26,7 @@ export default function NotificationSettingsPage() {
     }
 
     if (next) WebViewFacade.requestNotificationPermission();
-    // else setEnabled();
+    else toggleNotification();
   };
 
   return (
@@ -26,7 +37,7 @@ export default function NotificationSettingsPage() {
             <span className="text-base font-semibold">알림 설정</span>
             <span className="text-xs text-muted-foreground mt-1">서버에서 보내는 실시간 알림을 받아보세요.</span>
           </div>
-          <Switch checked={true} onCheckedChange={handleToggle} disabled={!isWebView} />
+          <Switch checked={enabled} onCheckedChange={handleToggle} disabled={!isWebView} />
         </div>
       </div>
     </BackHeaderLayout>
