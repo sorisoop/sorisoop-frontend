@@ -1,5 +1,6 @@
 import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { notificationQueryOptions } from "./query-optionts";
+import type { NotificationResonse } from "../model";
 
 export const useNotificationStatus = (displayMode: "toast" | "fallback" = "fallback"): boolean => {
   const { data } = useSuspenseQuery<string>(notificationQueryOptions.getStatus(displayMode));
@@ -9,4 +10,8 @@ export const useNotificationStatus = (displayMode: "toast" | "fallback" = "fallb
 export const useUnreadNotifications = (displayMode: "toast" | "fallback" = "toast"): boolean => {
   const { data } = useQuery<boolean>(notificationQueryOptions.getUnread(displayMode));
   return data ?? false;
+};
+
+export const useNotifications = (displayMode: "toast" | "fallback" = "fallback") => {
+  return useSuspenseQuery<NotificationResonse[]>(notificationQueryOptions.getNotifications(displayMode));
 };

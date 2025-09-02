@@ -1,7 +1,7 @@
+import { lazy } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { ScrollToTop } from "./widgets";
 import { NotificataionSseEListener } from "@/features/notification";
-import { lazy } from "react";
 
 const HomePage = lazy(() => import("@/pages/home"));
 const LibraryPage = lazy(() => import("@/pages/library"));
@@ -21,6 +21,7 @@ const SignupPage = lazy(() => import("@/pages/auth/signup"));
 const ProfilePage = lazy(() => import("@/pages/profile"));
 const CustomFairyTaleDetailPage = lazy(() => import("@/pages/fairy-tale/custom"));
 const CustomFairyTaleReaderPage = lazy(() => import("@/pages/fairy-tale/custom/read"));
+const NotificationsPage = lazy(() => import("@/pages/notifications"));
 const NotificationSettingsPage = lazy(() => import("@/pages/settings/notification"));
 
 export default function App() {
@@ -49,6 +50,8 @@ export default function App() {
         <Route path="/auth/login" element={<LoginPage />} />
         <Route path="/auth/signup" element={<SignupPage />} />
         <Route path="/profile" element={<ProfilePage />} />
+
+        <Route path="/notifications" element={<NotificationsPage />} />
 
         <Route path="/settings/notification" element={<NotificationSettingsPage />} />
 

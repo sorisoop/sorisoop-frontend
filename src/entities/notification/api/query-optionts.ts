@@ -1,8 +1,9 @@
-import { getNotificationStatus, getUnreadNotifications } from "./get";
+import { getNotifications, getNotificationStatus, getUnreadNotifications } from "./get";
 
 export const notificationKeys = {
   getStatus: ["notification", "status"] as const,
   getUnread: ["notification", "unread"] as const,
+  getNotifications: ["notifications"] as const,
 };
 
 export const notificationQueryOptions = {
@@ -18,5 +19,12 @@ export const notificationQueryOptions = {
     queryFn: () => getUnreadNotifications(displayMode),
     staleTime: 0,
     gcTime: 0,
+  }),
+
+  getNotifications: (displayMode: "toast" | "fallback" = "fallback") => ({
+    queryKey: notificationKeys.getNotifications,
+    queryFn: () => getNotifications(displayMode),
+    staleTime: 30 * 1000,
+    gcTime: 5 * 60 * 1000,
   }),
 };
