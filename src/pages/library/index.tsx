@@ -1,11 +1,14 @@
 import { CommonLayout } from "@/shared/layouts";
-import { Suspense } from "react";
+import { Suspense, useState } from "react";
 import { FairyTaleCard } from "@/features/fairy-tale/components/variants";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/shared/components/ui/tabs";
 import FavoriteFairyTaleContent from "./favorite-fairy-tale-content";
 import CustomFairyTaleContent from "./custom-fairy-tale-content";
+import { CategoriesNav, CategoriesNavSkeleton } from "@/widgets";
 
 export default function LibraryPage() {
+  const [categoryId, setCategoryId] = useState(0);
+
   return (
     <CommonLayout title="내 책장">
       <Tabs defaultValue="favorite" className="w-full">
@@ -49,8 +52,12 @@ export default function LibraryPage() {
         </TabsContent>
 
         <TabsContent value="my">
+          <Suspense fallback={<CategoriesNavSkeleton />}>
+            <CategoriesNav categoryId={categoryId} onChange={setCategoryId} />
+          </Suspense>
+
           <Suspense fallback={<FairyTaleCard.GridSkeleton />}>
-            <CustomFairyTaleContent />
+            <CustomFairyTaleContent categoryId={categoryId} />
           </Suspense>
         </TabsContent>
       </Tabs>
