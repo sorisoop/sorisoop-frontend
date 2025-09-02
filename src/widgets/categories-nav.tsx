@@ -16,13 +16,13 @@ export default function CategoriesNav({
 
   return (
     <div className="relative left-1/2 right-1/2 -mx-[50vw] w-screen">
-      <div className="mx-auto max-w-screen-xl border-border overflow-x-auto scrollbar-hide">
-        <nav
-          className="flex space-x-4 min-w-max px-4"
-          onMouseDown={onMouseDown}
-          onMouseMove={onMouseMove}
-          onMouseUp={onMouseUp}
-        >
+      <div
+        className="mx-auto max-w-screen-xl border-border overflow-x-auto scrollbar-hide"
+        onMouseDown={onMouseDown}
+        onMouseMove={onMouseMove}
+        onMouseUp={onMouseUp}
+      >
+        <nav className="flex space-x-4 min-w-max px-4">
           {allCategories.map((category) => (
             <Button
               key={category.id}
