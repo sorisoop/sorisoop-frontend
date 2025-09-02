@@ -1,8 +1,8 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { MutationCache, QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BaseApiError } from "./shared/lib/api/errors/base-api-error.ts";
 import { toast } from "sonner";
+import { MutationCache, QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BaseApiError } from "@/shared/lib/api/errors/base-api-error.ts";
 import { Toaster } from "@/shared/components/ui/sonner.tsx";
 
 import "./index.css";

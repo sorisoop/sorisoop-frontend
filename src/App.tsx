@@ -1,5 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { ScrollToTop } from "./widgets";
+import { NotificataionSseEListener } from "@/features/notification";
 import { lazy } from "react";
 
 const HomePage = lazy(() => import("@/pages/home"));
@@ -26,6 +27,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
+      <NotificataionSseEListener />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/lib" element={<LibraryPage />} />
