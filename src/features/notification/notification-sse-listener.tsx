@@ -20,16 +20,15 @@ export default function NotificationSseListener() {
       withCredentials: true,
     });
 
-    es.onmessage = (e) => {
-      const data = JSON.parse(e.data);
-      const msg = data.message ?? "새 알림";
+    es.addEventListener("make-fairy-tale-complete", (e) => {
+      const data = (e as MessageEvent).data;
 
       if (isWebView) {
-        WebViewFacade.sendNotification(msg);
+        WebViewFacade.sendNotification(data);
       } else {
-        toast.success(msg);
+        toast.success(`동화 생성 완료 🎉 ${data}`);
       }
-    };
+    });
 
     es.onerror = () => {
       es.close();
