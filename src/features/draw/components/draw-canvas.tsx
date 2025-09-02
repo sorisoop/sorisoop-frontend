@@ -17,7 +17,17 @@ export default function DrawCanvas() {
           y: e.clientY - rect.top,
         });
       }}
+      onTouchMove={(e) => {
+        const rect = e.currentTarget.getBoundingClientRect();
+        const touch = e.touches[0];
+        if (!touch) return;
+        setCursor({
+          x: touch.clientX - rect.left,
+          y: touch.clientY - rect.top,
+        });
+      }}
       onMouseLeave={() => setCursor(null)}
+      onTouchEnd={() => setCursor(null)}
     >
       <ReactSketchCanvas
         ref={canvasRef}
