@@ -9,18 +9,12 @@ import { FairyTaleToggleTextButton } from "./fairy-tale-toggle-text-button";
 import { FairyTaleBookEndDialog } from "./fairy-tale-book-end-dialog";
 
 function Root({ children }: { children: React.ReactNode }) {
-  const { nextPage, prevPage, isOverlayOpen, setIsOverlayOpen, ttsData } = useFairyTaleReaderContext();
+  const { nextPage, prevPage, isOverlayOpen, setIsOverlayOpen } = useFairyTaleReaderContext();
   const { handleTouchStart, handleTouchEnd } = useSwipe({
     onSwipeLeft: nextPage,
     onSwipeRight: prevPage,
     enabled: !isOverlayOpen,
   });
-
-  const audioUrl = ttsData?.audio
-    ? URL.createObjectURL(
-        new Blob([Uint8Array.from(atob(ttsData.audio), (c) => c.charCodeAt(0))], { type: "audio/mpeg" })
-      )
-    : null;
 
   return (
     <div
@@ -28,8 +22,6 @@ function Root({ children }: { children: React.ReactNode }) {
       onTouchStart={handleTouchStart}
       onTouchEnd={handleTouchEnd}
     >
-      {audioUrl && <audio key={ttsData?.page} src={audioUrl} autoPlay controls className="hidden" />}
-
       {children}
       {!isOverlayOpen && (
         <div className="absolute inset-0 z-0 pointer-events-auto" onClick={() => setIsOverlayOpen(true)} />

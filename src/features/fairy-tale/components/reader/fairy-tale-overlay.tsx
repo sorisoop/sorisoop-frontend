@@ -1,10 +1,13 @@
 import { useEffect, useRef } from "react";
-import { useFairyTaleReaderContext } from "@/features/fairy-tale/hooks";
+import { useFairyTaleReaderContext, useTtsContext } from "@/features/fairy-tale/hooks";
 import { useDragScroll } from "@/shared/hooks";
 import { useDragPreventClick } from "@/shared/hooks";
+import { Play, Pause } from "lucide-react";
+import { Button } from "@/shared/components/ui/button"; // shadcn 버튼
 
 export function FairyTaleOverlay() {
-  const { data, currentPage, goToPage, isOverlayOpen, setIsOverlayOpen } = useFairyTaleReaderContext();
+  const { data, goToPage, isOverlayOpen, setIsOverlayOpen } = useFairyTaleReaderContext();
+  const { currentPage, isPlaying, play, pause } = useTtsContext();
   const { onMouseDown, onMouseMove, onMouseUp } = useDragScroll<HTMLDivElement>();
   const { handleMouseDown, handleMouseMove, handleClick, isDragging } = useDragPreventClick(8);
   const thumbnailContainerRef = useRef<HTMLDivElement>(null);
@@ -12,15 +15,12 @@ export function FairyTaleOverlay() {
   useEffect(() => {
     if (isOverlayOpen && thumbnailContainerRef.current) {
       const container = thumbnailContainerRef.current;
-      if (!container) return;
-
-      const currentThumbnail = container.children[currentPage] as HTMLElement;
+      const currentThumbnail = container.children[currentPage] as HTMLElement | undefined;
 
       if (currentThumbnail) {
         const containerWidth = container.offsetWidth;
         const thumbnailLeft = currentThumbnail.offsetLeft;
         const thumbnailWidth = currentThumbnail.offsetWidth;
-
         const scrollPosition = thumbnailLeft - containerWidth / 2 + thumbnailWidth / 2;
 
         container.scrollTo({
@@ -65,6 +65,7 @@ export function FairyTaleOverlay() {
       className="absolute inset-0 z-50 flex flex-col justify-between bg-black/30 backdrop-blur-sm"
       onClick={() => setIsOverlayOpen(false)}
     >
+      {/* 상단 정보 */}
       <header className="absolute top-0 left-0 right-0 px-6 py-4 flex justify-between items-center text-secondary bg-gradient-to-b from-black/70 to-transparent">
         <div>
           <h2 className="text-lg font-semibold">{title}</h2>
@@ -76,6 +77,23 @@ export function FairyTaleOverlay() {
         </div>
       </header>
 
+      {/* 중앙 재생/정지 버튼 */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <Button
+          size="icon"
+          variant="secondary"
+          className="h-16 w-16 rounded-full bg-black/60 hover:bg-black/80 pointer-events-auto"
+          onClick={(e) => {
+            e.stopPropagation();
+            if (isPlaying) pause();
+            else play();
+          }}
+        >
+          {isPlaying ? <Pause className="h-8 w-8 text-white" /> : <Play className="h-8 w-8 text-white" />}
+        </Button>
+      </div>
+
+      {/* 하단 썸네일 */}
       <footer
         className="absolute bottom-0 left-0 right-0 bg-foreground/95 pb-4 pt-3"
         onClick={(e) => e.stopPropagation()}
@@ -99,13 +117,9 @@ export function FairyTaleOverlay() {
                 className="flex-shrink-0 cursor-pointer group"
               >
                 <div className="relative">
-                  <div
-                    className={`w-24 h-16 sm:w-32 sm:h-20 md:w-36 md:h-24 rounded-lg overflow-hidden transition-all duration-200
-                    `}
-                  >
+                  <div className="w-24 h-16 sm:w-32 sm:h-20 md:w-36 md:h-24 rounded-lg overflow-hidden transition-all duration-200">
                     <img src={page.imageUrl} alt={`페이지 ${pageIndex + 1}`} className="w-full h-full object-cover" />
                   </div>
-
                   <p className={`text-center mt-2 text-xs ${getPageNumberStyles(pageIndex)}`}>{pageIndex + 1} 페이지</p>
                 </div>
               </div>

@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useState } from "react";
 import HTMLFlipBook from "react-pageflip";
-import { useFairyTaleReaderContext } from "@/features/fairy-tale/hooks";
+import { useFairyTaleReaderContext, useTtsContext } from "@/features/fairy-tale/hooks";
 import type { FairyTaleContentResponse } from "@/entities/fairy-tale/model";
 
 const Page = forwardRef<HTMLDivElement, { pageData: FairyTaleContentResponse }>(({ pageData }, ref) => {
@@ -23,6 +23,7 @@ const Page = forwardRef<HTMLDivElement, { pageData: FairyTaleContentResponse }>(
         onLoad={() => setImageLoaded(true)}
       />
 
+      {/* 텍스트 */}
       <div
         className={`absolute bottom-0 left-0 right-0 z-10 transition-all duration-300 ${
           showText ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"
@@ -36,6 +37,7 @@ const Page = forwardRef<HTMLDivElement, { pageData: FairyTaleContentResponse }>(
           </div>
         </div>
       </div>
+
       <div className="absolute inset-0 bg-background/10" />
     </div>
   );
@@ -44,7 +46,8 @@ const Page = forwardRef<HTMLDivElement, { pageData: FairyTaleContentResponse }>(
 Page.displayName = "Page";
 
 export function FairyTaleBook() {
-  const { data, setCurrentPage, flipBookRef } = useFairyTaleReaderContext();
+  const { data, flipBookRef } = useFairyTaleReaderContext();
+  const { setCurrentPage } = useTtsContext();
   const [bookKey, setBookKey] = useState(0);
 
   useEffect(() => {

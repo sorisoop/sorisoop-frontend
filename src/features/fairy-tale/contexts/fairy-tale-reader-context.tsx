@@ -1,21 +1,17 @@
-import type { FairyTaleContentResponse } from "@/entities/fairy-tale/model";
-import type { TtsResponse } from "@/entities/voice/model";
 import { createContext, type Dispatch, type SetStateAction } from "react";
 import type { FlipBookRef } from "react-pageflip";
+import type { FairyTaleContentResponse } from "@/entities/fairy-tale/model";
 
 export interface FairyTaleReaderContextValue {
   data: FairyTaleContentResponse[];
-  currentPage: number;
   isOverlayOpen: boolean;
   isBookEndOpen: boolean;
   flipBookRef: React.RefObject<FlipBookRef | null>;
   showText: boolean;
-  ttsData?: TtsResponse;
 
   nextPage: () => void;
   prevPage: () => void;
   goToPage: (page: number) => void;
-  setCurrentPage: (page: number) => void;
   setIsOverlayOpen: Dispatch<SetStateAction<boolean>>;
   setIsBookEndOpen: Dispatch<SetStateAction<boolean>>;
   setShowText: Dispatch<SetStateAction<boolean>>;
