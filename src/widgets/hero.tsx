@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 type HeroProps = {
   title: string;
   description: string;
@@ -9,10 +11,19 @@ type HeroProps = {
 };
 
 export default function Hero({ title, description, image, alt }: HeroProps) {
+  const navigate = useNavigate();
+
   return (
     <section className="pt-4">
       <div className="mx-auto max-w-screen-xl">
-        <div className="relative overflow-hidden rounded-lg shadow h-[280px] md:h-[180px] lg:h-[240px] bg-muted">
+        <div
+          className="relative overflow-hidden rounded-lg shadow h-[280px] md:h-[180px] lg:h-[240px] bg-muted cursor-pointer
+                     transform transition-transform duration-300 hover:scale-[1.02] active:scale-[0.98]"
+          onClick={() => navigate("/draw")}
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => e.key === "Enter" && navigate("/draw")}
+        >
           <picture>
             {image.tablet && <source srcSet={image.tablet} media="(min-width: 768px)" />}
             <img
