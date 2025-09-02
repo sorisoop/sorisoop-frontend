@@ -2,12 +2,10 @@ import { toast } from "sonner";
 
 import { BackHeaderLayout } from "@/shared/layouts";
 import { Switch } from "@/shared/components/ui/switch";
-import { useNotificationContext } from "@/features/notification/hooks";
 import { useIsWebview } from "@/shared/hooks/use-is-webview";
 import { WebViewFacade } from "@/shared/webview";
 
 export default function NotificationSettingsPage() {
-  const { enabled, setEnabled } = useNotificationContext();
   const { isWebView } = useIsWebview();
 
   const handleToggle = (next: boolean) => {
@@ -16,11 +14,8 @@ export default function NotificationSettingsPage() {
       return;
     }
 
-    if (next) {
-      WebViewFacade.requestNotificationPermission();
-    } else {
-      setEnabled(false);
-    }
+    if (next) WebViewFacade.requestNotificationPermission();
+    // else setEnabled();
   };
 
   return (
@@ -31,7 +26,7 @@ export default function NotificationSettingsPage() {
             <span className="text-base font-semibold">알림 설정</span>
             <span className="text-xs text-muted-foreground mt-1">서버에서 보내는 실시간 알림을 받아보세요.</span>
           </div>
-          <Switch checked={enabled} onCheckedChange={handleToggle} disabled={!isWebView} />
+          <Switch checked={true} onCheckedChange={handleToggle} disabled={!isWebView} />
         </div>
       </div>
     </BackHeaderLayout>
