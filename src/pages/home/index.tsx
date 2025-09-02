@@ -1,15 +1,23 @@
 import { Suspense, useState } from "react";
-import { Tabs, TabsList, TabsTrigger } from "@/shared/components/ui/tabs";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/shared/components/ui/tabs";
 import { CommonLayout } from "@/shared/layouts";
 import { FairyTaleCard } from "@/features/fairy-tale/components/variants";
-import { Categories, CategoriesSkeleton, Hero, TodayPickWidget, WeeklyBoxWidget, TitleBar } from "@/widgets";
+import {
+  Categories,
+  CategoriesSkeleton,
+  Hero,
+  TodayPickWidget,
+  WeeklyBoxWidget,
+  TitleBar,
+  MyCustomFairyTale,
+} from "@/widgets";
 
 export default function HomePage() {
-  const [homeFilter, setHomeFilter] = useState<string>("전체");
+  const [homeFilter, setHomeFilter] = useState<"전체" | "창작 동화">("전체");
 
   return (
     <CommonLayout title="">
-      <Tabs value={homeFilter} onValueChange={(v: string) => setHomeFilter(v)} className="w-full pt-2">
+      <Tabs value={homeFilter} onValueChange={(v) => setHomeFilter(v as typeof homeFilter)} className="w-full pt-2">
         <TabsList className="relative h-10 bg-transparent p-0 gap-8 rounded-none">
           {(["전체", "창작 동화"] as const).map((tabKey) => (
             <TabsTrigger
@@ -31,35 +39,43 @@ export default function HomePage() {
             </TabsTrigger>
           ))}
         </TabsList>
+
+        <TabsContent value="전체">
+          <Hero
+            title="동화 만들기"
+            description="아이의 그림으로 이야기가 만들어져요! 세상에 단 하나뿐인 동화책을 만들어보세요."
+            image={{
+              mobile: "/assets/hero/story-create-mobile.webp",
+              tablet: "/assets/hero/story-create-tablet.webp",
+            }}
+            alt="동화 만들기"
+          />
+
+          <Suspense fallback={<CategoriesSkeleton />}>
+            <Categories />
+          </Suspense>
+
+          <section className="pt-10">
+            <TitleBar title="이번 주 이야기 상자" subtitle="반짝반짝, 이번 주에 꺼내 보는 이야기" />
+            <Suspense fallback={<FairyTaleCard.HighlightRowSkeleton />}>
+              <WeeklyBoxWidget />
+            </Suspense>
+          </section>
+
+          <section className="pt-10">
+            <TitleBar title="오늘의 픽" subtitle="소리숲이 고른 오늘의 이야기" />
+            <Suspense fallback={<FairyTaleCard.GridSkeleton />}>
+              <TodayPickWidget />
+            </Suspense>
+          </section>
+        </TabsContent>
+
+        <TabsContent value="창작 동화">
+          <Suspense fallback={<FairyTaleCard.GridSkeleton />}>
+            <MyCustomFairyTale />
+          </Suspense>
+        </TabsContent>
       </Tabs>
-
-      <Hero
-        title="동화 만들기"
-        description="아이의 그림으로 이야기가 만들어져요! 세상에 단 하나뿐인 동화책을 만들어보세요."
-        image={{
-          mobile: "/assets/hero/story-create-mobile.webp",
-          tablet: "/assets/hero/story-create-tablet.webp",
-        }}
-        alt="동화 만들기"
-      />
-
-      <Suspense fallback={<CategoriesSkeleton />}>
-        <Categories />
-      </Suspense>
-
-      <section className="pt-10">
-        <TitleBar title="이번 주 이야기 상자" subtitle="반짝반짝, 이번 주에 꺼내 보는 이야기" />
-        <Suspense fallback={<FairyTaleCard.HighlightRowSkeleton />}>
-          <WeeklyBoxWidget />
-        </Suspense>
-      </section>
-
-      <section className="pt-10">
-        <TitleBar title="오늘의 픽" subtitle="소리숲이 고른 오늘의 이야기" />
-        <Suspense fallback={<FairyTaleCard.GridSkeleton />}>
-          <TodayPickWidget />
-        </Suspense>
-      </section>
     </CommonLayout>
   );
 }

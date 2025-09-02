@@ -8,3 +8,4 @@ export { default as TitleBar } from "./title-bar";
 export { default as ScrollToTop } from "./scroll-to-top";
 export { default as CategoriesNav } from "./categories-nav";
 export { default as CategoriesNavSkeleton } from "./categories-nav.skeleton";
+export { default as MyCustomFairyTale } from "./my-custom-fairy-tale";
