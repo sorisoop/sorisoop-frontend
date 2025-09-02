@@ -20,7 +20,6 @@ export const WebViewFacade = {
     postToApp({ type: "RESET_RECORD" });
   },
 
-  // 알림
   sendNotification(message: string) {
     postToApp({ type: "NOTIFICATION", message });
   },

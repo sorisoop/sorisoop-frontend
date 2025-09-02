@@ -1,7 +1,9 @@
 export interface NotificationResonse {
   id: number;
-  customFairyTaleId: number | null;
+  customFairyTaleId: number;
   content: string;
+  thumbnailImage: string;
+  title: string;
   createdAt: string;
   isRead: "T" | "F";
 }

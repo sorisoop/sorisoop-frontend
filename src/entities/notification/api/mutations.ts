@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { updateNotificationStatus } from "./update";
+import { readNotification, updateNotificationStatus } from "./update";
 import { notificationKeys } from "./query-optionts";
 
 export const useUpdateNotificationStatus = () => {
@@ -12,3 +12,14 @@ export const useUpdateNotificationStatus = () => {
     },
   });
 };
+
+export function useReadNotification() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (notificationId: number) => readNotification(notificationId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: notificationKeys.getNotifications });
+    },
+  });
+}

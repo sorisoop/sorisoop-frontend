@@ -7,7 +7,6 @@ import { Badge } from "@/shared/components/ui/badge";
 export default function CustomFairyTaleDetailDesktop({ fairyTale }: { fairyTale: FairyTaleResponse }) {
   const navigate = useNavigate();
 
-  console.log(`/fairy-tale/custom/${fairyTale.id}/read`);
   return (
     <div className="relative w-full h-screen overflow-hidden">
       <img
