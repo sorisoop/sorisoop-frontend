@@ -7,7 +7,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 export function TtsProvider({ id, voiceUuid, children }: { id: number; voiceUuid: string; children: React.ReactNode }) {
   const { data: pages } = useFairyTaleContents(id);
   const totalPages = pages?.length ?? 0;
-
+  const [bookEnded, setBookEnded] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
   const { data: ttsData } = useTts(voiceUuid, id, currentPage + 1);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -15,6 +15,7 @@ export function TtsProvider({ id, voiceUuid, children }: { id: number; voiceUuid
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [autoPlayEnabled, setAutoPlayEnabled] = useState(true);
 
   useEffect(() => {
     if (!ttsData?.audio) return;
@@ -31,24 +32,36 @@ export function TtsProvider({ id, voiceUuid, children }: { id: number; voiceUuid
     audio.onloadedmetadata = () => setDuration(audio.duration);
     audio.ontimeupdate = () => setCurrentTime(audio.currentTime);
 
+    audio.onplay = () => setIsPlaying(true);
+    audio.onpause = () => setIsPlaying(false);
     audio.onended = () => {
       setIsPlaying(false);
-      setCurrentPage((prev) => (prev < totalPages - 1 ? prev + 1 : prev));
+      setCurrentPage((prev) => {
+        if (prev < totalPages - 1) {
+          return prev + 1;
+        } else {
+          setBookEnded(true);
+          return prev;
+        }
+      });
     };
 
-    audio.play().catch(() => setIsPlaying(false));
+    if (autoPlayEnabled) {
+      audio.play().catch(() => setIsPlaying(false));
+    }
+
+    return () => {
+      audio.pause();
+      audio.src = "";
+    };
   }, [ttsData, totalPages]);
 
   const play = useCallback(() => {
-    if (!audioRef.current) return;
-    audioRef.current.play();
-    setIsPlaying(true);
+    audioRef.current?.play();
   }, []);
 
   const pause = useCallback(() => {
-    if (!audioRef.current) return;
-    audioRef.current.pause();
-    setIsPlaying(false);
+    audioRef.current?.pause();
   }, []);
 
   const seek = useCallback((time: number) => {
@@ -69,6 +82,10 @@ export function TtsProvider({ id, voiceUuid, children }: { id: number; voiceUuid
         play,
         pause,
         seek,
+        autoPlayEnabled,
+        setAutoPlayEnabled,
+        bookEnded,
+        setBookEnded,
       }}
     >
       {children}

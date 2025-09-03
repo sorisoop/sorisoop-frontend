@@ -17,7 +17,7 @@ export function FairyTaleReaderProvider({ id, children }: { id: number; children
   const flipBookRef = useRef<FlipBookRef | null>(null);
 
   const { data } = useFairyTaleContents(id);
-  const { currentPage, pause } = useTtsContext();
+  const { currentPage, pause, bookEnded, setBookEnded } = useTtsContext();
 
   /**
    * 다음 페이지로 이동
@@ -84,16 +84,18 @@ export function FairyTaleReaderProvider({ id, children }: { id: number; children
     const book = flipBookRef.current.pageFlip?.();
     if (!book) return;
 
-    if (currentPage >= data.length) {
-      setIsBookEndOpen(true);
-      return;
-    }
-
     // 현재 flipbook이 가리키는 페이지와 동기화
     if (book.getCurrentPageIndex() !== currentPage) {
       book.flip(currentPage, "top");
     }
   }, [currentPage, data, setIsBookEndOpen]);
+
+  useEffect(() => {
+    if (bookEnded) {
+      setIsBookEndOpen(true);
+      setBookEnded(false);
+    }
+  }, [bookEnded, setBookEnded]);
 
   const value = {
     data: data ?? ([] as FairyTaleContentResponse[]),

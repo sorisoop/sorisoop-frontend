@@ -14,7 +14,14 @@ export default function FairyTaleReaderPage() {
   return (
     <TtsProvider id={fairyTaleId} voiceUuid={voiceUuid}>
       <FairyTaleReaderProvider id={fairyTaleId}>
-        <FullScreenBackHeaderLayout rightSlot={<FairyTaleReader.ToggleTextButton />}>
+        <FullScreenBackHeaderLayout
+          rightSlot={
+            <div className="flex gap-2">
+              <FairyTaleReader.ToggleTextButton />
+              <FairyTaleReader.ToggleAutoPlayButton />
+            </div>
+          }
+        >
           <FairyTaleReader>
             <FairyTaleReader.Book />
             <FairyTaleReader.Navigation />

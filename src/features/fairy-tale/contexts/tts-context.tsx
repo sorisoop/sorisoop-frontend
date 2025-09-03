@@ -11,6 +11,10 @@ export interface TtsContextValue {
   play: () => void;
   pause: () => void;
   seek: (time: number) => void;
+  autoPlayEnabled: boolean;
+  setAutoPlayEnabled: Dispatch<SetStateAction<boolean>>;
+  bookEnded: boolean;
+  setBookEnded: Dispatch<SetStateAction<boolean>>;
 }
 
 export const TtsContext = createContext<TtsContextValue | null>(null);

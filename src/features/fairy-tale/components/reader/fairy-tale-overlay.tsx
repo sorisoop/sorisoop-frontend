@@ -31,8 +31,6 @@ export function FairyTaleOverlay() {
     }
   }, [isOverlayOpen, currentPage]);
 
-  if (!isOverlayOpen) return null;
-
   const totalPages = data.length;
   const title = data[0].title;
   const currentPageNumber = currentPage + 1;
@@ -62,10 +60,11 @@ export function FairyTaleOverlay() {
 
   return (
     <div
-      className="absolute inset-0 z-50 flex flex-col justify-between bg-black/30 backdrop-blur-sm"
+      className={`absolute inset-0 flex flex-col justify-between bg-black/30 backdrop-blur-sm transition-opacity duration-300 ${
+        isOverlayOpen ? "opacity-100 visible z-50" : "opacity-0 invisible -z-10 pointer-events-none"
+      }`}
       onClick={() => setIsOverlayOpen(false)}
     >
-      {/* 상단 정보 */}
       <header className="absolute top-0 left-0 right-0 px-6 py-4 flex justify-between items-center text-secondary bg-gradient-to-b from-black/70 to-transparent">
         <div>
           <h2 className="text-lg font-semibold">{title}</h2>

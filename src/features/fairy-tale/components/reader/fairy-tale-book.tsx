@@ -74,7 +74,7 @@ export function FairyTaleBook() {
       mobileScrollSupport={false}
       swipeDistance={50}
       clickEventForward={false}
-      useMouseEvents={true}
+      useMouseEvents={false}
       showPageCorners={false}
       disableFlipByClick={false}
       ref={flipBookRef}
