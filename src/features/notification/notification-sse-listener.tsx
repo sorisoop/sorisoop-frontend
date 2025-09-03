@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { toast } from "sonner";
 import { useIsWebview } from "@/shared/hooks/use-is-webview";
 import { WebViewFacade } from "@/shared/webview";
-
+import { EventSourcePolyfill } from "event-source-polyfill";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
 export default function NotificationSseListener() {
@@ -16,7 +16,7 @@ export default function NotificationSseListener() {
   useEffect(() => {
     if (!shouldConnect) return;
 
-    const es = new EventSource(`${API_BASE_URL}/notifications/subscribe`, {
+    const es = new EventSourcePolyfill(`${API_BASE_URL}/notifications/subscribe`, {
       withCredentials: true,
     });
 
