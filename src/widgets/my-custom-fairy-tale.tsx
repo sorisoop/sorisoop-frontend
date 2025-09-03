@@ -6,7 +6,7 @@ import { Button } from "@/shared/components/ui/button";
 import paintBrush from "@/lotties/paint-brush.json";
 
 export default function MyCustomFairyTale() {
-  const { data: tales = [] } = useCustomFairyTales(1);
+  const { data: tales = [] } = useCustomFairyTales(0);
 
   if (tales.length === 0) {
     return (

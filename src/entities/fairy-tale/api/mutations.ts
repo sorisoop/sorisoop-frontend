@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { addFavorite, createCustomSynopsis, makeCustomFairyTale } from "./create";
-import { deleteFavorite } from "./delete";
+import { deleteCustomFairyTale, deleteFavorite } from "./delete";
 import { fairyTaleKeys } from "./query-options";
 import type { FairyTaleResponse, MakeCustomFairyTaleRequest } from "../model";
 
@@ -62,5 +62,16 @@ export const useCreateCustomSynopsis = () => {
 export const useMakeCustomFairyTale = () => {
   return useMutation({
     mutationFn: (payload: MakeCustomFairyTaleRequest) => makeCustomFairyTale(payload),
+  });
+};
+
+export const useDeleteCustomFairyTale = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (customFairyTaleId: number) => deleteCustomFairyTale(customFairyTaleId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: fairyTaleKeys.getCustomFairyTales(0) });
+    },
   });
 };

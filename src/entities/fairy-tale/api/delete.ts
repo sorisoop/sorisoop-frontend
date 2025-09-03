@@ -13,3 +13,21 @@ export const deleteFavorite = async (fairyTaleId: number, displayMode: DisplayMo
     throw err;
   }
 };
+
+/**
+ * 커스텀 동화 삭제 API
+ */
+export const deleteCustomFairyTale = async (
+  customFairyTaleId: number,
+  displayMode: DisplayMode = "toast"
+): Promise<null> => {
+  try {
+    const res = await api.delete(`fairy-tale/custom/${customFairyTaleId}`, {}).json<ApiResponse<null>>();
+    return res.data;
+  } catch (err) {
+    if (err instanceof BaseApiError) {
+      err.displayMode = displayMode;
+    }
+    throw err;
+  }
+};
