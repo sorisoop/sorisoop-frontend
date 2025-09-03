@@ -16,7 +16,7 @@ export default function FavoriteFairyTaleContent() {
 
   if (tales.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[calc(100dvh-118px)] text-center">
+      <div className="flex flex-col items-center justify-center h-[calc(100dvh-263px)] text-center">
         <Lottie animationData={books} play loop className="w-40 h-40 mb-4" />
         <h2 className="text-lg font-bold">아직 찜한 동화책이 없어요</h2>
         <p className="text-muted-foreground mt-1">마음에 드는 동화책을 찜해 보세요!</p>

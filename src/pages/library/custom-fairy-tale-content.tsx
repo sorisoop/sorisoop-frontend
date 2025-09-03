@@ -10,7 +10,7 @@ export default function CustomFairyTaleContent({ categoryId }: { categoryId: num
 
   if (tales.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[calc(100dvh-213px)] text-center">
+      <div className="flex flex-col items-center justify-center min-h-[calc(100dvh-250px)] text-center">
         <Lottie animationData={paintBrush} play loop className="w-32 h-32 mb-4" />
         <h2 className="text-lg font-bold">아직 만든 동화책이 없어요</h2>
         <p className="text-muted-foreground mt-1">세상에 단 하나뿐인 동화를 만들어 보세요!</p>
