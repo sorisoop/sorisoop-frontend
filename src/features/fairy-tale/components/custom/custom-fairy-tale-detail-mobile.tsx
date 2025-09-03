@@ -36,8 +36,12 @@ export default function CustomFairyTaleDetailMobile({
         <h1 className="text-xl font-bold">{fairyTale.title}</h1>
 
         <div className="mt-2 flex items-center gap-2">
-          <Badge variant="default">{fairyTale.categoryName}</Badge>
-          <Badge variant="default">{fairyTale.author}</Badge>
+          <Badge variant="default" className="text-secondary font-semibold">
+            {fairyTale.categoryName}
+          </Badge>
+          <Badge variant="default" className="text-secondary font-semibold">
+            {fairyTale.author}
+          </Badge>
         </div>
 
         <div className="mt-4 flex flex-col gap-3">
