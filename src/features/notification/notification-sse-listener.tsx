@@ -20,10 +20,11 @@ export default function NotificationSseListener() {
       withCredentials: true,
     });
 
+    es.addEventListener("CONNECTED", () => {});
+
     es.addEventListener("make-fairy-tale-complete", (e) => {
       const data = (e as MessageEvent).data;
 
-      console.log(data);
       if (isWebView) WebViewFacade.sendNotification(data);
       else toast.success(`동화 생성이 완료됐습니다.`);
     });
