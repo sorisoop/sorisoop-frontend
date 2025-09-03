@@ -43,7 +43,7 @@ export default function CustomFairyTaleDetailMobile({
         <div className="mt-4 flex flex-col gap-3">
           <Button
             className="w-full h-10 rounded-md text-base font-semibold gap-2 cursor-pointer shadow-md text-secondary"
-            onClick={() => navigate(`/fairy-tale/${fairyTale.id}/read`)}
+            onClick={() => navigate(`/fairy-tale/custom/${fairyTale.id}/read`)}
           >
             <Play className="!w-5 !h-5" />
             보기
