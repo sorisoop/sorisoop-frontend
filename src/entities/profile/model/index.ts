@@ -6,3 +6,8 @@ export interface ProfileResponse {
   age: number;
   gender: "M" | "F";
 }
+
+export interface SelectProfileSubmit {
+  profileId: number;
+  password: string | null;
+}

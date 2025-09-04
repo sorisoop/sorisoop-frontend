@@ -7,6 +7,7 @@ import { ProfileGrid } from "./profile-grid";
 import { ProfileHeader } from "./profile-header";
 import { ProfileManageDialogContent } from "./profile-manage-dialog-content";
 import { ProfileManageDialogTrigger } from "./profile-manage-dialog-trigger";
+import { ProfileParentPasswordDialog } from "./profile-parent-passwrd-dialog";
 import { ProfileRoot } from "./profile-root";
 export { default as ProfileGridSkeleton } from "./profile-grid-skeleton";
 
@@ -17,6 +18,7 @@ export const ProfilePage = Object.assign(ProfileRoot, {
   AddCard: ProfileAddCard,
   AddDialog: ProfileAddDialog,
   DeleteDialog: ProfileDeleteDialog,
+  PasswordDialog: ProfileParentPasswordDialog,
 });
 
 export const ProfileManageDialog = Object.assign(ProfileManageDialogProvider, {

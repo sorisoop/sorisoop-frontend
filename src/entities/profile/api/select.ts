@@ -7,9 +7,13 @@ import { BaseApiError, type DisplayMode } from "@/shared/lib/api/errors";
  * @param profileId - 선택할 프로필 ID
  * @param displayMode - 에러 발생 시 표시 방식 ("toast" | "fallback")
  */
-export const selectProfile = async (profileId: number, displayMode: DisplayMode = "toast"): Promise<null> => {
+export const selectProfile = async (
+  profileId: number,
+  password: string | null = null,
+  displayMode: DisplayMode = "toast"
+): Promise<null> => {
   try {
-    const res = await api.post(`profiles/${profileId}`).json<ApiResponse<null>>();
+    const res = await api.post(`profiles/${profileId}`, { json: { password } }).json<ApiResponse<null>>();
     return res.data;
   } catch (err) {
     if (err instanceof BaseApiError) {

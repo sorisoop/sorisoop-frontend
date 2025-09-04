@@ -10,19 +10,27 @@ import { cn } from "@/shared/lib/utils";
 import { useState } from "react";
 import { DrawerClose } from "@/shared/components/ui/drawer";
 
-const addProfileSchema = z.object({
+const childSchema = z.object({
   nickname: z.string().min(1, "닉네임을 입력해주세요"),
-  role: z.enum(["PARENT", "CHILD"]),
+  role: z.literal("CHILD"),
   age: z.coerce.number().int().min(1, "나이를 입력해주세요"),
   gender: z.enum(["M", "F"]),
   profileImage: z.string().nullable().optional(),
 });
 
-export type AddProfileFormValues = z.infer<typeof addProfileSchema>;
+const parentSchema = z.object({
+  nickname: z.string().min(1, "닉네임을 입력해주세요"),
+  role: z.literal("PARENT"),
+  age: z.coerce.number().int().min(1, "나이를 입력해주세요"),
+  password: z.string().min(4, "비밀번호는 4자 이상 입력해주세요"),
+  gender: z.enum(["M", "F"]),
+  profileImage: z.string().nullable().optional(),
+});
 
-export interface AddProfileFormSubmit extends AddProfileFormValues {
-  file?: File | null;
-}
+const addProfileSchema = z.discriminatedUnion("role", [childSchema, parentSchema]);
+
+export type AddProfileFormValues = z.infer<typeof addProfileSchema>;
+export type AddProfileFormSubmit = AddProfileFormValues & { file?: File | null };
 
 const genderOptions: Array<{ value: "M" | "F"; label: string }> = [
   { value: "M", label: "남" },
@@ -78,6 +86,8 @@ export function ProfileAddForm({
       ...data,
       file: imageFile,
     };
+
+    console.log(submitData);
     onSubmit(submitData);
   };
 
@@ -105,7 +115,7 @@ export function ProfileAddForm({
 
       <div className="grid gap-2">
         <Label htmlFor="nickname">닉네임</Label>
-        <Input id="nickname" placeholder="닉네임" {...register("nickname")} />
+        <Input id="nickname" placeholder="닉네임" {...register("nickname")} autoComplete="nickname" />
       </div>
 
       <div className="space-y-2">
@@ -157,8 +167,30 @@ export function ProfileAddForm({
         />
       </div>
 
+      {role === "PARENT" && (
+        <div className="grid gap-2">
+          <Label htmlFor="password">비밀번호</Label>
+          <Input
+            type="text"
+            name="hidden-username"
+            autoComplete="hidden-username"
+            className="sr-only"
+            tabIndex={-1}
+            aria-hidden="true"
+          />
+
+          <Input
+            id="password"
+            type="password"
+            placeholder="비밀번호 입력"
+            {...register("password")}
+            autoComplete="current-password"
+          />
+        </div>
+      )}
+
       <div className="flex flex-col gap-2 mt-4">
-        <Button type="submit" disabled={!isValid || isPending} className="w-full">
+        <Button type="submit" disabled={!isValid || isPending} className="w-full text-secondary font-semibold">
           {isPending ? "추가 중..." : "추가하기"}
         </Button>
         <DrawerClose asChild>
