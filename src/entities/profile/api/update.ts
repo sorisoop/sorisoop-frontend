@@ -1,4 +1,4 @@
-import type { AddProfileFormSubmit } from "@/features/profile/components/profile-add-form";
+import type { UpdateProfileFormSubmit } from "@/features/profile/components/profile-manage-dialog-update";
 import { BaseApiError, type DisplayMode } from "@/shared/lib/api/errors";
 import { api } from "@/shared/lib/api/ky";
 import type { ApiResponse } from "@/shared/lib/model/common-api-response";
@@ -9,7 +9,7 @@ import type { ApiResponse } from "@/shared/lib/model/common-api-response";
  * @param displayMode - 에러 발생 시 표시 방식 ("toast" | "fallback")
  */
 export const updateProfile = async (
-  data: AddProfileFormSubmit & { id: number },
+  data: UpdateProfileFormSubmit,
   displayMode: DisplayMode = "toast"
 ): Promise<null> => {
   try {

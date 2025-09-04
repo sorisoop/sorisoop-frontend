@@ -13,6 +13,7 @@ import { useProfileManageDialogContext } from "../hooks";
 import { useUpdateProfile } from "@/entities/profile/api/mutations";
 import { toast } from "sonner";
 import { SpinnerIcon } from "@/shared/components/ui/spinner";
+import type { AddProfileFormSubmit } from "./profile-add-form";
 
 const updateProfileSchema = z.object({
   id: z.number().int(),
@@ -24,6 +25,7 @@ const updateProfileSchema = z.object({
 });
 
 type UpdateProfileFormValues = z.infer<typeof updateProfileSchema>;
+export type UpdateProfileFormSubmit = Omit<AddProfileFormSubmit, "password"> & { id: number };
 
 export default function ProfileManageDialogUpdate({ profile }: { profile: ProfileResponse }) {
   const { setSelectedProfile } = useProfileManageDialogContext();

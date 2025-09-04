@@ -6,6 +6,7 @@ import { selectProfile } from "./select";
 import { updateProfile } from "./update";
 import { deleteProfile } from "./delete";
 import type { SelectProfileSubmit } from "../model";
+import type { UpdateProfileFormSubmit } from "@/features/profile/components/profile-manage-dialog-update";
 
 export const useCreateProfile = () => {
   const queryClient = useQueryClient();
@@ -45,7 +46,7 @@ export const useUpdateProfile = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (data: AddProfileFormSubmit & { id: number }) => updateProfile(data),
+    mutationFn: (data: UpdateProfileFormSubmit) => updateProfile(data),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: profileKeys.getProfiles,
