@@ -3,23 +3,33 @@ import { useSelectProfile } from "@/entities/profile/api/mutations";
 import { Avatar, AvatarImage, AvatarFallback } from "@/shared/components/ui/avatar";
 import { X } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
-import { useProfileDeleteContext } from "../hooks";
+import { useProfileDeleteContext, useProfileParentPasswordContext } from "../hooks";
 
 interface ProfileCardProps {
   id: number;
   name: string;
   image?: string | null;
+  role: "PARENT" | "CHILD";
 }
 
-export function ProfileCard({ id, name, image }: ProfileCardProps) {
+export function ProfileCard({ id, name, image, role }: ProfileCardProps) {
   const { mutate: selectProfile } = useSelectProfile();
-  const { setOpen, setTargetId } = useProfileDeleteContext();
+  const { setOpen: setDeleteOpen, setTargetId: setDeleteTargetId } = useProfileDeleteContext();
+  const { setOpen: setPasswordOpen, setTargetId: setPasswordTargetId } = useProfileParentPasswordContext();
   const navigate = useNavigate();
 
   const handleClick = () => {
-    selectProfile(id, {
-      onSuccess: () => navigate("/"),
-    });
+    if (role === "PARENT") {
+      setPasswordTargetId(id);
+      setPasswordOpen(true);
+    } else {
+      selectProfile(
+        { profileId: id, password: null },
+        {
+          onSuccess: () => navigate("/"),
+        }
+      );
+    }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -31,8 +41,8 @@ export function ProfileCard({ id, name, image }: ProfileCardProps) {
 
   const handleDelete = (e: React.MouseEvent) => {
     e.stopPropagation();
-    setTargetId(id);
-    setOpen(true);
+    setDeleteTargetId(id);
+    setDeleteOpen(true);
   };
 
   return (

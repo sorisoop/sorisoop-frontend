@@ -20,6 +20,10 @@ export const createProfile = async (data: AddProfileFormSubmit, displayMode: Dis
     formData.append("age", String(data.age));
     formData.append("gender", data.gender);
 
+    if (data.role === "PARENT" && data.password) {
+      formData.append("password", data.password);
+    }
+
     const res = await api.post("profiles", { body: formData }).json<ApiResponse<null>>();
     return res.data;
   } catch (err) {
