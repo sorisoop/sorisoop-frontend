@@ -6,4 +6,5 @@ export interface NotificationResonse {
   title: string;
   createdAt: string;
   isRead: "T" | "F";
+  customFairyTaleIsDelete: "T" | "F";
 }

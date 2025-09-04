@@ -20,13 +20,7 @@ const queryClient = new QueryClient({
         const mode = mutation.meta?.displayMode;
         const position = mutation.meta?.position ? "top-right" : "bottom-right";
         if (mode === "toast") {
-          toast(error.message, {
-            position,
-            classNames: {
-              toast: "!bg-destructive/80 !text-secondary border !border-destructive",
-              description: "!text-secondary",
-            },
-          });
+          toast.error(error.message, { position: position });
         }
       }
     },
