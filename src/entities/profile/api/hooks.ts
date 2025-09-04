@@ -9,3 +9,7 @@ export const useProfiles = () => {
 export const useProfile = () => {
   return useSuspenseQuery<ProfileResponse>(profileQueryOptions.getProfile());
 };
+
+export const useChildrenProfiles = () => {
+  return useSuspenseQuery<ProfileResponse[]>(profileQueryOptions.getChildren());
+};
