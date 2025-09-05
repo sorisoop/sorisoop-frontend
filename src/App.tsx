@@ -24,6 +24,7 @@ const CustomFairyTaleReaderPage = lazy(() => import("@/pages/fairy-tale/custom/r
 const NotificationsPage = lazy(() => import("@/pages/notifications"));
 const NotificationSettingsPage = lazy(() => import("@/pages/settings/notification"));
 const ExhibitionPage = lazy(() => import("@/pages/exhibition"));
+const MissionPage = lazy(() => import("@/pages/parents/mission"));
 
 export default function App() {
   return (
@@ -57,6 +58,8 @@ export default function App() {
         <Route path="/settings/notification" element={<NotificationSettingsPage />} />
 
         <Route path="/exhibition" element={<ExhibitionPage />} />
+
+        <Route path="/parents/mission" element={<MissionPage />} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
