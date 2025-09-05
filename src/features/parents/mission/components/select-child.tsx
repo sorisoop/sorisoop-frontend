@@ -1,7 +1,6 @@
 import { BackHeaderLayout } from "@/shared/layouts";
 import { useState } from "react";
 import { useChildrenProfiles } from "@/entities/profile/api/hooks";
-import { useNavigate } from "react-router-dom";
 
 type ChildProfile = {
   id: number;
@@ -9,23 +8,17 @@ type ChildProfile = {
   profileImage: string;
 };
 
-export default function MissionSelectChildPage() {
+type Props = {
+  onSelectComplete: (profileId: number) => void;
+};
+
+export default function SelectChild({ onSelectComplete }: Props) {
   const [selectedChild, setSelectedChild] = useState<number | null>(null);
   const { data: childProfiles } = useChildrenProfiles();
-  const navigate = useNavigate();
-
-  const handleNext = () => {
-    if (selectedChild) {
-      navigate("/parents/mission/type", {
-        state: { profileId: selectedChild },
-      });
-    }
-  };
 
   return (
     <BackHeaderLayout title="미션 만들기">
       <div className="flex flex-col min-h-[calc(100vh-52px)]">
-        {/* 콘텐츠 영역 */}
         <div className="flex-1 pt-6 md:pt-8 pb-24">
           <div className="text-base font-bold mb-6 md:mb-8 text-center">
             아이를 선택해주세요.
@@ -33,19 +26,7 @@ export default function MissionSelectChildPage() {
 
           {childProfiles && (
             <div className="flex justify-center">
-              <div
-                className={`
-                  grid
-                  grid-cols-2
-                  sm:grid-cols-3
-                  md:grid-cols-4
-                  gap-x-6 gap-y-10
-                  sm:gap-x-10 sm:gap-y-12
-                  md:gap-x-14 md:gap-y-16
-                  px-4
-                  max-w-7xl
-                `}
-              >
+              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-6 gap-y-10 sm:gap-x-10 sm:gap-y-12 md:gap-x-14 md:gap-y-16 px-4 max-w-7xl">
                 {childProfiles.map((profile: ChildProfile) => {
                   const isSelected = selectedChild === profile.id;
 
@@ -56,9 +37,11 @@ export default function MissionSelectChildPage() {
                       className={`
                         flex flex-col items-center justify-center
                         rounded-2xl border transition duration-200
-                        ${isSelected
-                          ? "border-yellow-400 bg-yellow-100 shadow-md"
-                          : "border-gray-300 bg-white"}
+                        ${
+                          isSelected
+                            ? "border-yellow-400 bg-yellow-100 shadow-md"
+                            : "border-gray-300 bg-white"
+                        }
                         w-full
                         aspect-[3/4]
                         max-w-[200px]
@@ -72,15 +55,7 @@ export default function MissionSelectChildPage() {
                         src={profile.profileImage}
                         alt={profile.nickname}
                         draggable={false}
-                        className={`
-                          rounded-full object-cover
-                          mb-3 sm:mb-4
-                          w-20 h-20
-                          sm:w-28 sm:h-28
-                          md:w-36 md:h-36
-                          lg:w-40 lg:h-40
-                          transition-all
-                        `}
+                        className="rounded-full object-cover mb-3 sm:mb-4 w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 lg:w-40 lg:h-40 transition-all"
                       />
                       <span className="text-sm sm:text-base font-semibold">
                         {profile.nickname}
@@ -93,15 +68,12 @@ export default function MissionSelectChildPage() {
           )}
         </div>
 
-        {/* 하단 버튼 */}
         <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-screen-xl bg-white border-t py-4">
           <div className="px-4">
             <button
-              onClick={handleNext}
+              onClick={() => selectedChild && onSelectComplete(selectedChild)}
               disabled={!selectedChild}
-              className={`w-full py-3 rounded-xl font-semibold text-white transition ${
-                selectedChild ? "bg-yellow-400" : "bg-gray-300"
-              }`}
+              className={`w-full py-3 rounded-xl font-semibold text-white transition ${selectedChild ? "bg-yellow-400" : "bg-gray-300"}`}
             >
               선택
             </button>
