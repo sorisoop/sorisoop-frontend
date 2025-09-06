@@ -82,7 +82,16 @@ export default function MypageProfileEditDialog({ open, onOpenChange }: MypagePr
           onClick={() =>
             p.role === "PARENT"
               ? goToPassword(p.id)
-              : selectProfile({ profileId: p.id, password: null }, { onSuccess: () => onOpenChange(false) })
+              : selectProfile(
+                  { profileId: p.id, password: null },
+                  {
+                    onSuccess: () => {
+                      onOpenChange(false);
+                      setStep("LIST");
+                      navigate("/my");
+                    },
+                  }
+                )
           }
         >
           <div className="flex items-center gap-3">
@@ -113,6 +122,7 @@ export default function MypageProfileEditDialog({ open, onOpenChange }: MypagePr
 
   const PasswordForm = (
     <form onSubmit={handlePasswordSubmit} className="space-y-4">
+      <Input type="text" name="username" autoComplete="username" className="hidden" />
       <Input
         type="password"
         placeholder="비밀번호 입력"
@@ -185,7 +195,17 @@ export default function MypageProfileEditDialog({ open, onOpenChange }: MypagePr
 
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
-      <DrawerContent className="px-4 pb-4 overflow-hidden">
+      <DrawerContent
+        className="px-4 pb-4 overflow-hidden"
+        onOpenAutoFocus={(e) => {
+          e.preventDefault();
+          const target = e.currentTarget as HTMLElement;
+          const firstInput = target.querySelector("input, button");
+          if (firstInput instanceof HTMLElement) {
+            firstInput.focus();
+          }
+        }}
+      >
         <DrawerHeader>
           <DrawerTitle className="sr-only">{step === "LIST" ? "프로필 변경" : "비밀번호 확인"}</DrawerTitle>
           <DrawerDescription className="sr-only">

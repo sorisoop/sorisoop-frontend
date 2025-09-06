@@ -26,7 +26,10 @@ const NotificationSettingsPage = lazy(() => import("@/pages/settings/notificatio
 const ExhibitionPage = lazy(() => import("@/pages/exhibition"));
 
 const ParentsPage = lazy(() => import("@/pages/parents"));
+const ParentsMyPage = lazy(() => import("@/pages/parents/my"));
 const MissionPage = lazy(() => import("@/pages/parents/mission"));
+const ChildrenPage = lazy(() => import("@/pages/parents/children"));
+const ChildrenMissionPage = lazy(() => import("@/pages/parents/children/mission"));
 
 export default function App() {
   return (
@@ -62,6 +65,11 @@ export default function App() {
         <Route path="/exhibition" element={<ExhibitionPage />} />
 
         <Route path="/parents" element={<ParentsPage />} />
+        <Route path="/parents/my" element={<ParentsMyPage />} />
+
+        <Route path="/parents/children" element={<ChildrenPage />} />
+        <Route path="/parents/children/:childId" element={<ChildrenMissionPage />} />
+
         <Route path="/parents/mission/create" element={<MissionPage />} />
 
         <Route path="*" element={<Navigate to="/" replace />} />

@@ -1,8 +1,8 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/shared/components/ui/button";
-import { Home, PlusCircle, BarChart3 } from "lucide-react";
+import { Home, PlusCircle, UserRound } from "lucide-react";
 
-type ParentNavKey = "home" | "missions" | "create" | "stats";
+type ParentNavKey = "home" | "create" | "my";
 
 const NAV_ITEMS: Array<{
   key: ParentNavKey;
@@ -12,7 +12,7 @@ const NAV_ITEMS: Array<{
 }> = [
   { key: "home", path: "/parents", label: "메인", icon: Home },
   { key: "create", path: "/parents/mission/create", label: "미션", icon: PlusCircle },
-  { key: "stats", path: "/parents/mission/stats", label: "통계", icon: BarChart3 },
+  { key: "my", path: "/parents/my", label: "My", icon: UserRound },
 ];
 
 export default function ParentsBottomNavigation() {
