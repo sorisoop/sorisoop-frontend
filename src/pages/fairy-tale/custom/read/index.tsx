@@ -1,27 +1,35 @@
 import { useParams } from "react-router-dom";
 import { FullScreenBackHeaderLayout } from "@/shared/layouts";
-import { CustomFairyTaleReaderProvider } from "@/features/fairy-tale/providers";
-import { CustomFairyTaleReader } from "@/features/fairy-tale/components/custom/reader";
+import { CustomFairyTaleReaderProvider, CustomTtsProvider } from "@/features/fairy-tale/providers";
+import { CustomFairyTaleReader } from "@/features/fairy-tale/components/custom/reader/with-tts";
 
 export default function CustomFairyTaleReaderPage() {
-  const { id } = useParams<{ id: string }>();
+  const { id, voiceUuid } = useParams<{ id: string; voiceUuid: string }>();
   const fairyTaleId = id ? Number(id) : undefined;
 
-  if (!fairyTaleId) return null;
+  if (!fairyTaleId || !voiceUuid) return null;
 
   return (
-    <FullScreenBackHeaderLayout>
+    <CustomTtsProvider id={fairyTaleId} voiceUuid={voiceUuid}>
       <CustomFairyTaleReaderProvider id={fairyTaleId}>
-        <CustomFairyTaleReader>
-          <CustomFairyTaleReader.Book />
-          <CustomFairyTaleReader.Navigation />
-          <CustomFairyTaleReader.Indicator />
-          <CustomFairyTaleReader.Hint />
-          <CustomFairyTaleReader.Overlay />
-          <CustomFairyTaleReader.ToggleTextButton />
-          <CustomFairyTaleReader.EndDialog />
-        </CustomFairyTaleReader>
+        <FullScreenBackHeaderLayout
+          rightSlot={
+            <div className="flex gap-2">
+              <CustomFairyTaleReader.ToggleTextButton />
+              <CustomFairyTaleReader.ToggleAutoPlayButton />
+            </div>
+          }
+        >
+          <CustomFairyTaleReader>
+            <CustomFairyTaleReader.Book />
+            <CustomFairyTaleReader.Navigation />
+            <CustomFairyTaleReader.Indicator />
+            <CustomFairyTaleReader.Hint />
+            <CustomFairyTaleReader.Overlay />
+            <CustomFairyTaleReader.EndDialog />
+          </CustomFairyTaleReader>
+        </FullScreenBackHeaderLayout>
       </CustomFairyTaleReaderProvider>
-    </FullScreenBackHeaderLayout>
+    </CustomTtsProvider>
   );
 }

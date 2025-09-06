@@ -1,6 +1,6 @@
 import { forwardRef, useEffect, useState } from "react";
 import HTMLFlipBook from "react-pageflip";
-import { useCustomFairyTaleReaderContext } from "@/features/fairy-tale/hooks";
+import { useCustomFairyTaleReaderContext, useCustomTtsContext } from "@/features/fairy-tale/hooks";
 import type { FairyTaleContentResponse } from "@/entities/fairy-tale/model";
 
 const Page = forwardRef<HTMLDivElement, { pageData: FairyTaleContentResponse }>(({ pageData }, ref) => {
@@ -28,16 +28,15 @@ const Page = forwardRef<HTMLDivElement, { pageData: FairyTaleContentResponse }>(
           showText ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"
         }`}
       >
-        <div className="bg-black/50 py-6">
-          <div className="px-6 md:px-8 lg:px-12">
-            <div className="max-w-screen-xl mx-auto">
-              <p className="text-white text-xl md:text-xl lg:text-2xl leading-relaxed font-semibold tracking-wide break-keep whitespace-pre-wrap">
-                {pageData.script}
-              </p>
-            </div>
+        <div className="bg-black/50 pb-[env(safe-area-inset-bottom)]">
+          <div className="p-4 md:p-6 lg:px-8">
+            <p className="text-white text-xl md:text-xl lg:text-2xl leading-relaxed font-semibold tracking-wide break-keep whitespace-pre-wrap">
+              {pageData.script}
+            </p>
           </div>
         </div>
       </div>
+
       <div className="absolute inset-0 bg-background/10" />
     </div>
   );
@@ -46,7 +45,8 @@ const Page = forwardRef<HTMLDivElement, { pageData: FairyTaleContentResponse }>(
 Page.displayName = "Page";
 
 export function CustomFairyTaleBook() {
-  const { data, setCurrentPage, flipBookRef } = useCustomFairyTaleReaderContext();
+  const { data, flipBookRef } = useCustomFairyTaleReaderContext();
+  const { setCurrentPage } = useCustomTtsContext();
   const [bookKey, setBookKey] = useState(0);
 
   useEffect(() => {
@@ -78,8 +78,7 @@ export function CustomFairyTaleBook() {
       disableFlipByClick={false}
       ref={flipBookRef}
       onFlip={(e: { data: number }) => setCurrentPage(e.data)}
-      className="max-w-screen-xl"
-      style={{ width: "100vw", height: "100vh" }}
+      className="max-w-screen-xl !h-dvh"
     >
       {data.map((pageData, index) => (
         <Page key={`${pageData.id}-${index}`} pageData={pageData} />

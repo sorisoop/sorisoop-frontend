@@ -1,8 +1,9 @@
 import { Card } from "@/shared/components/ui/card";
-import { useCustomFairyTaleReaderContext } from "@/features/fairy-tale/hooks";
+import { useCustomFairyTaleReaderContext, useCustomTtsContext } from "@/features/fairy-tale/hooks";
 
 export function CustomFairyTaleIndicator() {
-  const { currentPage, data } = useCustomFairyTaleReaderContext();
+  const { currentPage } = useCustomTtsContext();
+  const { data } = useCustomFairyTaleReaderContext();
 
   if (!data || data.length === 0) return null;
 

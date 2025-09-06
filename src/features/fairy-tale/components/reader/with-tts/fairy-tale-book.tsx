@@ -23,7 +23,6 @@ const Page = forwardRef<HTMLDivElement, { pageData: FairyTaleContentResponse }>(
         onLoad={() => setImageLoaded(true)}
       />
 
-      {/* 텍스트 */}
       <div
         className={`absolute bottom-0 left-0 right-0 z-10 transition-all duration-300 ${
           showText ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"

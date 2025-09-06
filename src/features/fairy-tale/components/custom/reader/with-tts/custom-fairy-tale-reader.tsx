@@ -7,6 +7,7 @@ import { CustomFairyTaleHint } from "./custom-fairy-tale-hint";
 import { CustomFairyTaleOverlay } from "./custom-fairy-tale-overlay";
 import { CustomFairyTaleToggleTextButton } from "./custom-fairy-tale-toggle-text-button";
 import { CustomFairyTaleBookEndDialog } from "./custom-fairy-tale-book-end-dialog";
+import { CustomFairyTaleToggleAutoPlayButton } from "./custom-fairy-tale-toggle-auto-play-button";
 
 function Root({ children }: { children: React.ReactNode }) {
   const { nextPage, prevPage, isOverlayOpen, setIsOverlayOpen } = useCustomFairyTaleReaderContext();
@@ -38,4 +39,5 @@ export const CustomFairyTaleReader = Object.assign(Root, {
   Overlay: CustomFairyTaleOverlay,
   ToggleTextButton: CustomFairyTaleToggleTextButton,
   EndDialog: CustomFairyTaleBookEndDialog,
+  ToggleAutoPlayButton: CustomFairyTaleToggleAutoPlayButton,
 });
