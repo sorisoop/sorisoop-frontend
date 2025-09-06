@@ -31,4 +31,8 @@ export const WebViewFacade = {
   checkNotificationPermission() {
     postToApp({ type: "CHECK_NOTIFICATION_PERMISSION" });
   },
+
+  kakaoLogin() {
+    postToApp({ type: "KAKAO_LOGIN" });
+  },
 };
