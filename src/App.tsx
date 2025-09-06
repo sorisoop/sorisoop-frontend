@@ -62,7 +62,7 @@ export default function App() {
         <Route path="/exhibition" element={<ExhibitionPage />} />
 
         <Route path="/parents" element={<ParentsPage />} />
-        <Route path="/parents/mission" element={<MissionPage />} />
+        <Route path="/parents/mission/create" element={<MissionPage />} />
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
