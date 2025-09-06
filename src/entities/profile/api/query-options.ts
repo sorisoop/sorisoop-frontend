@@ -1,4 +1,4 @@
-import { getChildrenProfiles, getProfile, getProfiles } from "./get";
+import { getProfile, getProfiles } from "./get";
 
 export const profileKeys = {
   getProfiles: ["profiles"] as const,
@@ -17,13 +17,6 @@ export const profileQueryOptions = {
   getProfile: (displayMode: "toast" | "fallback" = "fallback") => ({
     queryKey: profileKeys.getProfile,
     queryFn: () => getProfile(displayMode),
-    staleTime: 0,
-    gcTime: 0,
-  }),
-
-  getChildren: () => ({
-    queryKey: profileKeys.getChildren,
-    queryFn: () => getChildrenProfiles(),
     staleTime: 0,
     gcTime: 0,
   }),

@@ -1,85 +1,80 @@
-import { BackHeaderLayout } from "@/shared/layouts";
 import { useState } from "react";
-import { useChildrenProfiles } from "@/entities/profile/api/hooks";
+import { motion, AnimatePresence } from "framer-motion";
+import { useProfiles } from "@/entities/profile/api/hooks";
+import { useMissionFlowContext } from "../hooks";
+import { MissionStep } from "../types";
+import { Button } from "@/shared/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/shared/components/ui/avatar";
 
-type ChildProfile = {
-  id: number;
-  nickname: string;
-  profileImage: string;
-};
-
-type Props = {
-  onSelectComplete: (profileId: number) => void;
-};
-
-export default function SelectChild({ onSelectComplete }: Props) {
+export default function SelectChild() {
   const [selectedChild, setSelectedChild] = useState<number | null>(null);
-  const { data: childProfiles } = useChildrenProfiles();
+  const { data: profiles } = useProfiles();
+  const { setProfileId, goToStep, step } = useMissionFlowContext();
+  const childProfiles = profiles?.filter((p) => p.role === "CHILD") ?? [];
+
+  const handleSelect = () => {
+    if (selectedChild) {
+      setProfileId(selectedChild);
+      goToStep(MissionStep.INPUT_TITLE);
+    }
+  };
 
   return (
-    <BackHeaderLayout title="미션 만들기">
-      <div className="flex flex-col min-h-[calc(100vh-52px)]">
-        <div className="flex-1 pt-6 md:pt-8 pb-24">
-          <div className="text-base font-bold mb-6 md:mb-8 text-center">
-            아이를 선택해주세요.
-          </div>
+    <div className="flex flex-col h-full">
+      <h2 className="text-xl font-bold text-left mt-6">아이를 선택해주세요</h2>
+      <p className="text-base text-muted-foreground mt-2 mb-8">선택한 아이 기준으로 미션이 설정됩니다</p>
 
-          {childProfiles && (
-            <div className="flex justify-center">
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-x-6 gap-y-10 sm:gap-x-10 sm:gap-y-12 md:gap-x-14 md:gap-y-16 px-4 max-w-7xl">
-                {childProfiles.map((profile: ChildProfile) => {
-                  const isSelected = selectedChild === profile.id;
+      <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-6 gap-y-12 justify-items-start px-2">
+        {childProfiles.map((profile) => {
+          const isSelected = selectedChild === profile.id;
 
-                  return (
-                    <button
-                      key={profile.id}
-                      onClick={() => setSelectedChild(profile.id)}
-                      className={`
-                        flex flex-col items-center justify-center
-                        rounded-2xl border transition duration-200
-                        ${
-                          isSelected
-                            ? "border-yellow-400 bg-yellow-100 shadow-md"
-                            : "border-gray-300 bg-white"
-                        }
-                        w-full
-                        aspect-[3/4]
-                        max-w-[200px]
-                        sm:max-w-[240px]
-                        md:max-w-[280px]
-                        lg:max-w-[320px]
-                        p-4 sm:p-5 md:p-6
-                      `}
-                    >
-                      <img
-                        src={profile.profileImage}
-                        alt={profile.nickname}
-                        draggable={false}
-                        className="rounded-full object-cover mb-3 sm:mb-4 w-20 h-20 sm:w-28 sm:h-28 md:w-36 md:h-36 lg:w-40 lg:h-40 transition-all"
-                      />
-                      <span className="text-sm sm:text-base font-semibold">
-                        {profile.nickname}
-                      </span>
-                    </button>
-                  );
-                })}
-              </div>
+          return (
+            <div key={profile.id} className="flex flex-col items-center gap-3">
+              <Avatar
+                role="button"
+                tabIndex={0}
+                aria-label={`${profile.nickname} 프로필 선택`}
+                onClick={() => setSelectedChild(profile.id)}
+                className={`w-24 h-24 sm:w-32 sm:h-32 md:w-36 md:h-36 lg:w-40 lg:h-40 shadow-md transition-all duration-300 cursor-pointer focus:outline-none
+                ${isSelected ? "ring-4 ring-primary" : "ring-2 ring-transparent hover:ring-primary/50"}
+                `}
+              >
+                <AvatarImage
+                  src={profile.profileImage ?? "/default.webp"}
+                  alt={`${profile.nickname} 프로필 이미지`}
+                  className="transition-transform duration-300 hover:scale-105"
+                />
+                <AvatarFallback aria-hidden>{profile.nickname.charAt(0)}</AvatarFallback>
+              </Avatar>
+
+              <span className={`text-sm sm:text-base font-semibold ${isSelected ? "text-primary" : "text-foreground"}`}>
+                {profile.nickname}
+              </span>
             </div>
-          )}
-        </div>
+          );
+        })}
+      </div>
 
-        <div className="fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-screen-xl bg-white border-t py-4">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={step}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 20 }}
+          transition={{ duration: 0.2, delay: 0.4 }}
+          className="fixed bottom-0 left-1/2 -translate-x-1/2 max-w-screen-xl w-full bg-background border-t py-4"
+        >
           <div className="px-4">
-            <button
-              onClick={() => selectedChild && onSelectComplete(selectedChild)}
+            <Button
+              onClick={handleSelect}
               disabled={!selectedChild}
-              className={`w-full py-3 rounded-xl font-semibold text-white transition ${selectedChild ? "bg-yellow-400" : "bg-gray-300"}`}
+              className="w-full h-10 font-semibold text-secondary cursor-pointer"
             >
               선택
-            </button>
+            </Button>
           </div>
-        </div>
-      </div>
-    </BackHeaderLayout>
+        </motion.div>
+      </AnimatePresence>
+    </div>
   );
 }

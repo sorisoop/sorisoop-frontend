@@ -26,8 +26,3 @@ export const getProfile = async (displayMode: "toast" | "fallback" = "fallback")
     throw err;
   }
 };
-
-export const getChildrenProfiles = async (): Promise<ProfileResponse[]> => {
-  const all = await getProfiles("toast");
-  return all.filter((profile) => profile.role === "CHILD");
-};
