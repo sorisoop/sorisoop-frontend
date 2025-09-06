@@ -11,12 +11,14 @@ export default function VoiceSelect() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
-  if (!voices || voices.length === 0) {
-    return <div className="p-6 text-center text-muted-foreground">아직 등록된 목소리가 없습니다.</div>;
-  }
-
-  const handleSelect = (voiceId: number) => {
+  const handleSelect = (voiceId: number | null) => {
     if (!id || isPending) return;
+
+    if (voiceId === null) {
+      navigate(`/fairy-tale/${id}/read`);
+      return;
+    }
+
     selectVoice(voiceId, {
       onSuccess: ({ voiceUuid }) => {
         navigate(`/fairy-tale/${id}/read/${voiceUuid}`);
@@ -26,8 +28,27 @@ export default function VoiceSelect() {
 
   return (
     <div className="relative">
-      <ul className="divide-y divide-border">
-        {voices.map((voice) => (
+      <ul className="max-h-[60vh] overflow-y-auto divide-y divide-border">
+        <li
+          key="no-voice"
+          className={cn(
+            "flex items-center justify-between py-3 cursor-pointer rounded hover:bg-muted transition-colors",
+            isPending && "pointer-events-none opacity-50"
+          )}
+          onClick={() => handleSelect(null)}
+        >
+          <div className="flex items-center gap-3">
+            <Avatar className="w-12 h-12">
+              <AvatarImage src="/default.webp" alt="목소리를 선택하지 않음" />
+              <AvatarFallback>∅</AvatarFallback>
+            </Avatar>
+            <div className="flex flex-col">
+              <span className="font-semibold text-foreground">선택하지 않음</span>
+            </div>
+          </div>
+        </li>
+
+        {voices?.map((voice) => (
           <li
             key={voice.id}
             className={cn(
