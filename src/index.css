@@ -20,6 +20,14 @@ body {
   min-height: -webkit-fill-available;
 }
 
+img {
+  -webkit-user-drag: none; /* Safari / Chrome */
+  user-drag: none; /* 비표준, 일부 브라우저 */
+  user-select: none; /* 텍스트 선택 막기 */
+  -webkit-touch-callout: none; /* iOS 롱탭 메뉴 방지 */
+  pointer-events: auto; /* 클릭 이벤트는 살려둠 */
+}
+
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);

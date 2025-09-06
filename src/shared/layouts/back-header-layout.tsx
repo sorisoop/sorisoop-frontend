@@ -7,6 +7,7 @@ interface BackHeaderLayoutProps {
   title?: string;
   rightButtonLabel?: string;
   onRightButtonClick?: () => void;
+  onBackClick?: () => void;
 }
 
 export default function BackHeaderLayout({
@@ -14,6 +15,7 @@ export default function BackHeaderLayout({
   title = "",
   rightButtonLabel,
   onRightButtonClick,
+  onBackClick,
 }: BackHeaderLayoutProps) {
   const navigate = useNavigate();
 
@@ -24,12 +26,11 @@ export default function BackHeaderLayout({
     >
       <header className="sticky top-0 z-20 w-full border-b border-border bg-background pt-[env(safe-area-inset-top)]">
         <div className="relative mx-auto max-w-screen-xl h-[52px] px-4 flex items-center justify-between gap-4">
-          {/* 왼쪽 버튼 */}
           <Button
             variant="ghost"
             size="icon"
             className="h-6 w-6 p-0 cursor-pointer"
-            onClick={() => navigate(-1)}
+            onClick={() => (onBackClick ? onBackClick() : navigate(-1))}
             aria-label="뒤로가기"
           >
             <ArrowLeft className="!h-5 !w-5 text-foreground" />
