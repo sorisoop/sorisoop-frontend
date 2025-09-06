@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { cn } from "@/shared/lib/utils";
 import { useSelectVoice } from "@/entities/voice/api/mutations";
 import { SpinnerIcon } from "@/shared/components/ui/spinner";
+import { MinusCircle } from "lucide-react";
 
 export default function VoiceSelect() {
   const { data: voices } = useGetVoices();
@@ -38,12 +39,13 @@ export default function VoiceSelect() {
           onClick={() => handleSelect(null)}
         >
           <div className="flex items-center gap-3">
-            <Avatar className="w-12 h-12">
-              <AvatarImage src="/default.webp" alt="목소리를 선택하지 않음" />
-              <AvatarFallback>∅</AvatarFallback>
+            <Avatar className="w-12 h-12 bg-muted">
+              <AvatarFallback>
+                <MinusCircle className="w-6 h-6 text-muted-foreground" />
+              </AvatarFallback>
             </Avatar>
             <div className="flex flex-col">
-              <span className="font-semibold text-foreground">선택하지 않음</span>
+              <span className="font-semibold text-foreground">선택안함</span>
             </div>
           </div>
         </li>
