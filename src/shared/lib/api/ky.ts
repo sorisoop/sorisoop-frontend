@@ -11,6 +11,8 @@ import {
   MissionError,
   NotificationApiError,
   NotificationError,
+  PaymentHistoryApiError,
+  PaymentHistoryError,
   SubscriptionApiError,
   SubscriptionError,
   type AuthErrorCode,
@@ -18,6 +20,7 @@ import {
   type MemberErrorCode,
   type MissionErrorCode,
   type NotificationErrorCode,
+  type PaymentHistoryErrorCode,
   type SubscriptionErrorCode,
 } from "./errors";
 
@@ -77,6 +80,10 @@ export const api = ky.create({
 
           if (code && code in MissionError) {
             throw new MissionApiError(code as MissionErrorCode, status);
+          }
+
+          if (code && code in PaymentHistoryError) {
+            throw new PaymentHistoryApiError(code as PaymentHistoryErrorCode, status);
           }
 
           throw new Error(data.message ?? "알 수 없는 오류가 발생했습니다.");

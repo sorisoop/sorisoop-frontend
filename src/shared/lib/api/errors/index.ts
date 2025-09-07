@@ -5,3 +5,4 @@ export * from "./subscription-api-error";
 export * from "./custom-fairy-tale-error";
 export * from "./notification-error";
 export * from "./mission-api-error";
+export * from "./payment-history-api-error";
