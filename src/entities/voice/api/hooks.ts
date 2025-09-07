@@ -23,3 +23,22 @@ export const useTts = (
 
   return page === 1 ? createTtsQuery : getTtsQuery;
 };
+
+export const useCustomTts = (
+  voiceUuid: string,
+  customFairyTaleId: number,
+  page: number,
+  displayMode: "toast" | "fallback" = "toast"
+) => {
+  const createCustomTtsQuery = useQuery({
+    ...voiceQueryOptions.createCustomTts(voiceUuid, customFairyTaleId, displayMode),
+    enabled: page === 1,
+  });
+
+  const getTtsQuery = useQuery({
+    ...voiceQueryOptions.getTts(voiceUuid, page, displayMode),
+    enabled: page > 1,
+  });
+
+  return page === 1 ? createCustomTtsQuery : getTtsQuery;
+};

@@ -55,3 +55,21 @@ export const createTts = async (
     throw err;
   }
 };
+
+export const createCustomTts = async (
+  voiceUuid: string,
+  customFairyTaleId: number,
+  displayMode: "toast" | "fallback" = "toast"
+): Promise<TtsResponse> => {
+  try {
+    const res = await api
+      .post("tts/custom", { json: { voiceUuid, customFairyTaleId } })
+      .json<ApiResponse<TtsResponse>>();
+    return res.data;
+  } catch (err) {
+    if (err instanceof BaseApiError) {
+      err.displayMode = displayMode;
+    }
+    throw err;
+  }
+};

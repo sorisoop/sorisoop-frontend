@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useCustomFairyTaleContents } from "@/entities/fairy-tale/api/hooks";
-import { useTts } from "@/entities/voice/api/hooks";
+import { useCustomTts } from "@/entities/voice/api/hooks";
 import { TtsContext } from "@/features/fairy-tale/contexts";
 import { base64ToAudioUrl } from "@/shared/utils/voice";
 
@@ -17,7 +17,7 @@ export function CustomTtsProvider({
   const totalPages = pages?.length ?? 0;
   const [bookEnded, setBookEnded] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const { data: ttsData } = useTts(voiceUuid, id, currentPage + 1);
+  const { data: ttsData } = useCustomTts(voiceUuid, id, currentPage + 1);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const [isPlaying, setIsPlaying] = useState(false);

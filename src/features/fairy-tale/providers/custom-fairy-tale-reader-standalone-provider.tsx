@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { type FlipBookRef } from "react-pageflip";
-import { useFairyTaleContents } from "@/entities/fairy-tale/api/hooks";
+import { useCustomFairyTaleContents } from "@/entities/fairy-tale/api/hooks";
 import type { FairyTaleContentResponse } from "@/entities/fairy-tale/model";
 import { CustomFairyTaleReaderStandaloneContext } from "@/features/fairy-tale/contexts";
 
@@ -11,7 +11,7 @@ export function CustomFairyTaleReaderStandaloneProvider({ id, children }: { id: 
   const [currentPage, setCurrentPage] = useState(0);
 
   const flipBookRef = useRef<FlipBookRef | null>(null);
-  const { data } = useFairyTaleContents(id);
+  const { data } = useCustomFairyTaleContents(id);
 
   const nextPage = useCallback(() => {
     if (!data || !flipBookRef.current) return;
