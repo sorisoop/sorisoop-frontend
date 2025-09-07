@@ -6,3 +6,5 @@ export * from "./custom-fairy-tale-error";
 export * from "./notification-error";
 export * from "./mission-api-error";
 export * from "./payment-history-api-error";
+export * from "./profile-api-error";
+export * from "./voice-api-error";

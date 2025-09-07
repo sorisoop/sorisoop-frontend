@@ -13,15 +13,21 @@ import {
   NotificationError,
   PaymentHistoryApiError,
   PaymentHistoryError,
+  ProfileApiError,
+  ProfileError,
   SubscriptionApiError,
   SubscriptionError,
+  VoiceApiError,
+  VoiceError,
   type AuthErrorCode,
   type CustomFairyTaleErrorCode,
   type MemberErrorCode,
   type MissionErrorCode,
   type NotificationErrorCode,
   type PaymentHistoryErrorCode,
+  type ProfileErrorCode,
   type SubscriptionErrorCode,
+  type VoiceErrorCode,
 } from "./errors";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
@@ -84,6 +90,14 @@ export const api = ky.create({
 
           if (code && code in PaymentHistoryError) {
             throw new PaymentHistoryApiError(code as PaymentHistoryErrorCode, status);
+          }
+
+          if (code && code in ProfileError) {
+            throw new ProfileApiError(code as ProfileErrorCode, status);
+          }
+
+          if (code && code in VoiceError) {
+            throw new VoiceApiError(code as VoiceErrorCode, status);
           }
 
           throw new Error(data.message ?? "알 수 없는 오류가 발생했습니다.");
