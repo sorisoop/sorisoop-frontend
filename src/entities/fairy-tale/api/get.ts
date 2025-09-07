@@ -3,9 +3,19 @@ import type { ApiResponse } from "@/shared/lib/model/common-api-response";
 import type { FairyTaleCategoryResponse, FairyTaleContentResponse, FairyTaleResponse } from "../model";
 import { BaseApiError, type DisplayMode } from "@/shared/lib/api/errors";
 
-export const getFairyTaleContents = async (id: number) => {
-  const res = await api.get(`fairy-tale/${id}/contents`).json<ApiResponse<FairyTaleContentResponse[]>>();
-  return res.data;
+export const getFairyTaleContents = async (
+  id: number,
+  displayMode: DisplayMode = "fallback"
+): Promise<FairyTaleContentResponse[]> => {
+  try {
+    const res = await api.get(`fairy-tale/${id}/contents`).json<ApiResponse<FairyTaleContentResponse[]>>();
+    return res.data;
+  } catch (err) {
+    if (err instanceof BaseApiError) {
+      err.displayMode = displayMode;
+    }
+    throw err;
+  }
 };
 
 export const getFairyTaleByRandom = async (displayMode: DisplayMode = "fallback"): Promise<FairyTaleResponse[]> => {
@@ -146,7 +156,17 @@ export const getCustomFairyTaleDetailById = async (
   }
 };
 
-export const getCustomFairyTaleContents = async (id: number) => {
-  const res = await api.get(`fairy-tale/custom/${id}/contents`).json<ApiResponse<FairyTaleContentResponse[]>>();
-  return res.data;
+export const getCustomFairyTaleContents = async (
+  id: number,
+  displayMode: DisplayMode = "fallback"
+): Promise<FairyTaleContentResponse[]> => {
+  try {
+    const res = await api.get(`fairy-tale/custom/${id}/contents`).json<ApiResponse<FairyTaleContentResponse[]>>();
+    return res.data;
+  } catch (err) {
+    if (err instanceof BaseApiError) {
+      err.displayMode = displayMode;
+    }
+    throw err;
+  }
 };
