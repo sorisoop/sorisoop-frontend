@@ -7,19 +7,20 @@ import type { LoginSchema } from "@/features/auth/components/login/login-form";
 export const useSignup = (displayMode: DisplayMode = "toast") => {
   return useMutation({
     mutationFn: (payload: SignupRequest) => signup(payload, displayMode),
-    meta: { displayMode },
+    meta: { displayMode: "toast" },
   });
 };
 
 export const useLogin = (displayMode: DisplayMode = "toast") => {
   return useMutation({
     mutationFn: (payload: LoginSchema) => login(payload, displayMode),
-    meta: { displayMode },
+    meta: { displayMode: "toast" },
   });
 };
 
 export const useLogout = () => {
   return useMutation({
     mutationFn: logout,
+    meta: { displayMode: "toast" },
   });
 };

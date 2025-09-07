@@ -8,6 +8,7 @@ import { restartSubscription } from "./update";
 export const useStartSubscription = () => {
   return useMutation({
     mutationFn: startSubscription,
+    meta: { displayMode: "toast" },
   });
 };
 
@@ -16,6 +17,7 @@ export const useDeleteSubscription = () => {
 
   return useMutation({
     mutationFn: deleteSubcription,
+    meta: { displayMode: "toast" },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: subscriptionKeys.getSubscription,
@@ -29,6 +31,7 @@ export const useRestartSubscription = () => {
 
   return useMutation({
     mutationFn: restartSubscription,
+    meta: { displayMode: "toast" },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: subscriptionKeys.getSubscription,

@@ -5,5 +5,6 @@ import type { CreateMissionRequest } from "../models";
 export const useCreateMission = () => {
   return useMutation({
     mutationFn: (data: CreateMissionRequest) => createMission(data),
+    meta: { displayMode: "toast" },
   });
 };

@@ -7,6 +7,7 @@ export const useUpdateNotificationStatus = () => {
 
   return useMutation({
     mutationFn: () => updateNotificationStatus("toast"),
+    meta: { displayMode: "toast" },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: notificationKeys.getStatus });
     },
@@ -18,6 +19,7 @@ export function useReadNotification() {
 
   return useMutation({
     mutationFn: (notificationId: number) => readNotification(notificationId),
+    meta: { displayMode: "toast" },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: notificationKeys.getNotifications });
     },

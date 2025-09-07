@@ -10,6 +10,7 @@ export const useAddVoice = () => {
 
   return useMutation({
     mutationFn: ({ voiceFile, request }: AddVoiceRequest) => addVoice(voiceFile, request),
+    meta: { displayMode: "toast" },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: voiceKeys.getVoices });
     },
@@ -22,6 +23,7 @@ export const useUpdateVoice = () => {
   return useMutation({
     mutationFn: ({ voiceId, request }: { voiceId: number; request: UpdateVoiceRequest }) =>
       updateVoice(voiceId, request),
+    meta: { displayMode: "toast" },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: voiceKeys.getVoices });
     },
@@ -33,6 +35,7 @@ export const useDeleteVoice = () => {
 
   return useMutation({
     mutationFn: (voiceId: number) => deleteVoice(voiceId),
+    meta: { displayMode: "toast" },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: voiceKeys.getVoices });
     },
@@ -42,5 +45,6 @@ export const useDeleteVoice = () => {
 export const useSelectVoice = () => {
   return useMutation({
     mutationFn: (voiceId: number) => selectVoice(voiceId),
+    meta: { displayMode: "toast" },
   });
 };

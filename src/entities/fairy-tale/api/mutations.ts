@@ -9,7 +9,7 @@ export const useAddFavorite = () => {
 
   return useMutation({
     mutationFn: ({ fairyTaleId }: { fairyTaleId: number }) => addFavorite(fairyTaleId),
-
+    meta: { displayMode: "toast" },
     onSuccess: (_, variables) => {
       queryClient.setQueryData<FairyTaleResponse[]>(fairyTaleKeys.getFairyTaleByRandom(), (old) =>
         old ? old.map((t) => (t.id === variables.fairyTaleId ? { ...t, isFavorite: true } : t)) : old
@@ -33,7 +33,7 @@ export const useDeleteFavorite = () => {
 
   return useMutation({
     mutationFn: ({ fairyTaleId }: { fairyTaleId: number }) => deleteFavorite(fairyTaleId),
-
+    meta: { displayMode: "toast" },
     onSuccess: (_, variables) => {
       queryClient.setQueryData<FairyTaleResponse[]>(fairyTaleKeys.getFairyTaleByRandom(), (old) =>
         old ? old.map((t) => (t.id === variables.fairyTaleId ? { ...t, isFavorite: false } : t)) : old
@@ -62,6 +62,7 @@ export const useCreateCustomSynopsis = () => {
 export const useMakeCustomFairyTale = () => {
   return useMutation({
     mutationFn: (payload: MakeCustomFairyTaleRequest) => makeCustomFairyTale(payload),
+    meta: { displayMode: "toast" },
   });
 };
 
@@ -70,6 +71,7 @@ export const useDeleteCustomFairyTale = () => {
 
   return useMutation({
     mutationFn: (customFairyTaleId: number) => deleteCustomFairyTale(customFairyTaleId),
+    meta: { displayMode: "toast" },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: fairyTaleKeys.getCustomFairyTales(0) });
     },
