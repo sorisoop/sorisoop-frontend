@@ -86,7 +86,12 @@ export function CustomFairyTaleBookEndDialog() {
             다시보기
           </Button>
           <DrawerClose asChild>
-            <Button type="button" variant="outline" className="w-full cursor-pointer" onClick={handleGoBack}>
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full cursor-pointer border-border"
+              onClick={handleGoBack}
+            >
               돌아가기
             </Button>
           </DrawerClose>

@@ -26,12 +26,17 @@ const messages = ["끝까지 읽었어요!", "훌륭해요  마지막 장까지 
 export function FairyTaleBookEndDialog() {
   const randomMessage = useMemo(() => messages[Math.floor(Math.random() * messages.length)], []);
   const isDesktop = useIsDeskTop();
-  const { isBookEndOpen, setIsBookEndOpen } = useFairyTaleReaderStandaloneContext();
+  const { isBookEndOpen, setIsBookEndOpen, goToPage } = useFairyTaleReaderStandaloneContext();
   const navigate = useNavigate();
 
-  const goHome = () => {
+  const handleGoBack = () => {
     setIsBookEndOpen(false);
-    navigate("/");
+    navigate(-1);
+  };
+
+  const handleReplay = () => {
+    goToPage(0);
+    setIsBookEndOpen(false);
   };
 
   if (isDesktop) {
@@ -46,10 +51,10 @@ export function FairyTaleBookEndDialog() {
           </DialogHeader>
 
           <DialogFooter className="flex gap-2 mt-6 justify-end">
-            <Button variant="outline" onClick={() => setIsBookEndOpen(false)} className="cursor-pointer border-border">
+            <Button variant="outline" onClick={handleReplay} className="cursor-pointer">
               다시보기
             </Button>
-            <Button onClick={goHome} className="cursor-pointer bg-primary text-secondary font-semibold">
+            <Button onClick={handleGoBack} className="cursor-pointer bg-primary text-secondary font-semibold">
               돌아가기
             </Button>
           </DialogFooter>
@@ -77,11 +82,16 @@ export function FairyTaleBookEndDialog() {
           </DrawerDescription>
         </DrawerHeader>
         <DrawerFooter className="pt-4 flex flex-col gap-2">
-          <Button onClick={goHome} className="w-full bg-primary text-white font-semibold">
-            홈으로
+          <Button onClick={handleReplay} className="w-full bg-primary text-white font-semibold">
+            다시보기
           </Button>
           <DrawerClose asChild>
-            <Button type="button" variant="outline" className="w-full cursor-pointer border-border">
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full cursor-pointer border-border"
+              onClick={handleGoBack}
+            >
               돌아가기
             </Button>
           </DrawerClose>
