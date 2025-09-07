@@ -8,8 +8,10 @@ interface DrawFlowContextValue {
   previousStep: Step | null;
   direction: "forward" | "backward";
   result: CustomFairyTaleConceptResponse | null;
+  stepHistory: Step[];
   setStep: (step: Step) => void;
   setResult: (result: CustomFairyTaleConceptResponse | null) => void;
+  resetHistory: () => void;
 }
 
 export const DrawFlowContext = createContext<DrawFlowContextValue | null>(null);

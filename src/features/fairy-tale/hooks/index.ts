@@ -5,3 +5,4 @@ export { useCustomFairyTaleReaderStandaloneContext } from "./use-custom-fairy-ta
 export { useTtsContext } from "./use-tts-context";
 export { useCustomTtsContext } from "./use-custom-tts-context";
 export { useReadLog } from "./use-read-log";
+export { useCreateLog } from "./use-create-log";

@@ -22,7 +22,7 @@ export default function DrawError() {
           onClick={() => window.location.reload()}
           variant="default"
           size="lg"
-          className="cursor-pointer w-full max-w-xs"
+          className="cursor-pointer w-full max-w-xs text-secondary font-semibold"
         >
           다시 시도하기
         </Button>

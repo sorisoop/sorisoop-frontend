@@ -3,11 +3,12 @@ import { BackHeaderLayout } from "@/shared/layouts";
 import { Button } from "@/shared/components/ui/button";
 import { useDrawFlow } from "../hooks";
 import { useMakeCustomFairyTale } from "@/entities/fairy-tale/api/mutations";
+import { useCreateLog } from "@/features/fairy-tale/hooks";
 
 export default function DrawResult() {
   const { result, setStep } = useDrawFlow();
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-
+  const { logAction } = useCreateLog();
   const makeCustomFairyTaleMutation = useMakeCustomFairyTale();
 
   if (!result) {
@@ -29,6 +30,7 @@ export default function DrawResult() {
       },
       {
         onSuccess: () => {
+          logAction("CUSTOM_FAIRY_TALE");
           setStep("complete");
         },
         onError: () => {
