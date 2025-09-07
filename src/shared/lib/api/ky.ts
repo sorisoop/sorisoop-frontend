@@ -7,11 +7,14 @@ import {
   CustomFairyTaleError,
   MemberApiError,
   MemberError,
+  NotificationApiError,
+  NotificationError,
   SubscriptionApiError,
   SubscriptionError,
   type AuthErrorCode,
   type CustomFairyTaleErrorCode,
   type MemberErrorCode,
+  type NotificationErrorCode,
   type SubscriptionErrorCode,
 } from "./errors";
 
@@ -64,6 +67,9 @@ export const api = ky.create({
 
           if (code && code in CustomFairyTaleError) {
             throw new CustomFairyTaleApiError(code as CustomFairyTaleErrorCode, status);
+          }
+          if (code && code in NotificationError) {
+            throw new NotificationApiError(code as NotificationErrorCode, status);
           }
 
           throw new Error(data.message ?? "알 수 없는 오류가 발생했습니다.");
