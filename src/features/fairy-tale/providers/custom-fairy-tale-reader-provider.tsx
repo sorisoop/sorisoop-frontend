@@ -18,7 +18,7 @@ export function CustomFairyTaleReaderProvider({ id, children }: { id: number; ch
 
   const { data } = useCustomFairyTaleContents(id);
   const { currentPage, pause, bookEnded, setBookEnded } = useCustomTtsContext();
-  const { logPage } = useReadLog("FAIRY_TALE", id);
+  const { logAction } = useReadLog("FAIRY_TALE", id);
 
   /** 다음 페이지로 이동 */
   const nextPage = useCallback(() => {
@@ -26,14 +26,14 @@ export function CustomFairyTaleReaderProvider({ id, children }: { id: number; ch
 
     const book = flipBookRef.current.pageFlip();
     if (currentPage < data.length - 1) {
-      logPage(currentPage);
+      logAction(currentPage, "READ");
       pause();
       book.flip(currentPage + 1, "top");
     } else {
-      logPage(currentPage);
+      logAction(currentPage, "READ");
       setIsBookEndOpen(true);
     }
-  }, [currentPage, data, pause, logPage]);
+  }, [currentPage, data, pause, logAction]);
 
   /** 이전 페이지로 이동 */
   const prevPage = useCallback(() => {
@@ -53,7 +53,7 @@ export function CustomFairyTaleReaderProvider({ id, children }: { id: number; ch
       if (pageIndex < 0 || pageIndex >= data.length) return;
 
       const book = flipBookRef.current.pageFlip();
-      if (pageIndex > currentPage) logPage(currentPage);
+      if (pageIndex > currentPage) logAction(currentPage, "READ");
 
       pause();
       if (Math.abs(pageIndex - currentPage) > 1) {
@@ -62,7 +62,7 @@ export function CustomFairyTaleReaderProvider({ id, children }: { id: number; ch
         book.flip(pageIndex, "top");
       }
     },
-    [data, currentPage, pause, logPage]
+    [data, currentPage, pause, logAction]
   );
 
   /** 키보드 단축키 지원 */

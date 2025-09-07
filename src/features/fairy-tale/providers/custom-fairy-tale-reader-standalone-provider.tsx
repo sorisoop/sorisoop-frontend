@@ -13,20 +13,20 @@ export function CustomFairyTaleReaderStandaloneProvider({ id, children }: { id: 
 
   const flipBookRef = useRef<FlipBookRef | null>(null);
   const { data } = useCustomFairyTaleContents(id);
-  const { logPage } = useReadLog("CUSTOM_FAIRY_TALE", id);
+  const { logAction } = useReadLog("CUSTOM_FAIRY_TALE", id);
 
   const nextPage = useCallback(() => {
     if (!data || !flipBookRef.current) return;
     const book = flipBookRef.current.pageFlip();
     if (currentPage < data.length - 1) {
-      logPage(currentPage);
+      logAction(currentPage, "READ");
       setCurrentPage((p) => p + 1);
       book.flip(currentPage + 1, "top");
     } else {
-      logPage(currentPage);
+      logAction(currentPage, "READ");
       setIsBookEndOpen(true);
     }
-  }, [currentPage, data, logPage]);
+  }, [currentPage, data, logAction]);
 
   const prevPage = useCallback(() => {
     if (!data || !flipBookRef.current) return;
@@ -42,7 +42,7 @@ export function CustomFairyTaleReaderStandaloneProvider({ id, children }: { id: 
       if (!data || !flipBookRef.current) return;
       if (pageIndex < 0 || pageIndex >= data.length) return;
       const book = flipBookRef.current.pageFlip();
-      if (pageIndex > currentPage) logPage(currentPage);
+      if (pageIndex > currentPage) logAction(currentPage, "READ");
 
       setCurrentPage(pageIndex);
       if (Math.abs(pageIndex - currentPage) > 1) {
@@ -51,7 +51,7 @@ export function CustomFairyTaleReaderStandaloneProvider({ id, children }: { id: 
         book.flip(pageIndex, "top");
       }
     },
-    [data, currentPage]
+    [data, currentPage, logAction]
   );
 
   useEffect(() => {
