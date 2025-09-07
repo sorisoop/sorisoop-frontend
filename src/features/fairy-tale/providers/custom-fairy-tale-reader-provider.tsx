@@ -3,7 +3,7 @@ import { useCustomFairyTaleContents } from "@/entities/fairy-tale/api/hooks";
 import type { FairyTaleContentResponse } from "@/entities/fairy-tale/model";
 import { type FlipBookRef } from "react-pageflip";
 import { CustomFairyTaleReaderContext } from "../contexts";
-import { useTtsContext } from "@/features/fairy-tale/hooks";
+import { useCustomTtsContext, useReadLog } from "@/features/fairy-tale/hooks";
 
 /**
  * - 커스텀 동화책 뷰어 상태(Context) 관리 (TTS 연동)
@@ -17,7 +17,8 @@ export function CustomFairyTaleReaderProvider({ id, children }: { id: number; ch
   const flipBookRef = useRef<FlipBookRef | null>(null);
 
   const { data } = useCustomFairyTaleContents(id);
-  const { currentPage, pause, bookEnded, setBookEnded } = useTtsContext();
+  const { currentPage, pause, bookEnded, setBookEnded } = useCustomTtsContext();
+  const { logPage } = useReadLog("FAIRY_TALE", id);
 
   /** 다음 페이지로 이동 */
   const nextPage = useCallback(() => {
@@ -25,12 +26,14 @@ export function CustomFairyTaleReaderProvider({ id, children }: { id: number; ch
 
     const book = flipBookRef.current.pageFlip();
     if (currentPage < data.length - 1) {
+      logPage(currentPage);
       pause();
       book.flip(currentPage + 1, "top");
     } else {
+      logPage(currentPage);
       setIsBookEndOpen(true);
     }
-  }, [currentPage, data, pause]);
+  }, [currentPage, data, pause, logPage]);
 
   /** 이전 페이지로 이동 */
   const prevPage = useCallback(() => {
@@ -50,6 +53,8 @@ export function CustomFairyTaleReaderProvider({ id, children }: { id: number; ch
       if (pageIndex < 0 || pageIndex >= data.length) return;
 
       const book = flipBookRef.current.pageFlip();
+      if (pageIndex > currentPage) logPage(currentPage);
+
       pause();
       if (Math.abs(pageIndex - currentPage) > 1) {
         book.turnToPage(pageIndex);
@@ -57,7 +62,7 @@ export function CustomFairyTaleReaderProvider({ id, children }: { id: number; ch
         book.flip(pageIndex, "top");
       }
     },
-    [data, currentPage, pause]
+    [data, currentPage, pause, logPage]
   );
 
   /** 키보드 단축키 지원 */

@@ -3,7 +3,7 @@ import { type FlipBookRef } from "react-pageflip";
 import { useFairyTaleContents } from "@/entities/fairy-tale/api/hooks";
 import type { FairyTaleContentResponse } from "@/entities/fairy-tale/model";
 import { FairyTaleReaderContext } from "@/features/fairy-tale/contexts";
-import { useTtsContext } from "@/features/fairy-tale/hooks";
+import { useReadLog, useTtsContext } from "@/features/fairy-tale/hooks";
 
 /**
  * - 동화책 뷰어 상태(Context) 관리 (UI 전용)
@@ -18,6 +18,7 @@ export function FairyTaleReaderProvider({ id, children }: { id: number; children
 
   const { data } = useFairyTaleContents(id);
   const { currentPage, pause, bookEnded, setBookEnded } = useTtsContext();
+  const { logPage } = useReadLog("FAIRY_TALE", id);
 
   /**
    * 다음 페이지로 이동
@@ -27,12 +28,14 @@ export function FairyTaleReaderProvider({ id, children }: { id: number; children
 
     const book = flipBookRef.current.pageFlip();
     if (currentPage < data.length - 1) {
+      logPage(currentPage);
       pause();
       book.flip(currentPage + 1, "top");
     } else {
+      logPage(currentPage);
       setIsBookEndOpen(true);
     }
-  }, [currentPage, data, pause]);
+  }, [currentPage, data, pause, logPage]);
 
   /**
    * 이전 페이지로 이동
@@ -56,6 +59,8 @@ export function FairyTaleReaderProvider({ id, children }: { id: number; children
       if (pageIndex < 0 || pageIndex >= data.length) return;
 
       const book = flipBookRef.current.pageFlip();
+      if (pageIndex > currentPage) logPage(currentPage);
+
       pause();
       if (Math.abs(pageIndex - currentPage) > 1) {
         book.turnToPage(pageIndex);
@@ -63,7 +68,7 @@ export function FairyTaleReaderProvider({ id, children }: { id: number; children
         book.flip(pageIndex, "top");
       }
     },
-    [data, currentPage, pause]
+    [data, currentPage, pause, logPage]
   );
 
   /**

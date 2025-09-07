@@ -3,6 +3,7 @@ import { type FlipBookRef } from "react-pageflip";
 import { useFairyTaleContents } from "@/entities/fairy-tale/api/hooks";
 import type { FairyTaleContentResponse } from "@/entities/fairy-tale/model";
 import { FairyTaleReaderStandaloneContext } from "@/features/fairy-tale/contexts/fairy-tale-reader-standalone-context";
+import { useReadLog } from "@/features/fairy-tale/hooks";
 
 export function FairyTaleReaderStandaloneProvider({ id, children }: { id: number; children: React.ReactNode }) {
   const [isOverlayOpen, setIsOverlayOpen] = useState(false);
@@ -12,17 +13,20 @@ export function FairyTaleReaderStandaloneProvider({ id, children }: { id: number
 
   const flipBookRef = useRef<FlipBookRef | null>(null);
   const { data } = useFairyTaleContents(id);
+  const { logPage } = useReadLog("FAIRY_TALE", id);
 
   const nextPage = useCallback(() => {
     if (!data || !flipBookRef.current) return;
     const book = flipBookRef.current.pageFlip();
     if (currentPage < data.length - 1) {
+      logPage(currentPage);
       setCurrentPage((p) => p + 1);
       book.flip(currentPage + 1, "top");
     } else {
+      logPage(currentPage);
       setIsBookEndOpen(true);
     }
-  }, [currentPage, data]);
+  }, [currentPage, data, logPage]);
 
   const prevPage = useCallback(() => {
     if (!data || !flipBookRef.current) return;
@@ -38,14 +42,17 @@ export function FairyTaleReaderStandaloneProvider({ id, children }: { id: number
       if (!data || !flipBookRef.current) return;
       if (pageIndex < 0 || pageIndex >= data.length) return;
       const book = flipBookRef.current.pageFlip();
+      if (pageIndex > currentPage) logPage(currentPage);
+
       setCurrentPage(pageIndex);
+
       if (Math.abs(pageIndex - currentPage) > 1) {
         book.turnToPage(pageIndex);
       } else {
         book.flip(pageIndex, "top");
       }
     },
-    [data, currentPage]
+    [data, currentPage, logPage]
   );
 
   useEffect(() => {
