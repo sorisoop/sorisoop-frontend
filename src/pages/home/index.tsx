@@ -1,5 +1,4 @@
 import { Suspense, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/shared/components/ui/tabs";
 import { CommonLayout } from "@/shared/layouts";
 import { FairyTaleCard } from "@/features/fairy-tale/components/variants";
@@ -15,7 +14,6 @@ import {
 
 export default function HomePage() {
   const [homeFilter, setHomeFilter] = useState<"전체" | "창작 동화">("전체");
-  const navigate = useNavigate();
 
   return (
     <CommonLayout title="">
@@ -43,7 +41,6 @@ export default function HomePage() {
           <TabsTrigger
             key="전시회"
             value="전시회"
-            onClick={() => navigate("/exhibition")}
             className={[
               "relative h-10 px-0 text-base font-bold tracking-tight cursor-pointer",
               "text-muted-foreground hover:text-foreground",

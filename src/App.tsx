@@ -25,7 +25,6 @@ const CustomFairyTaleReaderPage = lazy(() => import("@/pages/fairy-tale/custom/r
 const CustomFairyTaleReaderStandalonePage = lazy(() => import("@/pages/fairy-tale/custom/read/no-tts"));
 const NotificationsPage = lazy(() => import("@/pages/notifications"));
 const NotificationSettingsPage = lazy(() => import("@/pages/settings/notification"));
-const ExhibitionPage = lazy(() => import("@/pages/exhibition"));
 
 const ParentsPage = lazy(() => import("@/pages/parents"));
 const ParentsMyPage = lazy(() => import("@/pages/parents/my"));
@@ -66,8 +65,6 @@ export default function App() {
         <Route path="/notifications" element={<NotificationsPage />} />
 
         <Route path="/settings/notification" element={<NotificationSettingsPage />} />
-
-        <Route path="/exhibition" element={<ExhibitionPage />} />
 
         <Route path="/parents" element={<ParentsPage />} />
         <Route path="/parents/my" element={<ParentsMyPage />} />
