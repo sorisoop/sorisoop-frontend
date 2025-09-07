@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Play } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 import type { FairyTaleResponse } from "@/entities/fairy-tale/model";
 import { Badge } from "@/shared/components/ui/badge";
@@ -8,9 +8,11 @@ import { FairyTaleCard } from "../variants";
 export default function CustomFairyTaleDetailMobile({
   fairyTale,
   similarTales,
+  children,
 }: {
   fairyTale: FairyTaleResponse;
   similarTales: FairyTaleResponse[];
+  children: React.ReactNode;
 }) {
   const navigate = useNavigate();
 
@@ -45,13 +47,8 @@ export default function CustomFairyTaleDetailMobile({
         </div>
 
         <div className="mt-4 flex flex-col gap-3">
-          <Button
-            className="w-full h-10 rounded-md text-base font-semibold gap-2 cursor-pointer shadow-md text-secondary"
-            onClick={() => navigate(`/fairy-tale/custom/${fairyTale.id}/read`)}
-          >
-            <Play className="!w-5 !h-5" />
-            보기
-          </Button>
+          {children}
+
           <div className="flex gap-3">
             <Button
               variant="outline"

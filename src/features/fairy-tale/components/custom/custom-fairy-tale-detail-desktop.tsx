@@ -1,10 +1,16 @@
 import { useNavigate } from "react-router-dom";
-import { ArrowLeft, Play } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
 import { Button } from "@/shared/components/ui/button";
 import type { FairyTaleResponse } from "@/entities/fairy-tale/model";
 import { Badge } from "@/shared/components/ui/badge";
 
-export default function CustomFairyTaleDetailDesktop({ fairyTale }: { fairyTale: FairyTaleResponse }) {
+export default function CustomFairyTaleDetailDesktop({
+  fairyTale,
+  children,
+}: {
+  fairyTale: FairyTaleResponse;
+  children: React.ReactNode;
+}) {
   const navigate = useNavigate();
 
   return (
@@ -37,13 +43,7 @@ export default function CustomFairyTaleDetailDesktop({ fairyTale }: { fairyTale:
         </div>
 
         <div className="mt-6 flex flex-col gap-4 w-full max-w-md">
-          <Button
-            className="w-full h-12 text-secondary text-base font-semibold gap-2 cursor-pointer shadow-lg"
-            onClick={() => navigate(`/fairy-tale/custom/${fairyTale.id}/read`)}
-          >
-            <Play className="w-5 h-5" />
-            보기
-          </Button>
+          {children}
 
           <div className="flex gap-3 w-full">
             <Button

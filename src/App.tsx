@@ -21,7 +21,8 @@ const LoginPage = lazy(() => import("@/pages/auth/login"));
 const SignupPage = lazy(() => import("@/pages/auth/signup"));
 const ProfilePage = lazy(() => import("@/pages/profile"));
 const CustomFairyTaleDetailPage = lazy(() => import("@/pages/fairy-tale/custom"));
-const CustomFairyTaleReaderPage = lazy(() => import("@/pages/fairy-tale/custom/read"));
+const CustomFairyTaleReaderPage = lazy(() => import("@/pages/fairy-tale/custom/read/with-tts"));
+const CustomFairyTaleReaderStandalonePage = lazy(() => import("@/pages/fairy-tale/custom/read/no-tts"));
 const NotificationsPage = lazy(() => import("@/pages/notifications"));
 const NotificationSettingsPage = lazy(() => import("@/pages/settings/notification"));
 const ExhibitionPage = lazy(() => import("@/pages/exhibition"));
@@ -52,7 +53,8 @@ export default function App() {
 
         <Route path="/fairy-tale/category/:id" element={<FairyTaleByCategoryPage />} />
         <Route path="/fairy-tale/custom/:id" element={<CustomFairyTaleDetailPage />} />
-        <Route path="/fairy-tale/custom/:id/read" element={<CustomFairyTaleReaderPage />} />
+        <Route path="/fairy-tale/custom/:id/read" element={<CustomFairyTaleReaderStandalonePage />} />
+        <Route path="/fairy-tale/custom/:id/read/:voiceUuid" element={<CustomFairyTaleReaderPage />} />
 
         <Route path="/subscription/manage" element={<SubscribeManagePage />} />
         <Route path="/payment/success" element={<PaymentSuccessPage />} />

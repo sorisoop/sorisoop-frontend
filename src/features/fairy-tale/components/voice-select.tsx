@@ -6,23 +6,29 @@ import { useSelectVoice } from "@/entities/voice/api/mutations";
 import { SpinnerIcon } from "@/shared/components/ui/spinner";
 import { MinusCircle } from "lucide-react";
 
-export default function VoiceSelect() {
+interface VoiceSelectProps {
+  mode?: "default" | "custom";
+}
+
+export default function VoiceSelect({ mode = "default" }: VoiceSelectProps) {
   const { data: voices } = useGetVoices();
   const { mutate: selectVoice, isPending } = useSelectVoice();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
+  const basePath = mode === "custom" ? "/fairy-tale/custom" : "/fairy-tale";
+
   const handleSelect = (voiceId: number | null) => {
     if (!id || isPending) return;
 
     if (voiceId === null) {
-      navigate(`/fairy-tale/${id}/read`);
+      navigate(`${basePath}/${id}/read`);
       return;
     }
 
     selectVoice(voiceId, {
       onSuccess: ({ voiceUuid }) => {
-        navigate(`/fairy-tale/${id}/read/${voiceUuid}`);
+        navigate(`${basePath}/${id}/read/${voiceUuid}`);
       },
     });
   };

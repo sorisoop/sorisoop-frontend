@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import { Play } from "lucide-react";
 import {
   FairyTaleDetailDesktop,
   FairyTaleDetailMobile,
@@ -9,7 +10,6 @@ import { useFairyTaleDetailById, useFairyTalesByCategoryInfinite } from "@/entit
 import { CATEGORY_MAP } from "@/shared/utils/category";
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "@/shared/components/ui/dialog";
 import { Button } from "@/shared/components/ui/button";
-import { Play } from "lucide-react";
 
 export default function FairyTaleDetailPage() {
   const { id } = useParams<{ id: string }>();
