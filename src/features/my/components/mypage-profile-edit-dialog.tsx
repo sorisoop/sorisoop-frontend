@@ -40,6 +40,19 @@ export default function MypageProfileEditDialog({ open, onOpenChange }: MypagePr
   const [targetId, setTargetId] = useState<number | null>(null);
   const [password, setPassword] = useState("");
 
+  const resetState = () => {
+    setStep("LIST");
+    setDirection("backward");
+    setTargetId(null);
+    setPassword("");
+  };
+  const handleOpenChange = (v: boolean) => {
+    if (!v) {
+      resetState();
+    }
+    onOpenChange(v);
+  };
+
   const goToPassword = (id: number) => {
     setTargetId(id);
     setDirection("forward");
@@ -61,10 +74,7 @@ export default function MypageProfileEditDialog({ open, onOpenChange }: MypagePr
       { profileId: targetId, password },
       {
         onSuccess: () => {
-          onOpenChange(false);
-          setPassword("");
-          setTargetId(null);
-          setStep("LIST");
+          handleOpenChange(false);
           navigate("/parents");
         },
       }
@@ -177,7 +187,7 @@ export default function MypageProfileEditDialog({ open, onOpenChange }: MypagePr
   );
   if (isDesktop) {
     return (
-      <Dialog open={open} onOpenChange={onOpenChange}>
+      <Dialog open={open} onOpenChange={handleOpenChange}>
         <DialogContent className="max-w-md">
           <DialogHeader>
             <DialogTitle>{step === "LIST" ? "프로필 변경" : "비밀번호 확인"}</DialogTitle>
@@ -194,7 +204,7 @@ export default function MypageProfileEditDialog({ open, onOpenChange }: MypagePr
   }
 
   return (
-    <Drawer open={open} onOpenChange={onOpenChange}>
+    <Drawer open={open} onOpenChange={handleOpenChange}>
       <DrawerContent
         className="px-4 pb-4 overflow-hidden"
         onOpenAutoFocus={(e) => {

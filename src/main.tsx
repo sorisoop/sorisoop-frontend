@@ -8,6 +8,8 @@ import { Toaster } from "@/shared/components/ui/sonner.tsx";
 import "./index.css";
 import App from "./App.tsx";
 
+type ToastPosition = "top-left" | "top-center" | "top-right" | "bottom-left" | "bottom-center" | "bottom-right";
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -18,10 +20,9 @@ const queryClient = new QueryClient({
     onError: (error, _variables, _context, mutation) => {
       if (error instanceof BaseApiError) {
         const mode = mutation.meta?.displayMode;
-        const position =
-          (mutation.meta?.position as "top-left" | "top-right" | "bottom-left" | "bottom-right") ?? "top-right";
         if (mode === "toast") {
-          toast.error(error.userMessage ?? error.userMessage, { position });
+          const position: ToastPosition = (mutation.meta?.position as ToastPosition) ?? "top-right";
+          toast.error(error.userMessage, { position });
         }
       }
     },

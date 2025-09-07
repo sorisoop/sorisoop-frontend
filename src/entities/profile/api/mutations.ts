@@ -13,6 +13,10 @@ export const useCreateProfile = () => {
 
   return useMutation({
     mutationFn: (data: AddProfileFormSubmit) => createProfile(data),
+    meta: {
+      displayMode: "toast",
+      position: "top-right",
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: profileKeys.getProfiles,
@@ -26,7 +30,10 @@ export const useSelectProfile = () => {
 
   return useMutation({
     mutationFn: ({ profileId, password }: SelectProfileSubmit) => selectProfile(profileId, password),
-
+    meta: {
+      displayMode: "toast",
+      position: "top-right",
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({
         predicate: (query) => Array.isArray(query.queryKey) && query.queryKey[0] === "fairy-tale",
@@ -47,6 +54,10 @@ export const useUpdateProfile = () => {
 
   return useMutation({
     mutationFn: (data: UpdateProfileFormSubmit) => updateProfile(data),
+    meta: {
+      displayMode: "toast",
+      position: "top-right",
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: profileKeys.getProfiles,
@@ -59,6 +70,10 @@ export const useDeleteProfile = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (profileId: number) => deleteProfile(profileId),
+    meta: {
+      displayMode: "toast",
+      position: "top-right",
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: profileKeys.getProfiles });
     },
