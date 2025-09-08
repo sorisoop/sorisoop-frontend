@@ -1,6 +1,7 @@
 import { Button } from "@/shared/components/ui/button";
 import { useBrandpayPayment, useSubscriptionContext } from "../hooks";
 import { useSubscription } from "@/entities/subscription/api/hooks";
+import { DialogClose } from "@/shared/components/ui/dialog";
 
 export default function SubscriptionDialogPaymentSubscribeButton() {
   const { selectedPlan } = useSubscriptionContext();
@@ -24,9 +25,11 @@ export default function SubscriptionDialogPaymentSubscribeButton() {
 
   if (subscription?.status === "CANCELLED") {
     return (
-      <Button size="lg" className="w-full h-12 cursor-pointer" onClick={handleClick}>
-        다시 구독하기
-      </Button>
+      <DialogClose asChild>
+        <Button size="lg" className="w-full h-12 cursor-pointer" onClick={handleClick}>
+          다시 구독하기
+        </Button>
+      </DialogClose>
     );
   }
 
@@ -39,8 +42,10 @@ export default function SubscriptionDialogPaymentSubscribeButton() {
   }
 
   return (
-    <Button size="lg" className="w-full h-12 cursor-pointer" onClick={handleClick}>
-      구독하기
-    </Button>
+    <DialogClose asChild>
+      <Button size="lg" className="w-full h-12" onClick={handleClick}>
+        구독하기
+      </Button>
+    </DialogClose>
   );
 }
