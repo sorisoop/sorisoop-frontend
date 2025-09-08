@@ -37,11 +37,8 @@ export default function VoiceAddPage() {
       },
       {
         onSuccess: () => {
-          toast.success("목소리가 등록되었습니다!");
+          toast.success("목소리가 등록되었습니다!", { position: "top-right" });
           navigate("/voice");
-        },
-        onError: () => {
-          toast.error("등록에 실패했습니다. 다시 시도해주세요.");
         },
       }
     );
