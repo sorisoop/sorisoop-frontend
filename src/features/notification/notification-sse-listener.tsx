@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 import { toast } from "sonner";
 import { useIsWebview } from "@/shared/hooks/use-is-webview";
@@ -13,28 +13,51 @@ export default function NotificationSseListener() {
   const disabledPaths = ["/auth/login", "/auth/signup", "/profile"];
   const shouldConnect = !disabledPaths.includes(location.pathname);
 
+  const retryDelay = useRef(1000); // 1초 시작
+  const retryTimer = useRef<NodeJS.Timeout | null>(null);
+  const esRef = useRef<EventSource | null>(null);
+
   useEffect(() => {
     if (!shouldConnect) return;
 
-    const es = new EventSource(`${API_BASE_URL}/notifications/subscribe`, {
-      withCredentials: true,
-    });
+    function connect() {
+      const es = new EventSource(`${API_BASE_URL}/notifications/subscribe`, {
+        withCredentials: true,
+      });
+      esRef.current = es;
 
-    es.addEventListener("CONNECTED", () => {});
+      es.addEventListener("CONNECTED", () => {
+        retryDelay.current = 1000;
+      });
 
-    es.addEventListener("make-fairy-tale-complete", (e) => {
-      const data = (e as MessageEvent).data;
+      es.addEventListener("make-fairy-tale-complete", (e) => {
+        const data = (e as MessageEvent).data;
 
-      if (isWebView) WebViewFacade.sendNotification(data);
-      else toast.success(`동화 생성이 완료됐습니다.`);
-    });
+        if (isWebView) WebViewFacade.sendNotification(data);
+        else
+          toast.success("동화 생성이 완료됐습니다.", {
+            position: "top-right",
+          });
+      });
 
-    es.onerror = () => {
-      es.close();
-    };
+      es.onerror = () => {
+        es.close();
+        esRef.current = null;
+
+        const delay = retryDelay.current;
+        retryDelay.current = Math.min(delay * 2, 30000);
+
+        retryTimer.current = setTimeout(() => {
+          connect();
+        }, delay);
+      };
+    }
+
+    connect();
 
     return () => {
-      es.close();
+      esRef.current?.close();
+      if (retryTimer.current) clearTimeout(retryTimer.current);
     };
   }, [isWebView, shouldConnect]);
 
