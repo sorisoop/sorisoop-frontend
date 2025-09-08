@@ -1,6 +1,10 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { getGivenMissionsQueryOptions } from "./query-options";
+import { missionQueryOptions } from "./query-options";
 
 export function useGivenMissions(childProfileId: number) {
-  return useSuspenseQuery(getGivenMissionsQueryOptions(childProfileId));
+  return useSuspenseQuery(missionQueryOptions.getGivenMissions(childProfileId));
+}
+
+export function useMissionDetail(missionId: number) {
+  return useSuspenseQuery(missionQueryOptions.getMissionDetail(missionId));
 }

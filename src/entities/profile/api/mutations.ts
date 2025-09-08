@@ -13,10 +13,7 @@ export const useCreateProfile = () => {
 
   return useMutation({
     mutationFn: (data: AddProfileFormSubmit) => createProfile(data),
-    meta: {
-      displayMode: "toast",
-      position: "top-right",
-    },
+    meta: { displayMode: "toast" },
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: profileKeys.getProfiles,
@@ -30,10 +27,7 @@ export const useSelectProfile = () => {
 
   return useMutation({
     mutationFn: ({ profileId, password }: SelectProfileSubmit) => selectProfile(profileId, password),
-    meta: {
-      displayMode: "toast",
-      position: "top-right",
-    },
+    meta: { displayMode: "toast" },
     onSuccess: () => {
       queryClient.invalidateQueries({
         predicate: (query) => Array.isArray(query.queryKey) && query.queryKey[0] === "fairy-tale",

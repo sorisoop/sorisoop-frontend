@@ -23,3 +23,18 @@ export interface GetGivenMissionResponse {
   missionStatus: MissionStatus;
   progressRate: number;
 }
+
+export interface MissionDetailResponse {
+  missionType: "CREATE_FAIRY_TALE" | "READ_BOOK" | "READ_CATEGORY";
+  targetCount: number;
+  completedCount: number;
+  category: string | null;
+  readBookMissionInfoDtos:
+    | {
+        fairyTaleId: number;
+        title: string;
+        thumbnailImage: string;
+        read: boolean;
+      }[]
+    | null;
+}

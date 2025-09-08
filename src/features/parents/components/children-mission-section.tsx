@@ -1,0 +1,29 @@
+import { ChevronRight } from "lucide-react";
+import { ChildMissionAccordion } from "@/features/parents/components";
+import { useProfiles } from "@/entities/profile/api/hooks";
+import { Button } from "@/shared/components/ui/button";
+import { useNavigate } from "react-router-dom";
+import CategoryChart from "./category-chart";
+
+export default function ChildrenMissionSection() {
+  const { data: profiles } = useProfiles();
+  const navigate = useNavigate();
+  const children = profiles?.filter((profile) => profile.role === "CHILD") ?? [];
+
+  return (
+    <div className="space-y-4 w-full">
+      <div className="flex items-center justify-between">
+        <h3 className="text-lg font-semibold">아이들</h3>
+        <Button variant="ghost" size="sm" className="cursor-pointer" onClick={() => navigate("/parents/children")}>
+          전체보기 <ChevronRight className="h-4 w-4 ml-1" />
+        </Button>
+      </div>
+      {children.map((child) => (
+        <div key={child.id} className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <ChildMissionAccordion child={child} />
+          <CategoryChart childId={child.id} nickname={child.nickname} />
+        </div>
+      ))}
+    </div>
+  );
+}

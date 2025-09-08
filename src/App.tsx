@@ -28,7 +28,7 @@ const NotificationSettingsPage = lazy(() => import("@/pages/settings/notificatio
 
 const ParentsPage = lazy(() => import("@/pages/parents"));
 const ParentsMyPage = lazy(() => import("@/pages/parents/my"));
-const MissionPage = lazy(() => import("@/pages/parents/mission"));
+const MissionPage = lazy(() => import("@/pages/parents/create"));
 const ChildrenPage = lazy(() => import("@/pages/parents/children"));
 const ChildrenMissionPage = lazy(() => import("@/pages/parents/children/mission"));
 

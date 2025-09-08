@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { ParentsLayout } from "@/shared/layouts/parents";
-import { ChildrenMissionSection, ChildrenMissionSectionSkeleton } from "@/features/parents/child/components";
+import { ChildrenMissionSection, ChildrenMissionSectionSkeleton } from "@/features/parents/components";
 
 export default function ParentsPage() {
   return (
