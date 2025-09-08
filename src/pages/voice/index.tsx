@@ -1,67 +1,71 @@
+import { Link } from "react-router-dom";
+import { ErrorBoundary } from "react-error-boundary";
+import { Plus } from "lucide-react";
 import CommonLayout from "@/shared/layouts/common-layout";
 import { Button } from "@/shared/components/ui/button";
-import { Plus } from "lucide-react";
-import { Link } from "react-router-dom";
 import { cn } from "@/shared/lib/utils";
 import { useGetVoices } from "@/entities/voice/api/hooks";
+import { ErrorFallback } from "@/shared/components/error-boundary";
 
 export default function VoicePage() {
   const { data: voices } = useGetVoices();
 
   return (
     <CommonLayout title="목소리 추가">
-      <ul role="list" className="divide-y divide-border">
-        {voices.map((v) => (
-          <li key={v.id}>
-            <div className="relative flex items-center gap-4 md:gap-6 rounded-md py-4">
-              <span className="relative shrink-0 w-14 h-14">
-                <span className="absolute inset-0 rounded-full overflow-hidden bg-muted grid place-items-center">
-                  <img
-                    src={v.imageUrl}
-                    alt={v.title}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                    decoding="async"
-                  />
+      <ErrorBoundary fallback={<ErrorFallback />}>
+        <ul role="list" className="divide-y divide-border">
+          {voices.map((v) => (
+            <li key={v.id}>
+              <div className="relative flex items-center gap-4 md:gap-6 rounded-md py-4">
+                <span className="relative shrink-0 w-14 h-14">
+                  <span className="absolute inset-0 rounded-full overflow-hidden bg-muted grid place-items-center">
+                    <img
+                      src={v.imageUrl}
+                      alt={v.title}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </span>
                 </span>
-              </span>
 
-              <span className="flex-1 text-left">
-                <span className="block text-base md:text-lg font-semibold tracking-tight">{v.title}</span>
-              </span>
+                <span className="flex-1 text-left">
+                  <span className="block text-base md:text-lg font-semibold tracking-tight">{v.title}</span>
+                </span>
 
-              <div className="flex items-center gap-2 md:gap-3 pr-1">
-                <Button
-                  asChild
-                  variant="default"
-                  size="sm"
-                  className="rounded-md px-3 cursor-pointer text-secondary font-semibold"
-                >
-                  <Link to={`/voice/${v.id}/edit`} state={{ voice: v }}>
-                    관리
-                  </Link>
-                </Button>
+                <div className="flex items-center gap-2 md:gap-3 pr-1">
+                  <Button
+                    asChild
+                    variant="default"
+                    size="sm"
+                    className="rounded-md px-3 cursor-pointer text-secondary font-semibold"
+                  >
+                    <Link to={`/voice/${v.id}/edit`} state={{ voice: v }}>
+                      관리
+                    </Link>
+                  </Button>
+                </div>
               </div>
-            </div>
-          </li>
-        ))}
+            </li>
+          ))}
 
-        <li className="py-2">
-          <Link
-            to="/voice/add"
-            className={cn(
-              "flex items-center gap-4 md:gap-6 rounded-md py-3 md:py-4",
-              "text-left text-muted-foreground",
-              "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
-            )}
-          >
-            <span className="grid place-items-center rounded-full bg-muted shrink-0 w-14 h-14">
-              <Plus className="w-6 h-6" />
-            </span>
-            <span className="text-base md:text-lg font-semibold">목소리 추가하기</span>
-          </Link>
-        </li>
-      </ul>
+          <li className="py-2">
+            <Link
+              to="/voice/add"
+              className={cn(
+                "flex items-center gap-4 md:gap-6 rounded-md py-3 md:py-4",
+                "text-left text-muted-foreground",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+              )}
+            >
+              <span className="grid place-items-center rounded-full bg-muted shrink-0 w-14 h-14">
+                <Plus className="w-6 h-6" />
+              </span>
+              <span className="text-base md:text-lg font-semibold">목소리 추가하기</span>
+            </Link>
+          </li>
+        </ul>
+      </ErrorBoundary>
     </CommonLayout>
   );
 }
