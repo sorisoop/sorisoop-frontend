@@ -14,7 +14,7 @@ export default function MissionCompleted() {
         <p className="text-base text-muted-foreground mt-2">등록한 미션을 확인해보세요.</p>
       </div>
       <Button
-        onClick={() => navigate("/missions")}
+        onClick={() => navigate("/parents/children")}
         className="w-full max-w-xs font-semibold text-secondary cursor-pointer"
       >
         미션 목록으로 가기

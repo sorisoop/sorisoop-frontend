@@ -1,56 +1,53 @@
 import { BackHeaderLayout } from "@/shared/layouts";
 import { Progress } from "@/shared/components/ui/progress";
-import { BookOpen } from "lucide-react";
+import { BookOpen, BookMarked, Pencil } from "lucide-react";
+import { useParams } from "react-router-dom";
+import { useGivenMissions } from "@/entities/mission/api/hooks";
+import type { MissionType, MissionStatus, GetGivenMissionResponse } from "@/entities/mission/models";
 
-const mockMissions = [
-  {
-    missionId: "1",
-    title: "9월 독서 미션",
-    childName: "민수",
-    missionType: "READING",
-    startDate: "2025-09-01",
-    endDate: "2025-09-30",
-    missionStatus: "IN_PROGRESS",
-    progressRate: 50,
-  },
-  {
-    missionId: "2",
-    title: "공주 동화 3권 읽기",
-    childName: "지은",
-    missionType: "READING",
-    startDate: "2025-09-01",
-    endDate: "2025-09-15",
-    missionStatus: "COMPLETED",
-    progressRate: 100,
-  },
-  {
-    missionId: "3",
-    title: "10월 독서 챌린지",
-    childName: "민수",
-    missionType: "READING",
-    startDate: "2025-10-01",
-    endDate: "2025-10-31",
-    missionStatus: "NOT_STARTED",
-    progressRate: 0,
-  },
-];
+function getMissionIcon(type: MissionType) {
+  switch (type) {
+    case "READ_BOOK":
+      return <BookOpen className="h-6 w-6 text-foreground" />;
+    case "READ_CATEGORY":
+      return <BookMarked className="h-6 w-6 text-foreground" />;
+    case "CREATE_FAIRY_TALE":
+      return <Pencil className="h-6 w-6 text-foreground" />;
+    default:
+      return <BookOpen className="h-6 w-6 text-foreground" />;
+  }
+}
+
+function getMissionStatusInfo(status: MissionStatus, progressRate: number) {
+  if (progressRate === 0) {
+    return { label: "시작 전", className: "bg-gray-200 text-gray-700" };
+  }
+  if (progressRate === 100) {
+    return { label: "완료", className: "bg-green-500 text-white" };
+  }
+
+  switch (status) {
+    case "ONGOING":
+      return { label: "진행 중", className: "bg-primary text-white" };
+    case "FAILED":
+      return { label: "실패", className: "bg-destructive text-white" };
+    default:
+      return { label: status, className: "bg-gray-200 text-gray-700" };
+  }
+}
 
 export default function ChildrenMissionPage() {
-  //   const { childId } = useParams<{ childId: string }>();
+  const { childId } = useParams<{ childId: string }>();
+  const { data: missions, isLoading } = useGivenMissions(Number(childId));
 
   return (
     <BackHeaderLayout title="아이 미션">
-      <div className="space-y-5 py-6 px-4">
-        {mockMissions.map((mission) => {
-          const isDone = mission.progressRate === 100;
-          const statusLabel = mission.progressRate === 0 ? "대기" : isDone ? "완료" : "진행 중";
+      <div className="space-y-5 py-6">
+        {isLoading && <p className="text-sm text-muted-foreground">불러오는 중...</p>}
 
-          const statusColor =
-            mission.progressRate === 0
-              ? "bg-gray-100 text-gray-600"
-              : isDone
-              ? "bg-green-100 text-green-700"
-              : "bg-blue-100 text-blue-700";
+        {missions?.map((mission: GetGivenMissionResponse) => {
+          const isDone = mission.progressRate === 100;
+          const { label, className } = getMissionStatusInfo(mission.missionStatus, mission.progressRate);
 
           return (
             <div
@@ -63,25 +60,29 @@ export default function ChildrenMissionPage() {
                   isDone ? "bg-green-200" : "bg-blue-200"
                 }`}
               >
-                <BookOpen className="h-6 w-6 text-foreground" />
+                {getMissionIcon(mission.missionType)}
               </div>
 
               {/* 오른쪽 내용 */}
               <div className="flex-1">
                 <div className="flex items-center justify-between mb-1">
                   <h3 className="font-semibold text-lg">{mission.title}</h3>
-                  <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${statusColor}`}>{statusLabel}</span>
+                  <span className={`px-2 py-0.5 rounded-full text-xs font-medium ${className}`}>{label}</span>
                 </div>
 
-                <p className="text-sm text-muted-foreground mb-2">
-                  {mission.childName} • {mission.startDate} ~ {mission.endDate}
-                </p>
-
+                <div className="flex items-center gap-2 text-xs font-medium mb-2">
+                  <span className="px-2 py-0.5 rounded-full bg-primary/90 text-secondary">{mission.startDate}</span>
+                  <span className="px-2 py-0.5 rounded-full bg-primary/90 text-secondary">{mission.endDate}</span>
+                </div>
                 <Progress value={mission.progressRate} className="h-2" />
               </div>
             </div>
           );
         })}
+
+        {missions?.length === 0 && !isLoading && (
+          <p className="text-sm text-muted-foreground">아직 등록된 미션이 없습니다.</p>
+        )}
       </div>
     </BackHeaderLayout>
   );
