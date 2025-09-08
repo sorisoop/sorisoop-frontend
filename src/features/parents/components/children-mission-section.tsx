@@ -1,9 +1,8 @@
 import { ChevronRight } from "lucide-react";
-import { ChildMissionAccordion } from "@/features/parents/components";
+import { CategoryChart, ChildMissionAccordion } from "@/features/parents/components";
 import { useProfiles } from "@/entities/profile/api/hooks";
 import { Button } from "@/shared/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import CategoryChart from "./category-chart";
 
 export default function ChildrenMissionSection() {
   const { data: profiles } = useProfiles();

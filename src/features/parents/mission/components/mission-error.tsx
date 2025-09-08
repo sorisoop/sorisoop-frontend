@@ -19,7 +19,7 @@ export default function MissionError() {
         <Button variant="outline" onClick={() => window.location.reload()} className="font-semibold cursor-pointer">
           다시 시도하기
         </Button>
-        <Button onClick={() => navigate("/parents/children")} className="font-semibold text-secondary cursor-pointer">
+        <Button onClick={() => navigate("/parents")} className="font-semibold text-secondary cursor-pointer">
           미션 목록으로 가기
         </Button>
       </div>
