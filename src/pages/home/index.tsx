@@ -16,16 +16,28 @@ import { ErrorFallback } from "@/shared/components/error-boundary";
 import { AssignedMissionListSkeleton, MissionDetailDialog } from "@/features/mission/components";
 import AssignedMissionList from "@/features/mission/components/assigned-mission-list";
 import { FloatingCreateButton } from "@/shared/components";
+import { useNavigate } from "react-router-dom";
 
 export default function HomePage() {
-  const [homeFilter, setHomeFilter] = useState<"전체" | "창작 동화" | "전시회" | "미션">("전체");
+  const navigate = useNavigate();
+  const [homeFilter, setHomeFilter] = useState<"전체" | "창작 동화" | "갤러리" | "미션">("전체");
 
   return (
     <CommonLayout title="">
       <ErrorBoundary fallback={<ErrorFallback />}>
-        <Tabs value={homeFilter} onValueChange={(v) => setHomeFilter(v as typeof homeFilter)} className="w-full pt-2">
+        <Tabs
+          value={homeFilter}
+          onValueChange={(v) => {
+            if (v === "갤러리") {
+              navigate("/gallery");
+              return;
+            }
+            setHomeFilter(v as typeof homeFilter);
+          }}
+          className="w-full pt-2"
+        >
           <TabsList className="relative h-10 bg-transparent p-0 gap-8 rounded-none">
-            {(["전체", "창작 동화", "전시회", "미션"] as const).map((tabKey) => (
+            {(["전체", "창작 동화", "미션", "갤러리"] as const).map((tabKey) => (
               <TabsTrigger
                 key={tabKey}
                 value={tabKey}
@@ -45,7 +57,6 @@ export default function HomePage() {
               </TabsTrigger>
             ))}
           </TabsList>
-
           <TabsContent value="전체">
             <Hero
               title="동화 만들기"
@@ -75,17 +86,14 @@ export default function HomePage() {
               </Suspense>
             </section>
           </TabsContent>
-
           <TabsContent value="창작 동화">
             <Suspense fallback={<FairyTaleCard.GridSkeleton />}>
               <MyCustomFairyTale />
             </Suspense>
           </TabsContent>
-
-          <TabsContent value="전시회">
-            <div className="p-6 text-center text-muted-foreground">전시회 컨텐츠 준비 중...</div>
+          <TabsContent value="갤러리">
+            <div className="p-6 text-center text-muted-foreground">갤러리 컨텐츠 준비 중...</div>
           </TabsContent>
-
           <TabsContent value="미션">
             <Suspense fallback={<AssignedMissionListSkeleton />}>
               <AssignedMissionList>
