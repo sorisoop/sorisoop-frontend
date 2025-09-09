@@ -46,10 +46,9 @@ export default function Preview() {
     } else {
       audio.currentTime = 0;
       try {
-        audio.play(); // ✅ iPad 대응 → Promise 체인 제거
+        audio.play();
         setIsPlaying(true);
-      } catch (err) {
-        console.log("[Preview] audio.play() error:", err);
+      } catch {
         setIsPlaying(false);
       }
     }
