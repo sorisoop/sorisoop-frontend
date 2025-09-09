@@ -25,8 +25,12 @@ export default function DrawContent() {
       setStep("result");
     } catch (err) {
       if (err instanceof SubscriptionApiError) {
-        if (err.code === "SU013") {
-          setStep("subscription-required");
+        if (err instanceof SubscriptionApiError) {
+          if (err.code === "SU013") {
+            setStep("subscription-required");
+          } else {
+            setStep("error");
+          }
         } else {
           setStep("error");
         }
