@@ -13,22 +13,24 @@ export default function FloatingCreateButton() {
   return (
     <TooltipProvider>
       <Tooltip>
-        <TooltipTrigger asChild>
-          <div className="fixed bottom-32 left-1/2 -translate-x-1/2 w-full max-w-screen-xl px-4 z-30">
-            <div className="relative">
+        <div className="fixed bottom-20 left-1/2 -translate-x-1/2 w-full max-w-screen-xl px-4 z-30">
+          <div className="relative flex justify-end">
+            <TooltipTrigger asChild>
               <Button
                 asChild
                 size="icon"
-                className="absolute right-0 h-14 w-14 rounded-full shadow-lg bg-primary text-white hover:bg-primary/90"
+                className="h-14 w-14 rounded-full shadow-lg bg-primary text-white hover:bg-primary/90"
               >
                 <Link to="/draw">
                   <PenLine className="h-6 w-6" />
                 </Link>
               </Button>
-            </div>
+            </TooltipTrigger>
           </div>
-        </TooltipTrigger>
-        <TooltipContent side="left">그림 그리기</TooltipContent>
+        </div>
+        <TooltipContent side="left" className="text-secondary">
+          그림 그리기
+        </TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );
