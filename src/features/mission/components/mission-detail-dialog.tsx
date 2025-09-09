@@ -6,7 +6,7 @@ import type { MissionDetailResponse } from "@/entities/mission/models";
 import { Progress } from "@/shared/components/ui/progress";
 import { SpinnerIcon } from "@/shared/components/ui/spinner";
 
-export function MissionDetailDialog({
+export default function MissionDetailDialog({
   missionId,
   open,
   onOpenChange,

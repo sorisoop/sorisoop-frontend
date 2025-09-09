@@ -39,6 +39,10 @@ export default function MypageScreen() {
           </SubscriptionProvider>
         </Mypage.SubscribeBanner>
 
+        <Mypage.MenuSection title="미션">
+          <Mypage.MenuItem to="/missions">미션 관리</Mypage.MenuItem>
+        </Mypage.MenuSection>
+
         <Mypage.MenuSection title="구독">
           <Mypage.MenuItem to="/subscription/manage">구독 관리</Mypage.MenuItem>
           <Mypage.MenuItem onClick={openSettings}>카드 관리</Mypage.MenuItem>

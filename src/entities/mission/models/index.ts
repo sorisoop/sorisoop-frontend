@@ -38,3 +38,13 @@ export interface MissionDetailResponse {
       }[]
     | null;
 }
+
+export interface AssignedMissionResponse {
+  missionId: number;
+  title: string;
+  missionType: MissionType;
+  startDate: string;
+  endDate: string;
+  missionStatus: MissionStatus;
+  progressRate: number;
+}

@@ -1,10 +1,14 @@
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { missionQueryOptions } from "./query-options";
 
-export function useGivenMissions(childProfileId: number) {
+export const useGivenMissions = (childProfileId: number) => {
   return useSuspenseQuery(missionQueryOptions.getGivenMissions(childProfileId));
-}
+};
 
-export function useMissionDetail(missionId: number) {
+export const useMissionDetail = (missionId: number) => {
   return useSuspenseQuery(missionQueryOptions.getMissionDetail(missionId));
-}
+};
+
+export const useAssignedMissions = () => {
+  return useSuspenseQuery(missionQueryOptions.getAssignedMissions());
+};

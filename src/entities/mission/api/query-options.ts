@@ -1,9 +1,10 @@
 import { queryOptions } from "@tanstack/react-query";
-import { getGivenMissions, getMissionDetail } from "./get";
+import { getAssignedMissions, getGivenMissions, getMissionDetail } from "./get";
 
 export const missionKeys = {
   getGivenMissions: (childProfileId: number) => ["mission", "given", childProfileId] as const,
   getMissionDetail: (missionId: number) => ["mission", "detail", missionId] as const,
+  getAssignedMissions: () => ["mission", "assigned"] as const,
 };
 
 export const missionQueryOptions = {
@@ -21,5 +22,12 @@ export const missionQueryOptions = {
       queryFn: () => getMissionDetail(missionId),
       staleTime: 1000 * 60 * 1,
       gcTime: 1000 * 60 * 10,
+    }),
+  getAssignedMissions: () =>
+    queryOptions({
+      queryKey: missionKeys.getAssignedMissions(),
+      queryFn: () => getAssignedMissions(),
+      staleTime: 1000 * 60 * 5,
+      gcTime: 1000 * 60 * 30,
     }),
 };

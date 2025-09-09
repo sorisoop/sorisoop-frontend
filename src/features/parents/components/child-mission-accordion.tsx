@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { useGivenMissions } from "@/entities/mission/api/hooks";
 import { useCompletionStatistics } from "@/entities/statistics/api/hooks";
@@ -7,8 +5,8 @@ import type { ProfileResponse } from "@/entities/profile/model";
 import type { GetGivenMissionResponse } from "@/entities/mission/models";
 import { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from "@/shared/components/ui/accordion";
 import { Progress } from "@/shared/components/ui/progress";
-import { MissionStatusBadge } from "@/features/parents/components";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/shared/components/ui/select";
+import { MissionStatusBadge } from "@/features/mission/components";
 
 export default function ChildMissionAccordion({ child }: { child: ProfileResponse }) {
   const { data: missions } = useGivenMissions(child.id);

@@ -1,10 +1,10 @@
 import { Suspense } from "react";
+import { ErrorBoundary } from "react-error-boundary";
 import { useParams } from "react-router-dom";
 import { BackHeaderLayout } from "@/shared/layouts";
 import { ChildrenMissionList, ChildrenMissionListSkeleton } from "@/features/parents/components";
-import { MissionDetailDialog } from "@/features/parents/components/mission-detail-dialog";
-import { ErrorBoundary } from "react-error-boundary";
 import { ParentsErrorFallback } from "@/shared/components/error-boundary/";
+import { MissionDetailDialog } from "@/features/mission/components";
 
 export default function ChildrenMissionPage() {
   const { childId } = useParams<{ childId: string }>();
