@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { toast } from "sonner";
 import {
   Dialog,
   DialogContent,
@@ -30,9 +29,6 @@ export function ProfileParentPasswordDialog() {
           onSuccess: () => {
             setOpen(false);
             navigate("/parents");
-          },
-          onError: () => {
-            toast.error("비밀번호가 올바르지 않습니다.");
           },
         }
       );
@@ -74,7 +70,7 @@ export function ProfileParentPasswordDialog() {
             <Button variant="outline" onClick={() => setOpen(false)} className="cursor-pointer" type="button">
               취소
             </Button>
-            <Button onClick={handleConfirm} className="text-secondary font-semibold cursor-pointer" type="submit">
+            <Button className="text-secondary font-semibold cursor-pointer" type="submit">
               확인
             </Button>
           </DialogFooter>
