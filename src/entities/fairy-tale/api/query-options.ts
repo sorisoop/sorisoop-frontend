@@ -92,7 +92,7 @@ export const fairyTaleQueryOptions = {
   getCustomFairyTales: (id: number) => ({
     queryKey: fairyTaleKeys.getCustomFairyTales(id),
     queryFn: () => getMyCustomFairyTales(id),
-    staleTime: 1000 * 60 * 60 * 24,
+    staleTime: 0,
     gcTime: 1000 * 60 * 60 * 24,
   }),
 
