@@ -39,7 +39,7 @@ function redirectToLogin() {
 export const api = ky.create({
   prefixUrl: API_BASE_URL,
   credentials: "include",
-  timeout: 20000,
+  timeout: 50000,
   hooks: {
     afterResponse: [
       async (request, options, response) => {
