@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { AddVoiceRequest, UpdateVoiceRequest } from "@/entities/voice/model";
-import { addVoice, createTts, selectVoice } from "./create";
+import { addVoice, createCustomTts, createTts } from "./create";
 import { voiceKeys } from "./query-options";
 import { updateVoice } from "./update";
 import { deleteVoice } from "./delete";
@@ -24,9 +24,15 @@ export const useCreateTts = () => {
   });
 };
 
+export const useCreateCustomTts = () => {
+  return useMutation({
+    mutationFn: ({ speakerId, customFairyTaleId }: { speakerId: string; customFairyTaleId: number }) =>
+      createCustomTts(speakerId, customFairyTaleId),
+  });
+};
+
 export const useUpdateVoice = () => {
   const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: ({ voiceId, request }: { voiceId: number; request: UpdateVoiceRequest }) =>
       updateVoice(voiceId, request),
@@ -39,19 +45,11 @@ export const useUpdateVoice = () => {
 
 export const useDeleteVoice = () => {
   const queryClient = useQueryClient();
-
   return useMutation({
     mutationFn: (voiceId: number) => deleteVoice(voiceId),
     meta: { displayMode: "toast" },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: voiceKeys.getVoices });
     },
-  });
-};
-
-export const useSelectVoice = () => {
-  return useMutation({
-    mutationFn: (voiceId: number) => selectVoice(voiceId),
-    meta: { displayMode: "toast" },
   });
 };

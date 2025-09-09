@@ -27,8 +27,6 @@ export interface TtsResult {
 }
 
 export interface TtsResponse {
-  fairyTaleId: number | null;
-  profileId: number | null;
-  speakerId: string | null;
-  results: TtsResult[];
+  page: number;
+  audio_base64: string;
 }

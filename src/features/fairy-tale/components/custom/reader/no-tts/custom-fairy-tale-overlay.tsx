@@ -31,8 +31,6 @@ export function CustomFairyTaleOverlay() {
     }
   }, [isOverlayOpen, currentPage]);
 
-  if (!isOverlayOpen) return null;
-
   const totalPages = data.length;
   const title = data[0].title;
   const currentPageNumber = currentPage + 1;

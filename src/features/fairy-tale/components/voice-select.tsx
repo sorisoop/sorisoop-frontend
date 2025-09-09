@@ -2,7 +2,7 @@ import { useGetVoices } from "@/entities/voice/api/hooks";
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/components/ui/avatar";
 import { useNavigate, useParams } from "react-router-dom";
 import { cn } from "@/shared/lib/utils";
-import { useCreateTts } from "@/entities/voice/api/mutations";
+import { useCreateCustomTts, useCreateTts } from "@/entities/voice/api/mutations";
 import { SpinnerIcon } from "@/shared/components/ui/spinner";
 import { MinusCircle } from "lucide-react";
 
@@ -12,7 +12,10 @@ interface VoiceSelectProps {
 
 export default function VoiceSelect({ mode = "default" }: VoiceSelectProps) {
   const { data: voices } = useGetVoices();
-  const { mutate: createTts, isPending } = useCreateTts();
+  const { mutate: createTts, isPending: isPendingDefault } = useCreateTts();
+  const { mutate: createCustomTts, isPending: isPendingCustom } = useCreateCustomTts();
+  const isPending = isPendingDefault || isPendingCustom;
+
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
@@ -26,14 +29,25 @@ export default function VoiceSelect({ mode = "default" }: VoiceSelectProps) {
       return;
     }
 
-    createTts(
-      { speakerId, fairyTaleId: Number(id) },
-      {
-        onSuccess: (ttsData) => {
-          navigate(`${basePath}/${id}/read/with-voice`, { state: { ttsData } });
-        },
-      }
-    );
+    if (mode === "custom") {
+      createCustomTts(
+        { speakerId, customFairyTaleId: Number(id) },
+        {
+          onSuccess: () => {
+            navigate(`${basePath}/${id}/read/with-voice`, { state: { speakerId } });
+          },
+        }
+      );
+    } else {
+      createTts(
+        { speakerId, fairyTaleId: Number(id) },
+        {
+          onSuccess: () => {
+            navigate(`${basePath}/${id}/read/with-voice`, { state: { speakerId } });
+          },
+        }
+      );
+    }
   };
 
   return (
