@@ -2,7 +2,7 @@ import { useGetVoices } from "@/entities/voice/api/hooks";
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/components/ui/avatar";
 import { useNavigate, useParams } from "react-router-dom";
 import { cn } from "@/shared/lib/utils";
-import { useSelectVoice } from "@/entities/voice/api/mutations";
+import { useCreateTts } from "@/entities/voice/api/mutations";
 import { SpinnerIcon } from "@/shared/components/ui/spinner";
 import { MinusCircle } from "lucide-react";
 
@@ -12,25 +12,28 @@ interface VoiceSelectProps {
 
 export default function VoiceSelect({ mode = "default" }: VoiceSelectProps) {
   const { data: voices } = useGetVoices();
-  const { mutate: selectVoice, isPending } = useSelectVoice();
+  const { mutate: createTts, isPending } = useCreateTts();
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
 
   const basePath = mode === "custom" ? "/fairy-tale/custom" : "/fairy-tale";
 
-  const handleSelect = (voiceId: number | null) => {
+  const handleSelect = (speakerId: string | null) => {
     if (!id || isPending) return;
 
-    if (voiceId === null) {
+    if (speakerId === null) {
       navigate(`${basePath}/${id}/read`);
       return;
     }
 
-    selectVoice(voiceId, {
-      onSuccess: ({ voiceUuid }) => {
-        navigate(`${basePath}/${id}/read/${voiceUuid}`);
-      },
-    });
+    createTts(
+      { speakerId, fairyTaleId: Number(id) },
+      {
+        onSuccess: (ttsData) => {
+          navigate(`${basePath}/${id}/read/with-voice`, { state: { ttsData } });
+        },
+      }
+    );
   };
 
   return (
@@ -63,7 +66,7 @@ export default function VoiceSelect({ mode = "default" }: VoiceSelectProps) {
               "flex items-center justify-between py-3 cursor-pointer rounded hover:bg-muted transition-colors",
               isPending && "pointer-events-none opacity-50"
             )}
-            onClick={() => handleSelect(voice.id)}
+            onClick={() => handleSelect(voice.speakerId)}
           >
             <div className="flex items-center gap-3">
               <Avatar className="w-12 h-12">

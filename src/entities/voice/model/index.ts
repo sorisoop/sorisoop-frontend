@@ -3,6 +3,7 @@ export interface VoiceResponse {
   profileId: number;
   imageUrl: string;
   title: string;
+  speakerId: string;
 }
 
 export interface AddVoicePayload {
@@ -20,7 +21,14 @@ export interface UpdateVoiceRequest {
   imageUrl: string;
 }
 
-export interface TtsResponse {
+export interface TtsResult {
   page: number;
-  audio: string;
+  audio_base64: string;
+}
+
+export interface TtsResponse {
+  fairyTaleId: number | null;
+  profileId: number | null;
+  speakerId: string | null;
+  results: TtsResult[];
 }

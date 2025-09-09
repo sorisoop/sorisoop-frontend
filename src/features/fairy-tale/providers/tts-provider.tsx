@@ -1,15 +1,12 @@
-import { useFairyTaleContents } from "@/entities/fairy-tale/api/hooks";
-import { useTts } from "@/entities/voice/api/hooks";
+import type { TtsResponse } from "@/entities/voice/model";
 import { TtsContext } from "@/features/fairy-tale/contexts";
 import { base64ToAudioUrl } from "@/shared/utils/voice";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-export function TtsProvider({ id, voiceUuid, children }: { id: number; voiceUuid: string; children: React.ReactNode }) {
-  const { data: pages } = useFairyTaleContents(id);
-  const totalPages = pages?.length ?? 0;
+export function TtsProvider({ ttsData, children }: { ttsData: TtsResponse; children: React.ReactNode }) {
+  const totalPages = ttsData.results.length ?? 0;
   const [bookEnded, setBookEnded] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const { data: ttsData } = useTts(voiceUuid, id, currentPage + 1);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const [isPlaying, setIsPlaying] = useState(false);
@@ -18,14 +15,15 @@ export function TtsProvider({ id, voiceUuid, children }: { id: number; voiceUuid
   const [autoPlayEnabled, setAutoPlayEnabled] = useState(true);
 
   useEffect(() => {
-    if (!ttsData?.audio) return;
+    const currentResult = ttsData.results[currentPage];
+    if (!currentResult?.audio_base64) return;
 
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.src = "";
     }
 
-    const url = base64ToAudioUrl(ttsData.audio);
+    const url = base64ToAudioUrl(currentResult.audio_base64);
     const audio = new Audio(url);
     audioRef.current = audio;
 
@@ -54,7 +52,7 @@ export function TtsProvider({ id, voiceUuid, children }: { id: number; voiceUuid
       audio.pause();
       audio.src = "";
     };
-  }, [ttsData, totalPages]);
+  }, [ttsData, currentPage, totalPages]);
 
   const play = useCallback(() => {
     audioRef.current?.play();

@@ -1,23 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { useCustomFairyTaleContents } from "@/entities/fairy-tale/api/hooks";
-import { useCustomTts } from "@/entities/voice/api/hooks";
-import { TtsContext } from "@/features/fairy-tale/contexts";
+import { CustomTtsContext } from "@/features/fairy-tale/contexts";
 import { base64ToAudioUrl } from "@/shared/utils/voice";
+import type { TtsResponse } from "@/entities/voice/model";
 
-export function CustomTtsProvider({
-  id,
-  voiceUuid,
-  children,
-}: {
-  id: number;
-  voiceUuid: string;
-  children: React.ReactNode;
-}) {
-  const { data: pages } = useCustomFairyTaleContents(id);
-  const totalPages = pages?.length ?? 0;
+export function CustomTtsProvider({ ttsData, children }: { ttsData: TtsResponse; children: React.ReactNode }) {
+  const totalPages = ttsData.results.length ?? 0;
+
   const [bookEnded, setBookEnded] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const { data: ttsData } = useCustomTts(voiceUuid, id, currentPage + 1);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const [isPlaying, setIsPlaying] = useState(false);
@@ -26,14 +16,15 @@ export function CustomTtsProvider({
   const [autoPlayEnabled, setAutoPlayEnabled] = useState(true);
 
   useEffect(() => {
-    if (!ttsData?.audio) return;
+    const currentResult = ttsData.results[currentPage];
+    if (!currentResult?.audio_base64) return;
 
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.src = "";
     }
 
-    const url = base64ToAudioUrl(ttsData.audio);
+    const url = base64ToAudioUrl(currentResult.audio_base64);
     const audio = new Audio(url);
     audioRef.current = audio;
 
@@ -62,7 +53,7 @@ export function CustomTtsProvider({
       audio.pause();
       audio.src = "";
     };
-  }, [ttsData, totalPages, autoPlayEnabled]);
+  }, [ttsData, currentPage, totalPages, autoPlayEnabled]);
 
   const play = useCallback(() => {
     audioRef.current?.play();
@@ -79,7 +70,7 @@ export function CustomTtsProvider({
   }, []);
 
   return (
-    <TtsContext.Provider
+    <CustomTtsContext.Provider
       value={{
         currentPage,
         setCurrentPage,
@@ -97,6 +88,6 @@ export function CustomTtsProvider({
       }}
     >
       {children}
-    </TtsContext.Provider>
+    </CustomTtsContext.Provider>
   );
 }

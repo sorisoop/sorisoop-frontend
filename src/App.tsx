@@ -46,7 +46,7 @@ export default function App() {
 
         <Route path="/my" element={<MyPage />} />
         <Route path="/fairy-tale/:id" element={<FairyTaleDetailPage />} />
-        <Route path="/fairy-tale/:id/read/:voiceUuid" element={<FairyTaleReaderPage />} />
+        <Route path="/fairy-tale/:id/read/with-voice" element={<FairyTaleReaderPage />} />
         <Route path="/fairy-tale/:id/read" element={<FairyTaleReaderStandalonePage />} />
 
         <Route path="/fairy-tale/category/:id" element={<FairyTaleByCategoryPage />} />

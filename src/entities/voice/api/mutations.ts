@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { AddVoiceRequest, UpdateVoiceRequest } from "@/entities/voice/model";
-import { addVoice, selectVoice } from "./create";
+import { addVoice, createTts, selectVoice } from "./create";
 import { voiceKeys } from "./query-options";
 import { updateVoice } from "./update";
 import { deleteVoice } from "./delete";
@@ -14,6 +14,13 @@ export const useAddVoice = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: voiceKeys.getVoices });
     },
+  });
+};
+
+export const useCreateTts = () => {
+  return useMutation({
+    mutationFn: ({ speakerId, fairyTaleId }: { speakerId: string; fairyTaleId: number }) =>
+      createTts(speakerId, fairyTaleId),
   });
 };
 

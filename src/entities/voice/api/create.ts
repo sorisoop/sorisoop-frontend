@@ -41,12 +41,12 @@ export const selectVoice = async (
  * 첫 페이지 TTS 생성 요청
  */
 export const createTts = async (
-  voiceUuid: string,
+  speakerId: string,
   fairyTaleId: number,
   displayMode: "toast" | "fallback" = "toast"
 ): Promise<TtsResponse> => {
   try {
-    const res = await api.post("tts", { json: { voiceUuid, fairyTaleId } }).json<ApiResponse<TtsResponse>>();
+    const res = await api.post("tts", { json: { speakerId, fairyTaleId } }).json<ApiResponse<TtsResponse>>();
     return res.data;
   } catch (err) {
     if (err instanceof BaseApiError) {
