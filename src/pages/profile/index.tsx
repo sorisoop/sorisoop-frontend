@@ -6,40 +6,43 @@ import { ProfileGridSkeleton, ProfileManageDialog, ProfilePage } from "@/feature
 import { ProfileAddProvider } from "@/features/profile/providers/profile-add-provider";
 import { FloatingShapesBackground } from "@/widgets";
 import { ProfileDeleteProvider, ProfileParentPasswordProvider } from "@/features/profile/providers";
+import { ErrorBoundary } from "react-error-boundary";
+import { ErrorFallback } from "@/shared/components/error-boundary";
 
 export default function ProfilePageScreen() {
   return (
     <BackHeaderLayout title="">
-      <FloatingShapesBackground />
+      <ErrorBoundary fallback={<ErrorFallback />}>
+        <FloatingShapesBackground />
+        <ProfilePage>
+          <ProfilePage.Header />
+          <Suspense fallback={<ProfileGridSkeleton />}>
+            <ProfileDeleteProvider>
+              <ProfileParentPasswordProvider>
+                <ProfilePage.Grid>
+                  <ProfilePage.DeleteDialog />
+                  <ProfilePage.PasswordDialog />
+                  <ProfileAddProvider>
+                    <ProfilePage.AddCard>
+                      <ProfilePage.AddDialog />
+                    </ProfilePage.AddCard>
+                  </ProfileAddProvider>
+                </ProfilePage.Grid>
+              </ProfileParentPasswordProvider>
+            </ProfileDeleteProvider>
+          </Suspense>
 
-      <ProfilePage>
-        <ProfilePage.Header />
-        <Suspense fallback={<ProfileGridSkeleton />}>
-          <ProfileDeleteProvider>
-            <ProfileParentPasswordProvider>
-              <ProfilePage.Grid>
-                <ProfilePage.DeleteDialog />
-                <ProfilePage.PasswordDialog />
-                <ProfileAddProvider>
-                  <ProfilePage.AddCard>
-                    <ProfilePage.AddDialog />
-                  </ProfilePage.AddCard>
-                </ProfileAddProvider>
-              </ProfilePage.Grid>
-            </ProfileParentPasswordProvider>
-          </ProfileDeleteProvider>
-        </Suspense>
-
-        <ProfileManageDialog>
-          <ProfileManageDialog.Trigger>
-            <Button className="text-secondary font-semibold max-w-sm cursor-pointer">
-              <Settings className="!w-5 !h-5" />
-              프로필 관리
-            </Button>
-          </ProfileManageDialog.Trigger>
-          <ProfileManageDialog.Content />
-        </ProfileManageDialog>
-      </ProfilePage>
+          <ProfileManageDialog>
+            <ProfileManageDialog.Trigger>
+              <Button className="text-secondary font-semibold max-w-sm cursor-pointer">
+                <Settings className="!w-5 !h-5" />
+                프로필 관리
+              </Button>
+            </ProfileManageDialog.Trigger>
+            <ProfileManageDialog.Content />
+          </ProfileManageDialog>
+        </ProfilePage>
+      </ErrorBoundary>
     </BackHeaderLayout>
   );
 }
