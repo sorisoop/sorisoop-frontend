@@ -10,7 +10,7 @@ export const notificationQueryOptions = {
   getStatus: (displayMode: "toast" | "fallback" = "fallback") => ({
     queryKey: notificationKeys.getStatus,
     queryFn: () => getNotificationStatus(displayMode),
-    staleTime: Infinity,
+    staleTime: 0,
     gcTime: Infinity,
   }),
 
@@ -24,7 +24,7 @@ export const notificationQueryOptions = {
   getNotifications: (displayMode: "toast" | "fallback" = "fallback") => ({
     queryKey: notificationKeys.getNotifications,
     queryFn: () => getNotifications(displayMode),
-    staleTime: 30 * 1000,
+    staleTime: 0,
     gcTime: 5 * 60 * 1000,
   }),
 };

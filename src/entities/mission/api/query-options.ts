@@ -12,7 +12,7 @@ export const missionQueryOptions = {
     queryOptions({
       queryKey: missionKeys.getGivenMissions(childProfileId),
       queryFn: () => getGivenMissions(childProfileId),
-      staleTime: 1000 * 60 * 5,
+      staleTime: 0,
       gcTime: 1000 * 60 * 30,
     }),
 
@@ -20,14 +20,14 @@ export const missionQueryOptions = {
     queryOptions({
       queryKey: missionKeys.getMissionDetail(missionId),
       queryFn: () => getMissionDetail(missionId),
-      staleTime: 1000 * 60 * 1,
+      staleTime: 0,
       gcTime: 1000 * 60 * 10,
     }),
   getAssignedMissions: () =>
     queryOptions({
       queryKey: missionKeys.getAssignedMissions(),
       queryFn: () => getAssignedMissions(),
-      staleTime: 1000 * 60 * 5,
+      staleTime: 0,
       gcTime: 1000 * 60 * 30,
     }),
 };
