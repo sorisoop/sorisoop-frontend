@@ -2,20 +2,19 @@ import { useLocation, useParams } from "react-router-dom";
 import { FullScreenBackHeaderLayout } from "@/shared/layouts";
 import { FairyTaleReaderProvider, TtsProvider } from "@/features/fairy-tale/providers";
 import { FairyTaleReader } from "@/features/fairy-tale/components/reader/with-tts";
-import type { TtsResponse } from "@/entities/voice/model";
 
 export default function FairyTaleReaderPage() {
   const { id } = useParams<{ id: string }>();
   const { state } = useLocation();
   const fairyTaleId = id ? Number(id) : undefined;
-  const ttsData = state?.ttsData as TtsResponse | undefined;
+  const speakerId = state?.speakerId as string | undefined;
 
-  if (!fairyTaleId || !ttsData) {
+  if (!fairyTaleId || !speakerId) {
     return <div className="p-4">잘못된 접근입니다.</div>;
   }
 
   return (
-    <TtsProvider ttsData={ttsData}>
+    <TtsProvider fairyTaleId={fairyTaleId} speakerId={speakerId}>
       <FairyTaleReaderProvider id={fairyTaleId}>
         <FullScreenBackHeaderLayout
           rightSlot={

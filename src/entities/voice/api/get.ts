@@ -17,16 +17,36 @@ export const getVoices = async (displayMode: "toast" | "fallback" = "fallback"):
 
 /**
  * 페이지별 TTS 조회
- * @param voiceUuid 음성 UUID
- * @param page 조회할 페이지 번호 (1부터 시작)
  */
 export const getTts = async (
-  voiceUuid: string,
+  speakerId: string,
+  fairyTaleId: number,
   page: number,
   displayMode: "toast" | "fallback" = "toast"
 ): Promise<TtsResponse> => {
   try {
-    const res = await api.get(`tts/${voiceUuid}`, { searchParams: { page } }).json<ApiResponse<TtsResponse>>();
+    const res = await api
+      .get(`tts/${speakerId}/${fairyTaleId}`, { searchParams: { page } })
+      .json<ApiResponse<TtsResponse>>();
+    return res.data;
+  } catch (err) {
+    if (err instanceof BaseApiError) {
+      err.displayMode = displayMode;
+    }
+    throw err;
+  }
+};
+
+export const getCustomTts = async (
+  speakerId: string,
+  customFairyTaleId: number,
+  page: number,
+  displayMode: "toast" | "fallback" = "toast"
+): Promise<TtsResponse> => {
+  try {
+    const res = await api
+      .get(`tts/custom/${speakerId}/${customFairyTaleId}`, { searchParams: { page } })
+      .json<ApiResponse<TtsResponse>>();
     return res.data;
   } catch (err) {
     if (err instanceof BaseApiError) {

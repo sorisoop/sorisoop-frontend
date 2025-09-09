@@ -1,14 +1,16 @@
 import type { UseQueryOptions } from "@tanstack/react-query";
-import { createCustomTts, createTts } from "./create";
-import { getTts, getVoices } from "./get";
+import { getCustomTts, getTts, getVoices } from "./get";
 import type { TtsResponse } from "../model";
 
 export const voiceKeys = {
   getVoices: ["voices"] as const,
-  getTts: (voiceUuid: string, page: number) => ["tts", voiceUuid, page] as const,
-  createTts: (voiceUuid: string, fairyTaleId: number) => ["tts", "create", voiceUuid, fairyTaleId] as const,
-  createCustomTts: (voiceUuid: string, customFairyTaleId: number) =>
-    ["tts", "create", "custom", voiceUuid, customFairyTaleId] as const,
+  getTts: (speakerId: string, fairyTaleId: number, page: number) => ["tts", speakerId, fairyTaleId, page] as const,
+  getCustomTts: (speakerId: string, customFairyTaleId: number, page: number) =>
+    ["tts", "custom", speakerId, customFairyTaleId, page] as const,
+
+  createTts: (speakerId: string, fairyTaleId: number) => ["tts", "create", speakerId, fairyTaleId] as const,
+  createCustomTts: (speakerId: string, customFairyTaleId: number) =>
+    ["tts", "create", "custom", speakerId, customFairyTaleId] as const,
 };
 
 export const voiceQueryOptions = {
@@ -20,34 +22,25 @@ export const voiceQueryOptions = {
   }),
 
   getTts: (
-    voiceUuid: string,
+    speakerId: string,
+    fairyTaleId: number,
     page: number,
     displayMode: "toast" | "fallback" = "toast"
   ): UseQueryOptions<TtsResponse, Error, TtsResponse, ReturnType<typeof voiceKeys.getTts>> => ({
-    queryKey: voiceKeys.getTts(voiceUuid, page),
-    queryFn: () => getTts(voiceUuid, page, displayMode),
+    queryKey: voiceKeys.getTts(speakerId, fairyTaleId, page),
+    queryFn: () => getTts(speakerId, fairyTaleId, page, displayMode),
     staleTime: 1000 * 60 * 5,
     gcTime: 0,
   }),
 
-  createTts: (
-    voiceUuid: string,
-    fairyTaleId: number,
-    displayMode: "toast" | "fallback" = "toast"
-  ): UseQueryOptions<TtsResponse, Error, TtsResponse, ReturnType<typeof voiceKeys.createTts>> => ({
-    queryKey: voiceKeys.createTts(voiceUuid, fairyTaleId),
-    queryFn: () => createTts(voiceUuid, fairyTaleId, displayMode),
-    staleTime: 1000 * 60 * 5,
-    gcTime: 0,
-  }),
-
-  createCustomTts: (
-    voiceUuid: string,
+  getCustomTts: (
+    speakerId: string,
     customFairyTaleId: number,
+    page: number,
     displayMode: "toast" | "fallback" = "toast"
-  ): UseQueryOptions<TtsResponse, Error, TtsResponse, ReturnType<typeof voiceKeys.createCustomTts>> => ({
-    queryKey: voiceKeys.createCustomTts(voiceUuid, customFairyTaleId),
-    queryFn: () => createCustomTts(voiceUuid, customFairyTaleId, displayMode),
+  ): UseQueryOptions<TtsResponse, Error, TtsResponse, ReturnType<typeof voiceKeys.getCustomTts>> => ({
+    queryKey: voiceKeys.getCustomTts(speakerId, customFairyTaleId, page),
+    queryFn: () => getCustomTts(speakerId, customFairyTaleId, page, displayMode),
     staleTime: 1000 * 60 * 5,
     gcTime: 0,
   }),

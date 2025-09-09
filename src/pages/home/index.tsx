@@ -15,7 +15,6 @@ import {
 import { ErrorFallback } from "@/shared/components/error-boundary";
 import { AssignedMissionListSkeleton, MissionDetailDialog } from "@/features/mission/components";
 import AssignedMissionList from "@/features/mission/components/assigned-mission-list";
-import { useNavigate } from "react-router-dom";
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -103,6 +102,7 @@ export default function HomePage() {
             </Suspense>
           </TabsContent>
         </Tabs>
+        <FloatingCreateButton />
       </ErrorBoundary>
     </CommonLayout>
   );

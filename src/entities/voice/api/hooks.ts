@@ -1,44 +1,35 @@
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
-import { voiceQueryOptions } from "./query-options";
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { voiceKeys, voiceQueryOptions } from "./query-options";
+import { getCustomTts, getTts } from "./get";
+import type { TtsResponse } from "../model";
 
 export const useGetVoices = () => {
   return useSuspenseQuery(voiceQueryOptions.getVoices());
 };
 
 export const useTts = (
-  voiceUuid: string,
+  speakerId: string,
   fairyTaleId: number,
   page: number,
   displayMode: "toast" | "fallback" = "toast"
 ) => {
-  const createTtsQuery = useQuery({
-    ...voiceQueryOptions.createTts(voiceUuid, fairyTaleId, displayMode),
-    enabled: page === 1,
+  return useSuspenseQuery<TtsResponse>({
+    queryKey: voiceKeys.getTts(speakerId, fairyTaleId, page),
+    queryFn: () => getTts(speakerId, fairyTaleId, page, displayMode),
   });
-
-  const getTtsQuery = useQuery({
-    ...voiceQueryOptions.getTts(voiceUuid, page, displayMode),
-    enabled: page > 1,
-  });
-
-  return page === 1 ? createTtsQuery : getTtsQuery;
 };
 
+/**
+ * 커스텀 동화 TTS 조회
+ */
 export const useCustomTts = (
-  voiceUuid: string,
+  speakerId: string,
   customFairyTaleId: number,
   page: number,
   displayMode: "toast" | "fallback" = "toast"
 ) => {
-  const createCustomTtsQuery = useQuery({
-    ...voiceQueryOptions.createCustomTts(voiceUuid, customFairyTaleId, displayMode),
-    enabled: page === 1,
+  return useSuspenseQuery<TtsResponse>({
+    queryKey: voiceKeys.getCustomTts(speakerId, customFairyTaleId, page),
+    queryFn: () => getCustomTts(speakerId, customFairyTaleId, page, displayMode),
   });
-
-  const getTtsQuery = useQuery({
-    ...voiceQueryOptions.getTts(voiceUuid, page, displayMode),
-    enabled: page > 1,
-  });
-
-  return page === 1 ? createCustomTtsQuery : getTtsQuery;
 };

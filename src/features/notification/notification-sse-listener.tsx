@@ -35,7 +35,7 @@ export default function NotificationSseListener() {
 
         if (isWebView) WebViewFacade.sendNotification(data);
         else
-          toast.success("동화 생성이 완료됐습니다.", {
+          toast.success(data, {
             position: "top-right",
           });
       });
