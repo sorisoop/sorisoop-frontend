@@ -15,6 +15,7 @@ import {
 import { ErrorFallback } from "@/shared/components/error-boundary";
 import { AssignedMissionListSkeleton, MissionDetailDialog } from "@/features/mission/components";
 import AssignedMissionList from "@/features/mission/components/assigned-mission-list";
+import { FloatingCreateButton } from "@/shared/components";
 
 export default function HomePage() {
   const [homeFilter, setHomeFilter] = useState<"전체" | "창작 동화" | "전시회" | "미션">("전체");
@@ -95,6 +96,7 @@ export default function HomePage() {
             </Suspense>
           </TabsContent>
         </Tabs>
+        <FloatingCreateButton />
       </ErrorBoundary>
     </CommonLayout>
   );
