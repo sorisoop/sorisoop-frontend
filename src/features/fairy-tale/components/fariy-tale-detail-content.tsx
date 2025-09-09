@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { useParams } from "react-router-dom";
 import { Play } from "lucide-react";
 import { useFairyTaleDetailById, useFairyTalesByCategoryInfinite } from "@/entities/fairy-tale/api/hooks";
@@ -10,6 +11,8 @@ import {
   VoiceSelect,
 } from "@/features/fairy-tale/components";
 import { Button } from "@/shared/components/ui/button";
+import { Spinner } from "@/shared/components/ui/spinner";
+import { ErrorBoundary } from "react-error-boundary";
 
 export default function FairyTaleDetailContent() {
   const { id } = useParams<{ id: string }>();
@@ -30,7 +33,17 @@ export default function FairyTaleDetailContent() {
       <DialogContent>
         <DialogTitle>목소리 선택</DialogTitle>
         <DialogDescription className="sr-only">목소리를 선택해주세요</DialogDescription>
-        <VoiceSelect />
+        <ErrorBoundary
+          fallback={
+            <div className="p-4 text-sm text-destructive bg-destructive/10 rounded-md">
+              목소리를 불러오는 중 문제가 발생했어요.
+            </div>
+          }
+        >
+          <Suspense fallback={<Spinner />}>
+            <VoiceSelect />
+          </Suspense>
+        </ErrorBoundary>
       </DialogContent>
     </Dialog>
   );
