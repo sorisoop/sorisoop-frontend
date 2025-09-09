@@ -4,6 +4,8 @@ import { Suspense } from "react";
 import { FairyTaleCard } from "@/features/fairy-tale/components/variants";
 import FairyTaleByCategoryContent from "./fairy-tale-by-category-content";
 import { CATEGORY_REVERSE_MAP } from "@/shared/utils/category";
+import { ErrorBoundary } from "react-error-boundary";
+import { ErrorFallback } from "@/shared/components/error-boundary";
 
 export default function FairyTaleByCategoryPage() {
   const { id } = useParams<{ id: string }>();
@@ -12,9 +14,11 @@ export default function FairyTaleByCategoryPage() {
 
   return (
     <BackHeaderLayout title={categoryName}>
-      <Suspense fallback={<FairyTaleCard.GridSkeleton count={12} />}>
-        <FairyTaleByCategoryContent categoryId={categoryId} />
-      </Suspense>
+      <ErrorBoundary fallback={<ErrorFallback />}>
+        <Suspense fallback={<FairyTaleCard.GridSkeleton count={12} />}>
+          <FairyTaleByCategoryContent categoryId={categoryId} />
+        </Suspense>
+      </ErrorBoundary>
     </BackHeaderLayout>
   );
 }
