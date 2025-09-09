@@ -18,22 +18,20 @@ export default function Preview() {
     setIsPlaying(false);
   };
 
-  // 🔹 finalBlob 변화에 따라 URL 세팅
+  // 🔹 finalBlob 변화에 따라 초기화
   useEffect(() => {
     if (!finalBlob || finalBlob.size === 0) {
       stopAudio();
-      return;
     }
   }, [finalBlob]);
 
-  // 재생 끝나면 상태 리셋
+  // 🔹 재생 끝나면 상태 리셋
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
     const handleEnded = () => setIsPlaying(false);
     audio.addEventListener("ended", handleEnded);
-
     return () => {
       audio.removeEventListener("ended", handleEnded);
     };
@@ -47,10 +45,13 @@ export default function Preview() {
       stopAudio();
     } else {
       audio.currentTime = 0;
-      audio
-        .play()
-        .then(() => setIsPlaying(true))
-        .catch(() => setIsPlaying(false));
+      try {
+        audio.play(); // ✅ iPad 대응 → Promise 체인 제거
+        setIsPlaying(true);
+      } catch (err) {
+        console.log("[Preview] audio.play() error:", err);
+        setIsPlaying(false);
+      }
     }
   };
 
@@ -74,7 +75,17 @@ export default function Preview() {
             {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
             {isPlaying ? "정지" : "재생"}
           </Button>
-          <audio ref={audioRef} src={finalUrl} preload="auto" hidden />
+
+          <audio
+            ref={audioRef}
+            src={finalUrl}
+            preload="auto"
+            playsInline
+            webkit-playsinline="true"
+            x-webkit-airplay="allow"
+            controls={false}
+            style={{ display: "none" }}
+          />
         </div>
       </div>
 

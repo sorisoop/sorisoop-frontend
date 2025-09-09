@@ -50,7 +50,6 @@ export const api = ky.create({
         if (!response.ok && data) {
           const code = data.code as string;
 
-          // 🔹 AuthError 처리
           if (code && code in AuthError) {
             if (code === "AU010") {
               const success = await refreshAccessToken();

@@ -35,11 +35,8 @@ export default function RecordingDrawerContent({ className, children }: ContentP
       return;
     }
     const file = new File([tempBlob], "voice.webm", { type: tempBlob.type || "audio/webm" });
-    console.log("[record] file size:", file.size, "bytes");
-    console.log("[record] file size:", (file.size / 1024 / 1024).toFixed(2), "MB");
-
     setValue("voiceFile", file);
-    completeRecording(); // ✅ temp → final 이동
+    completeRecording();
   };
 
   /** 안내 문구 */
