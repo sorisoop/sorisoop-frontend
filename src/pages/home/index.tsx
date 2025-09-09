@@ -15,6 +15,8 @@ import {
 import { ErrorFallback } from "@/shared/components/error-boundary";
 import { AssignedMissionListSkeleton, MissionDetailDialog } from "@/features/mission/components";
 import AssignedMissionList from "@/features/mission/components/assigned-mission-list";
+import { FloatingCreateButton } from "@/shared/components";
+import { useNavigate } from "react-router-dom";
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -35,7 +37,7 @@ export default function HomePage() {
           className="w-full pt-2"
         >
           <TabsList className="relative h-10 bg-transparent p-0 gap-8 rounded-none">
-            {(["전체", "창작 동화", "갤러리", "미션"] as const).map((tabKey) => (
+            {(["전체", "창작 동화", "미션", "갤러리"] as const).map((tabKey) => (
               <TabsTrigger
                 key={tabKey}
                 value={tabKey}
