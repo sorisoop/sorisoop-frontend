@@ -14,7 +14,7 @@ export default function MyCustomFairyTale() {
         <Lottie animationData={paintBrush} play loop className="w-32 h-32 mb-4" />
         <h2 className="text-lg font-bold">아직 만든 동화책이 없어요</h2>
         <p className="text-muted-foreground mt-1">세상에 단 하나뿐인 동화를 만들어 보세요!</p>
-        <Button asChild size="sm" className="mt-4 text-secondary font-semibold">
+        <Button asChild size="sm" className="mt-4 text-secondary font-semibold w-xs max-w-xs h-10">
           <Link to="/draw">동화 만들러 가기</Link>
         </Button>
       </div>

@@ -20,7 +20,7 @@ export default function FavoriteFairyTaleContent() {
         <Lottie animationData={books} play loop className="w-40 h-40 mb-4" />
         <h2 className="text-lg font-bold">아직 찜한 동화책이 없어요</h2>
         <p className="text-muted-foreground mt-1">마음에 드는 동화책을 찜해 보세요!</p>
-        <Button asChild size="sm" className="mt-4 text-secondary font-semibold">
+        <Button asChild size="sm" className="mt-4 text-secondary font-semibold w-xs max-w-xs h-10">
           <Link to="/fairy-tale/category/0">동화 보러 가기</Link>
         </Button>
       </div>

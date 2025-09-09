@@ -13,16 +13,18 @@ import {
   MyCustomFairyTale,
 } from "@/widgets";
 import { ErrorFallback } from "@/shared/components/error-boundary";
+import { AssignedMissionListSkeleton, MissionDetailDialog } from "@/features/mission/components";
+import AssignedMissionList from "@/features/mission/components/assigned-mission-list";
 
 export default function HomePage() {
-  const [homeFilter, setHomeFilter] = useState<"전체" | "창작 동화">("전체");
+  const [homeFilter, setHomeFilter] = useState<"전체" | "창작 동화" | "전시회" | "미션">("전체");
 
   return (
     <CommonLayout title="">
       <ErrorBoundary fallback={<ErrorFallback />}>
         <Tabs value={homeFilter} onValueChange={(v) => setHomeFilter(v as typeof homeFilter)} className="w-full pt-2">
           <TabsList className="relative h-10 bg-transparent p-0 gap-8 rounded-none">
-            {(["전체", "창작 동화"] as const).map((tabKey) => (
+            {(["전체", "창작 동화", "전시회", "미션"] as const).map((tabKey) => (
               <TabsTrigger
                 key={tabKey}
                 value={tabKey}
@@ -41,19 +43,6 @@ export default function HomePage() {
                 {tabKey}
               </TabsTrigger>
             ))}
-            <TabsTrigger
-              key="전시회"
-              value="전시회"
-              className={[
-                "relative h-10 px-0 text-base font-bold tracking-tight cursor-pointer",
-                "text-muted-foreground hover:text-foreground",
-                "!rounded-none !bg-transparent !shadow-none",
-                "focus:outline-none focus-visible:outline-none",
-                "focus-visible:!ring-0 !ring-0 !ring-offset-0",
-              ].join(" ")}
-            >
-              전시회
-            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="전체">
@@ -89,6 +78,20 @@ export default function HomePage() {
           <TabsContent value="창작 동화">
             <Suspense fallback={<FairyTaleCard.GridSkeleton />}>
               <MyCustomFairyTale />
+            </Suspense>
+          </TabsContent>
+
+          <TabsContent value="전시회">
+            <div className="p-6 text-center text-muted-foreground">전시회 컨텐츠 준비 중...</div>
+          </TabsContent>
+
+          <TabsContent value="미션">
+            <Suspense fallback={<AssignedMissionListSkeleton />}>
+              <AssignedMissionList>
+                {(missionId, open, setOpen) => (
+                  <MissionDetailDialog missionId={missionId} open={open} onOpenChange={setOpen} />
+                )}
+              </AssignedMissionList>
             </Suspense>
           </TabsContent>
         </Tabs>
