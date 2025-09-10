@@ -16,13 +16,7 @@ export const base64ToAudioUrl = (base64: string): string => {
 
   // 여기서 MIME 탐지
   const mimeType = detectMimeType(base64);
-  console.log("🎧 Detected audio mimeType:", mimeType);
-
   const blob = new Blob([byteArray], { type: mimeType });
-  console.log("🎧 Blob type:", blob.type, "size:", blob.size);
-
   const url = URL.createObjectURL(blob);
-  console.log("🎧 Audio URL:", url);
-
   return url;
 };

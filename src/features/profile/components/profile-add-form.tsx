@@ -86,8 +86,6 @@ export function ProfileAddForm({
       ...data,
       file: imageFile,
     };
-
-    console.log(submitData);
     onSubmit(submitData);
   };
 
