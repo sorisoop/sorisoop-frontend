@@ -153,7 +153,7 @@ export function RecordingDrawerProvider({
             for (let i = 0; i < byteString.length; i++) {
               intArray[i] = byteString.charCodeAt(i);
             }
-            const blob = new Blob([intArray], { type: msg.mimeType || "audio/webm" });
+            const blob = new Blob([intArray], { type: "audio/wav" });
             setTempBlob(blob);
           }
           setPhase("review");

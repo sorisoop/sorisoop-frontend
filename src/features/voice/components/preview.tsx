@@ -18,14 +18,12 @@ export default function Preview() {
     setIsPlaying(false);
   };
 
-  // 🔹 finalBlob 변화에 따라 초기화
   useEffect(() => {
     if (!finalBlob || finalBlob.size === 0) {
       stopAudio();
     }
   }, [finalBlob]);
 
-  // 🔹 재생 끝나면 상태 리셋
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
