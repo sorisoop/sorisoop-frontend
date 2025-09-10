@@ -58,24 +58,26 @@ export function TtsProvider({ speakerId, fairyTaleId, children }: TtsProviderPro
       console.error("Audio error:", audio.error);
     };
 
+    const handleCanPlay = () => {
+      if (autoPlayEnabled) {
+        audio.play().catch((err) => {
+          console.error("Auto play failed:", err);
+          setIsPlaying(false);
+        });
+      }
+    };
+
     audio.addEventListener("loadedmetadata", handleLoaded);
     audio.addEventListener("timeupdate", handleTimeUpdate);
     audio.addEventListener("play", handlePlay);
     audio.addEventListener("pause", handlePause);
     audio.addEventListener("ended", handleEnded);
     audio.addEventListener("error", handleError);
-
-    if (autoPlayEnabled) {
-      audio.play().catch((err) => {
-        console.error("Auto play failed:", err);
-        setIsPlaying(false);
-      });
-    }
+    audio.addEventListener("canplaythrough", handleCanPlay);
 
     return () => {
-      audio.removeAttribute("src");
-      setTimeout(() => audio.load(), 50);
       audio.pause();
+      audio.removeAttribute("src");
       URL.revokeObjectURL(url);
 
       audio.removeEventListener("loadedmetadata", handleLoaded);
@@ -84,6 +86,7 @@ export function TtsProvider({ speakerId, fairyTaleId, children }: TtsProviderPro
       audio.removeEventListener("pause", handlePause);
       audio.removeEventListener("ended", handleEnded);
       audio.removeEventListener("error", handleError);
+      audio.removeEventListener("canplaythrough", handleCanPlay);
     };
   }, [ttsData, page, totalPages, autoPlayEnabled]);
 
