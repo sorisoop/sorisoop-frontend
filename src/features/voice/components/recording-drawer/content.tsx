@@ -1,11 +1,14 @@
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
 import { X, Play, Pause, CheckCircle2, RotateCcw } from "lucide-react";
+import { useFormContext } from "react-hook-form";
 import { Button } from "@/shared/components/ui/button";
 import { DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@/shared/components/ui/drawer";
 import { DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/shared/components/ui/dialog";
+import { useIsWebview } from "@/shared/hooks/use-is-webview";
 import { cn } from "@/shared/lib/utils";
 import { useRecordingDrawer } from "@/features/voice/hooks";
 import type { VoiceFormValues } from "@/features/voice/types";
-import { useFormContext } from "react-hook-form";
 
 type ContentProps = {
   className?: string;
@@ -27,26 +30,54 @@ export default function RecordingDrawerContent({ className, children }: ContentP
   } = useRecordingDrawer();
 
   const { setValue } = useFormContext<VoiceFormValues>();
+  const { isWebView } = useIsWebview();
 
-  /** 녹음 완료 → react-hook-form에 File 주입 */
+  const [elapsedTime, setElapsedTime] = useState(0);
+  const minDuration = 10;
+
+  const formatTime = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+  };
+
   const handleComplete = () => {
     if (!tempBlob) {
-      console.log("[record] tempBlob 없음");
+      toast.error(`목소리 파일이 저장되지 않았습니다.`, { position: "top-right" });
       return;
     }
-    const file = new File([tempBlob], "voice.webm", { type: tempBlob.type || "audio/webm" });
+
+    if (elapsedTime < minDuration) {
+      toast.error(`최소 ${minDuration}초 이상 녹음해야 합니다.`, { position: "top-right" });
+      return;
+    }
+
+    let file: File;
+
+    if (isWebView) file = new File([tempBlob], "voice.wav", { type: "audio/wav" });
+    else file = new File([tempBlob], "voice.webm", { type: "audio/webm" });
+
     setValue("voiceFile", file);
     completeRecording();
   };
 
-  /** 안내 문구 */
+  useEffect(() => {
+    if (phase === "recording") {
+      setElapsedTime(0);
+      const interval = setInterval(() => {
+        setElapsedTime((prev) => prev + 1);
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [phase]);
+
   const GuideBlock = (
     <div className="space-y-3">
       <p className="text-sm font-semibold text-muted-foreground">녹음 문장</p>
       <blockquote className="text-lg leading-7 md:text-xl md:leading-8 font-semibold text-foreground">
-        <span className="block">"이게 뭐지?</span>
-        <span className="block">작은 상자 안엔 반짝이는 돌이 들어 있었어요.</span>
-        <span className="block">누가 여기다 두고 간 걸까?"</span>
+        <span className="block">이게 뭐지? 작은 상자 안에는 반짝이는 돌이 들어 있었어요.</span>
+        <span className="block">그 돌은 마치 별빛처럼 반짝였고, 내가 손에 쥐자 따뜻한 온기가 전해졌어요. </span>
+        <span className="block">정말 신비롭다! 누가 여기다 두고 간 걸까?</span>
       </blockquote>
     </div>
   );
@@ -55,7 +86,12 @@ export default function RecordingDrawerContent({ className, children }: ContentP
     idle: (
       <p className="text-center text-sm text-muted-foreground leading-relaxed">조용한 곳에서 또박또박 읽어주세요.</p>
     ),
-    recording: <p className="text-center text-sm text-muted-foreground leading-relaxed">녹음 문장을 읽어주세요.</p>,
+    recording: (
+      <div className="text-center space-y-2">
+        <p className="text-sm text-muted-foreground leading-relaxed">녹음 문장을 읽어주세요.</p>
+        <p className="text-lg font-mono font-bold text-destructive">{formatTime(elapsedTime)}</p>
+      </div>
+    ),
     review: (
       <p className="text-center text-sm text-muted-foreground leading-relaxed">내가 방금 읽은 목소리를 들어보세요.</p>
     ),
