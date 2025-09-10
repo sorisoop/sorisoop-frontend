@@ -50,7 +50,7 @@ export default function CustomFairyTaleDetailContent() {
           }
         >
           <Suspense fallback={<Spinner />}>
-            <VoiceSelect />
+            <VoiceSelect mode="custom" />
           </Suspense>
         </ErrorBoundary>
       </DialogContent>

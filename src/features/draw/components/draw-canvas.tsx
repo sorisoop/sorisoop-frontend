@@ -30,7 +30,6 @@ export default function DrawCanvas({ className }: HTMLAttributes<HTMLDivElement>
           bg-[length:100%_30px]
         "
       >
-        {/* 밑그림 (stencil) */}
         {stencil && (
           <img
             src={stencil}
@@ -44,14 +43,13 @@ export default function DrawCanvas({ className }: HTMLAttributes<HTMLDivElement>
           />
         )}
 
-        {/* 실제 그림 캔버스 */}
         <ReactSketchCanvas
           ref={canvasRef}
           className={`absolute inset-0 w-full h-full rounded-lg ${isEraser ? "cursor-none" : "cursor-crosshair"} z-20`}
           strokeWidth={brushWidth}
           eraserWidth={eraserWidth}
           strokeColor={color}
-          canvasColor="transparent"
+          canvasColor="#ffffff"
         />
 
         {/* 지우개 커서 */}
