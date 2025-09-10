@@ -1,4 +1,6 @@
+import type { HTMLAttributes } from "react";
 import { Button } from "@/shared/components/ui/button";
+import { cn } from "@/shared/lib/utils";
 import { useDraw } from "../hooks";
 
 const COLORS = [
@@ -12,11 +14,11 @@ const COLORS = [
   { name: "살색", hex: "#FCD5B5", tw: "bg-[#FCD5B5]" },
 ];
 
-export function DrawToolbarColor() {
+export function DrawToolbarColor({ className }: HTMLAttributes<HTMLDivElement>) {
   const { color, setColor, setIsEraser } = useDraw();
 
   return (
-    <>
+    <div className={cn("flex flex-row gap-2 lg:flex-col lg:gap-2 ", className)}>
       {COLORS.map((c) => (
         <Button
           key={c.hex}
@@ -26,9 +28,9 @@ export function DrawToolbarColor() {
             setColor(c.hex);
             setIsEraser(false);
           }}
-          className={`rounded-full cursor-pointer ${c.tw} ${color === c.hex ? "scale-125" : ""}`}
+          className={`rounded-full cursor-pointer ${c.tw} ${color === c.hex ? "scale-110" : ""}`}
         />
       ))}
-    </>
+    </div>
   );
 }

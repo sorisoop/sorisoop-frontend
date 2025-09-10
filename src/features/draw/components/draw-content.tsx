@@ -3,6 +3,7 @@ import { DrawCanvas, DrawToolbar } from ".";
 import { useDraw, useDrawFlow } from "../hooks";
 import { useCreateCustomSynopsis } from "@/entities/fairy-tale/api/mutations";
 import { SubscriptionApiError } from "@/shared/lib/api/errors";
+import DrawTutorial from "./draw-tutorial";
 
 export default function DrawContent() {
   const { canvasRef } = useDraw();
@@ -40,21 +41,29 @@ export default function DrawContent() {
 
   return (
     <BackHeaderLayout title="그림 그리기" rightButtonLabel="다음" onRightButtonClick={handleNext}>
+      <DrawTutorial />
+
       <div className="h-[calc(100vh-104px)] py-4 flex flex-col lg:flex-row gap-4">
         <DrawToolbar.Root className="lg:hidden flex-wrap justify-start px-4">
-          <DrawToolbar.Color />
-          <DrawToolbar.Brush />
-          <DrawToolbar.Eraser />
-          <DrawToolbar.Clear />
+          <DrawToolbar.Color className="toolbar-color mobile-toolbar-color" />
+          <div className="flex gap-2 mobile-toolbar-brush-eraser">
+            <DrawToolbar.Brush className="toolbar-brush" />
+            <DrawToolbar.Eraser className="toolbar-eraser" />
+          </div>
+          <DrawToolbar.Clear className="toolbar-clear mobile-toolbar-clear" />
+          <DrawToolbar.Character className="toolbar-character mobile-toolbar-character" />
         </DrawToolbar.Root>
 
-        <DrawCanvas />
+        <DrawCanvas className="draw-canvas" />
 
         <DrawToolbar.Root className="hidden lg:flex flex-col w-20 items-center py-4">
-          <DrawToolbar.Color />
-          <DrawToolbar.Brush />
-          <DrawToolbar.Eraser />
-          <DrawToolbar.Clear />
+          <DrawToolbar.Color className="toolbar-color desktop-toolbar-color" />
+          <div className="desktop-toolbar-brush-eraser gap-y-2 flex flex-col">
+            <DrawToolbar.Brush className="toolbar-brush" />
+            <DrawToolbar.Eraser className="toolbar-erase" />
+          </div>
+          <DrawToolbar.Clear className="toolbar-clear desktop-toolbar-clear" />
+          <DrawToolbar.Character className="toolbar-character desktop-toolbar-character" />
         </DrawToolbar.Root>
       </div>
     </BackHeaderLayout>

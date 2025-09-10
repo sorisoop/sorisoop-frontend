@@ -11,6 +11,10 @@ export interface DrawContextValue {
   eraserWidth: number;
   setEraserWidth: (n: number) => void;
   canvasRef: RefObject<ReactSketchCanvasRef | null>;
+  stencil: string | null;
+  setStencil: (s: string | null) => void;
+  enablePen: () => void;
+  enableEraser: () => void;
 }
 
 export const DrawContext = createContext<DrawContextValue | null>(null);
