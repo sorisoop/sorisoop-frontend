@@ -1,23 +1,23 @@
+import { ErrorBoundary } from "react-error-boundary";
 import { Suspense } from "react";
 import { useParams } from "react-router-dom";
 import { Play } from "lucide-react";
-import { useFairyTaleDetailById, useFairyTalesByCategoryInfinite } from "@/entities/fairy-tale/api/hooks";
+import { useCustomFairyTaleDetailById, useFairyTalesByCategoryInfinite } from "@/entities/fairy-tale/api/hooks";
 import { CATEGORY_MAP } from "@/shared/utils/category";
 import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogTrigger } from "@/shared/components/ui/dialog";
-import {
-  FairyTaleDetailDesktop,
-  FairyTaleDetailMobile,
-  FairyTaleDetailView,
-  VoiceSelect,
-} from "@/features/fairy-tale/components";
+import { VoiceSelect } from "@/features/fairy-tale/components";
 import { Button } from "@/shared/components/ui/button";
 import { Spinner } from "@/shared/components/ui/spinner";
-import { ErrorBoundary } from "react-error-boundary";
+import {
+  CustomFairyTaleDetailDesktop,
+  CustomFairyTaleDetailMobile,
+  CustomFairyTaleDetailView,
+} from "@/features/fairy-tale/components/custom";
 
-export default function FairyTaleDetailContent() {
+export default function CustomFairyTaleDetailContent() {
   const { id } = useParams<{ id: string }>();
   const fairyTaleId = Number(id);
-  const { data: fairyTale } = useFairyTaleDetailById(fairyTaleId);
+  const { data: fairyTale } = useCustomFairyTaleDetailById(fairyTaleId);
   const categoryId = CATEGORY_MAP[fairyTale.categoryName];
   const { data: relatedTales } = useFairyTalesByCategoryInfinite(categoryId);
   const similarTales = relatedTales?.pages[0] ?? [];
@@ -59,15 +59,15 @@ export default function FairyTaleDetailContent() {
 
   return (
     <>
-      <FairyTaleDetailView.isMobile>
-        <FairyTaleDetailMobile fairyTale={fairyTale} similarTales={similarTales}>
+      <CustomFairyTaleDetailView.isMobile>
+        <CustomFairyTaleDetailMobile fairyTale={fairyTale} similarTales={similarTales}>
           {VoiceDialog}
-        </FairyTaleDetailMobile>
-      </FairyTaleDetailView.isMobile>
+        </CustomFairyTaleDetailMobile>
+      </CustomFairyTaleDetailView.isMobile>
 
-      <FairyTaleDetailView.isDeskTop>
-        <FairyTaleDetailDesktop fairyTale={fairyTale}>{VoiceDialog}</FairyTaleDetailDesktop>
-      </FairyTaleDetailView.isDeskTop>
+      <CustomFairyTaleDetailView.isDeskTop>
+        <CustomFairyTaleDetailDesktop fairyTale={fairyTale}>{VoiceDialog}</CustomFairyTaleDetailDesktop>
+      </CustomFairyTaleDetailView.isDeskTop>
     </>
   );
 }

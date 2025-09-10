@@ -96,8 +96,14 @@ export default function VoiceSelect({ mode = "default" }: VoiceSelectProps) {
       </ul>
 
       {isPending && (
-        <div className="absolute inset-0 flex items-center justify-center bg-background/80 z-10">
-          <SpinnerIcon className="animate-spin w-6 h-6 text-primary" />
+        <div
+          id="voice-select-overlay-pending"
+          className="absolute inset-0 flex items-center justify-center bg-background/80 z-10"
+        >
+          <div className="flex flex-col items-center gap-y-4">
+            <SpinnerIcon className="animate-spin w-6 h-6 text-primary" />
+            <span className="text-sm text-muted-foreground">목소리를 생성하는 중이에요...</span>
+          </div>
         </div>
       )}
     </div>

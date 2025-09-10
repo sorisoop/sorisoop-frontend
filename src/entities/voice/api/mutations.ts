@@ -21,6 +21,7 @@ export const useCreateTts = () => {
   return useMutation({
     mutationFn: ({ speakerId, fairyTaleId }: { speakerId: string; fairyTaleId: number }) =>
       createTts(speakerId, fairyTaleId),
+    meta: { displayMode: "toast" },
   });
 };
 
@@ -28,6 +29,7 @@ export const useCreateCustomTts = () => {
   return useMutation({
     mutationFn: ({ speakerId, customFairyTaleId }: { speakerId: string; customFairyTaleId: number }) =>
       createCustomTts(speakerId, customFairyTaleId),
+    meta: { displayMode: "toast" },
   });
 };
 
