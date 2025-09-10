@@ -59,14 +59,14 @@ export function RecordingDrawerProvider({
     }
 
     if (!isMediaDevicesSupported) {
-      toast.error("이 브라우저에서는 마이크 녹음을 지원하지 않습니다.");
+      toast.error("이 브라우저에서는 마이크 녹음을 지원하지 않습니다.", { position: "top-right" });
       return;
     }
 
     if (status !== "granted") {
       const granted = await requestPermission();
       if (granted !== "granted") {
-        toast.error("마이크 권한이 없어 녹음을 시작할 수 없습니다.");
+        toast.error("마이크 권한이 없어 녹음을 시작할 수 없습니다.", { position: "top-right" });
         return;
       }
     }

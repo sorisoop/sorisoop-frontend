@@ -49,7 +49,7 @@ export default function VoiceEditPage() {
       },
       {
         onSuccess: () => {
-          toast.success("목소리가 수정되었습니다!");
+          toast.success("목소리가 수정되었습니다!", { position: "top-right" });
           navigate("/voice");
         },
       }
@@ -61,7 +61,7 @@ export default function VoiceEditPage() {
 
     deleteVoice(voice.id, {
       onSuccess: () => {
-        toast.success("목소리가 삭제되었습니다!");
+        toast.success("목소리가 삭제되었습니다!", { position: "top-right" });
         navigate("/voice");
       },
     });

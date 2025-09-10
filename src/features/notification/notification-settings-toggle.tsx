@@ -13,7 +13,7 @@ export default function NotificationSettingsToggle() {
   useWebViewMessage((msg: AppToWebMessage) => {
     if (msg.type === "NOTIFICATION_PERMISSION_RESULT") {
       if (msg.granted) toggleNotification();
-      else toast.error("알림 권한이 거부되어 알림을 켤 수 없습니다");
+      else toast.error("알림 권한이 거부되어 알림을 켤 수 없습니다", { position: "top-right" });
     }
   });
 

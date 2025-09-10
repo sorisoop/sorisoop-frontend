@@ -48,10 +48,7 @@ export default function FairyTaleCardGrid({
     deleteCustomFairyTaleMutation.mutate(deleteTarget.id, {
       onSuccess: () => {
         setDeleteTarget(null);
-        toast.success("동화책이 삭제되었습니다.");
-      },
-      onError: () => {
-        toast.error("삭제에 실패했습니다. 다시 시도해 주세요.");
+        toast.success("동화책이 삭제되었습니다.", { position: "top-right" });
       },
     });
   };

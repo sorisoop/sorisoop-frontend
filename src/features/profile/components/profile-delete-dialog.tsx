@@ -18,13 +18,9 @@ export function ProfileDeleteDialog() {
     if (!targetId) return;
     deleteProfile(targetId, {
       onSuccess: () => {
-        toast.success("프로필이 삭제되었습니다");
+        toast.success("프로필이 삭제되었습니다", { position: "top-right" });
         setOpen(false);
         setTargetId(null);
-      },
-      onError: () => {
-        setOpen(false);
-        toast.error("프로필 삭제에 실패했습니다");
       },
     });
   };

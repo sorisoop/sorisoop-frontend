@@ -25,7 +25,7 @@ export default function NotificationList() {
   ) => {
     if (isDeleted) {
       toast.error("이미 삭제된 동화책입니다.", {
-        position: "top-center",
+        position: "top-right",
       });
       return;
     }
