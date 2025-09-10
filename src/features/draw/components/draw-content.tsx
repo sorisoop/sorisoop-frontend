@@ -63,7 +63,7 @@ export default function DrawContent() {
             <DrawToolbar.Brush className="toolbar-brush" />
             <DrawToolbar.Eraser className="toolbar-erase" />
           </div>
-          <DrawToolbar.Undo className="toolbar-undo mobile-toolbar-undo" />
+          <DrawToolbar.Undo className="toolbar-undo desktop-toolbar-undo" />
           <DrawToolbar.Clear className="toolbar-clear desktop-toolbar-clear" />
           <DrawToolbar.Character className="toolbar-character desktop-toolbar-character" />
         </DrawToolbar.Root>

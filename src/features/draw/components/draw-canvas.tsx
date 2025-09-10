@@ -35,10 +35,10 @@ export default function DrawCanvas({ className }: HTMLAttributes<HTMLDivElement>
             src={stencil}
             alt="stencil"
             className="
-              absolute inset-0 w-full h-full object-contain
-              opacity-40 z-0
-              pointer-events-none
-              filter grayscale contrast(200%) brightness(0)
+            absolute inset-0 w-full h-full object-contain
+            opacity-40 z-10
+            pointer-events-none
+            filter grayscale contrast(200%) brightness(0)
             "
           />
         )}
@@ -48,6 +48,10 @@ export default function DrawCanvas({ className }: HTMLAttributes<HTMLDivElement>
           eraserWidth={eraserWidth}
           strokeColor={color}
           canvasColor="#ffffff"
+          className="absolute inset-0 w-full h-full z-20"
+          style={{
+            mixBlendMode: "multiply",
+          }}
         />
         {isEraser && cursor && (
           <div

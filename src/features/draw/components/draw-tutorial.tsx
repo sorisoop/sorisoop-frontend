@@ -14,6 +14,11 @@ const getMobileSteps = (): Step[] => [
     disableBeacon: true,
   },
   {
+    target: ".mobile-toolbar-undo",
+    content: "마지막에 그린 선을 되돌릴 수 있어요",
+    disableBeacon: true,
+  },
+  {
     target: ".mobile-toolbar-character",
     content: "직접 캐릭터를 그리거나, 제공되는 그림을 참고할 수 있어요.",
     disableBeacon: true,
@@ -34,6 +39,11 @@ const getDesktopSteps = (): Step[] => [
   {
     target: ".desktop-toolbar-brush-eraser",
     content: "필요하면 브러시와 지우개를 바꿀 수 있어요",
+    disableBeacon: true,
+  },
+  {
+    target: ".desktop-toolbar-undo",
+    content: "마지막에 그린 선을 되돌릴 수 있어요",
     disableBeacon: true,
   },
   {
@@ -123,13 +133,13 @@ export default function DrawTutorial() {
         },
         buttonNext: {
           backgroundColor: "#3b82f6",
-          borderRadius: "6px",
+          borderRadius: "4px",
           fontSize: "14px",
           padding: "8px 16px",
         },
         buttonSkip: {
-          color: "#6b7280",
-          fontSize: "14px",
+          color: "#000000",
+          fontSize: "16px",
         },
       }}
       callback={handleCallback}
