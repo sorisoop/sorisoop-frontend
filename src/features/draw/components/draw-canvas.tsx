@@ -42,17 +42,13 @@ export default function DrawCanvas({ className }: HTMLAttributes<HTMLDivElement>
             "
           />
         )}
-
         <ReactSketchCanvas
           ref={canvasRef}
-          className={`absolute inset-0 w-full h-full rounded-lg ${isEraser ? "cursor-none" : "cursor-crosshair"} z-20`}
           strokeWidth={brushWidth}
           eraserWidth={eraserWidth}
           strokeColor={color}
           canvasColor="#ffffff"
         />
-
-        {/* 지우개 커서 */}
         {isEraser && cursor && (
           <div
             className="absolute rounded-full border-2 border-muted-foreground border-dashed pointer-events-none z-30"

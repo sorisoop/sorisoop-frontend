@@ -15,7 +15,7 @@ const COLORS = [
 ];
 
 export function DrawToolbarColor({ className }: HTMLAttributes<HTMLDivElement>) {
-  const { color, setColor, setIsEraser } = useDraw();
+  const { color, setColor, enablePen } = useDraw();
 
   return (
     <div className={cn("flex flex-row gap-2 lg:flex-col lg:gap-2 ", className)}>
@@ -26,7 +26,7 @@ export function DrawToolbarColor({ className }: HTMLAttributes<HTMLDivElement>) 
           size="icon"
           onClick={() => {
             setColor(c.hex);
-            setIsEraser(false);
+            enablePen();
           }}
           className={`rounded-full cursor-pointer ${c.tw} ${color === c.hex ? "scale-110" : ""}`}
         />

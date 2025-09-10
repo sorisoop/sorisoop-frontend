@@ -12,6 +12,7 @@ import { DrawToolbarBrush } from "./draw-toolbar.brush";
 import { DrawToolbarEraser } from "./draw-toolbar.eraser";
 import { DrawToolbarClear } from "./draw-toolbar.clear";
 import { DrawToolbarCharacter } from "./draw-toolbar.character";
+import { DrawToolbarUndo } from "./draw-toolbar.undo";
 
 export const DrawToolbar = {
   Root: DrawToolbarRoot,
@@ -20,4 +21,5 @@ export const DrawToolbar = {
   Eraser: DrawToolbarEraser,
   Clear: DrawToolbarClear,
   Character: DrawToolbarCharacter,
+  Undo: DrawToolbarUndo,
 };
