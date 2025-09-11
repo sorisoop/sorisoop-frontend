@@ -7,9 +7,11 @@ import { useManageCard } from "@/features/subscription/hooks";
 import { SubscriptionProvider } from "@/features/subscription/providers/subscription-provider";
 import { useLogout } from "@/entities/member/api/mutations";
 import { ErrorFallback } from "@/shared/components/error-boundary";
+import { useProfile } from "@/entities/profile/api/hooks";
 
 export default function MypageScreen() {
   const { openSettings } = useManageCard();
+  const { data: profile } = useProfile();
   const logout = useLogout();
 
   return (
@@ -38,6 +40,12 @@ export default function MypageScreen() {
             </SubscriptionDialog>
           </SubscriptionProvider>
         </Mypage.SubscribeBanner>
+
+        {profile?.role === "PARENT" && (
+          <Mypage.MenuSection title="부모">
+            <Mypage.MenuItem to="/parents">부모님 페이지</Mypage.MenuItem>
+          </Mypage.MenuSection>
+        )}
 
         <Mypage.MenuSection title="구독">
           <Mypage.MenuItem to="/subscription/manage">구독 관리</Mypage.MenuItem>
