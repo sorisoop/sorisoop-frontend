@@ -18,7 +18,6 @@ export class Text {
     this.canvas.width = stageWidth;
     this.canvas.height = stageHeight;
 
-    // 🔑 반응형 폰트 크기 (화면 크기에 따라 자동 조정)
     const fontSize = Math.min(stageWidth, stageHeight) * 0.8;
 
     this.ctx.clearRect(0, 0, stageWidth, stageHeight);
@@ -27,7 +26,6 @@ export class Text {
     this.ctx.textAlign = "center";
     this.ctx.textBaseline = "middle";
 
-    // 🔑 정확히 중앙 정렬
     this.ctx.fillText(str, stageWidth / 2, stageHeight / 2);
 
     return this.dotPos(density, stageWidth, stageHeight);
