@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useMemo } from "react";
 import { Box3, Vector3 } from "three";
 import * as THREE from "three";
 import { Physics, RigidBody } from "@react-three/rapier";
@@ -9,11 +9,12 @@ import { useGalleryDialog } from "@/features/gallery/hooks";
 
 export default function Scene() {
   const { camera, scene, gl } = useThree();
-  const raycaster = new THREE.Raycaster();
-  const mouse = new THREE.Vector2();
+  const raycaster = useMemo(() => new THREE.Raycaster(), []);
+  const mouse = useMemo(() => new THREE.Vector2(), []);
   const heendyRef = useRef<HeendyRef>(null);
   const roomBoundsRef = useRef<{ min: Vector3; max: Vector3 } | null>(null);
   const { isPaused } = useGalleryDialog();
+  const isPointerDown = useRef(false);
 
   useEffect(() => {
     const room = scene.getObjectByName("Room");
@@ -24,12 +25,7 @@ export default function Scene() {
   }, [scene]);
 
   useEffect(() => {
-    const handlePointerDown = (e: PointerEvent) => {
-      if (isPaused) return;
-
-      const target = e.target as HTMLElement;
-      if (target.tagName.toLowerCase() !== "canvas") return;
-
+    const getTargetPos = (e: PointerEvent) => {
       mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
       mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
 
@@ -45,7 +41,6 @@ export default function Scene() {
       });
 
       let intersects = raycaster.intersectObjects(floorObjects, true);
-
       if (intersects.length === 0) {
         intersects = raycaster.intersectObjects(scene.children, true).slice(0, 3);
       }
@@ -57,16 +52,42 @@ export default function Scene() {
 
         if (targetPos.x > min.x && targetPos.x < max.x && targetPos.z > min.z && targetPos.z < max.z) {
           targetPos.y = 0.7;
-          heendyRef.current?.moveTo(targetPos);
+          return targetPos;
         }
       }
+      return null;
+    };
+
+    const handlePointerDown = (e: PointerEvent) => {
+      if (isPaused) return;
+      if ((e.target as HTMLElement).tagName.toLowerCase() !== "canvas") return;
+      isPointerDown.current = true;
+      const targetPos = getTargetPos(e);
+      if (targetPos) heendyRef.current?.startMove(targetPos);
+    };
+
+    const handlePointerMove = (e: PointerEvent) => {
+      if (!isPointerDown.current) return;
+      const targetPos = getTargetPos(e);
+      if (targetPos) heendyRef.current?.startMove(targetPos);
+    };
+
+    const handlePointerUp = () => {
+      isPointerDown.current = false;
     };
 
     gl.domElement.addEventListener("pointerdown", handlePointerDown);
+    gl.domElement.addEventListener("pointermove", handlePointerMove);
+    window.addEventListener("pointerup", handlePointerUp);
+    window.addEventListener("touchend", handlePointerUp);
+
     return () => {
       gl.domElement.removeEventListener("pointerdown", handlePointerDown);
+      gl.domElement.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerup", handlePointerUp);
+      window.removeEventListener("touchend", handlePointerUp);
     };
-  }, [camera, scene, gl, isPaused]);
+  }, [camera, scene, gl, isPaused, mouse, raycaster]);
 
   return (
     <>
