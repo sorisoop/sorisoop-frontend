@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/shared/components/ui/dialog";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerDescription } from "@/shared/components/ui/drawer";
 import { useIsDeskTop } from "@/shared/hooks";
@@ -9,7 +10,7 @@ import ProfileManageDialogUpdate from "./profile-manage-dialog-update";
 export function ProfileManageDialogContent() {
   const { open, setOpen, selectedProfile, setSelectedProfile } = useProfileManageDialogContext();
   const isDesktop = useIsDeskTop();
-
+  const innerRef = useRef<HTMLDivElement>(null);
   const handleOpenChange = (next: boolean) => {
     if (!next) {
       setSelectedProfile(null);
@@ -25,13 +26,32 @@ export function ProfileManageDialogContent() {
 
   return (
     <Wrapper open={open} onOpenChange={handleOpenChange}>
-      <Inner className={`px-4 pb-4 ${isDesktop ? "max-w-sm" : "max-w-full"}`}>
+      <Inner
+        ref={innerRef}
+        onOpenAutoFocus={(e) => {
+          e.preventDefault();
+          // 내부 첫 번째 포커스 가능한 엘리먼트로 강제 이동
+          const firstFocusable = innerRef.current?.querySelector<HTMLElement>(
+            "button, [href], input, select, textarea, [tabindex]:not([tabindex='-1'])"
+          );
+          if (firstFocusable) {
+            firstFocusable.focus();
+          } else {
+            // 아무 것도 없으면 content 자체에 focus 가능하게 처리
+            innerRef.current?.setAttribute("tabIndex", "-1");
+            innerRef.current?.focus();
+          }
+        }}
+        className={`
+          ${isDesktop ? "max-w-sm" : "h-dvh"} 
+          px-4 pb-4 flex flex-col
+        `}
+      >
         <Header>
           <Title className="sr-only">프로필 관리</Title>
           <Description className="sr-only">등록된 프로필을 선택하거나 수정할 수 있습니다.</Description>
         </Header>
-
-        <div className="relative w-full overflow-hidden">
+        <div className="relative w-full overflow-auto">
           <AnimatePresence mode="wait" initial={false}>
             {!selectedProfile ? (
               <motion.div

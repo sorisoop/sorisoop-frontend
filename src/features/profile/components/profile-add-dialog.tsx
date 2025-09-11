@@ -21,12 +21,12 @@ export function ProfileAddDialog() {
   if (!isDesktop) {
     return (
       <Drawer open={isOpen} onOpenChange={setOpen}>
-        <DrawerContent className="flex flex-col max-h-dvh pb-4">
+        <DrawerContent className="h-dvh flex flex-col pb-4">
           <DrawerHeader>
             <DrawerTitle className="sr-only">새 프로필 추가</DrawerTitle>
             <DrawerDescription className="sr-only">새 프로필을 등록할 수 있어요.</DrawerDescription>
           </DrawerHeader>
-          <div className="flex-1 overflow-y-auto px-4 pb-1">
+          <div className="flex-1 overflow-y-auto px-4 pb-2">
             <ProfileAddForm onSubmit={handleSubmit} isPending={isPending} />
           </div>
         </DrawerContent>
