@@ -5,4 +5,7 @@ export { default as Scene } from "./scene";
 export { default as GradientBackground } from "./gradient-background";
 export { default as GalleryFallback } from "./gallery-fallback";
 export { default as GalleryDialog } from "./gallery-dialog";
+export { default as PixelRippleArt } from "./pixel-ripple-art";
+export { default as SheepEffect } from "./sheep-effect";
+export { default as TypographyEffect } from "./typography-effect";
 export { Img } from "./gallery-room";
