@@ -17,16 +17,8 @@ export default function VoicePage() {
           {voices.map((v) => (
             <li key={v.id}>
               <div className="relative flex items-center gap-4 md:gap-6 rounded-md py-4">
-                <span className="relative shrink-0 w-14 h-14">
-                  <span className="absolute inset-0 rounded-full overflow-hidden bg-muted grid place-items-center">
-                    <img
-                      src={v.imageUrl}
-                      alt={v.title}
-                      className="w-full h-full object-cover"
-                      loading="lazy"
-                      decoding="async"
-                    />
-                  </span>
+                <span className="shrink-0 w-14 h-14 rounded-full overflow-hidden bg-muted">
+                  <img src={v.imageUrl} alt={v.title} className="w-full h-full object-cover object-center" />
                 </span>
 
                 <span className="flex-1 text-left">
