@@ -51,7 +51,7 @@ export default function ReadByCategory() {
                     : "bg-muted/30 border border-border",
                 ].join(" ")}
               >
-                <span className="text-2xl select-none">{emoji}</span>
+                <span className="text-4xl select-none">{emoji}</span>
               </Button>
               <p
                 className={[

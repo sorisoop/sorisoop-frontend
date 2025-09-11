@@ -42,7 +42,7 @@ export default function Categories() {
                     "focus-visible:ring-0 focus-visible:ring-offset-0",
                   ].join(" ")}
                 >
-                  <span className="text-2xl select-none">{emoji}</span>
+                  <span className="text-4xl select-none">{emoji}</span>
                 </Button>
                 <p className="mt-2 text-sm font-medium leading-tight text-foreground">{name}</p>
               </div>
