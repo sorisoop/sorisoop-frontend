@@ -4,4 +4,5 @@ export { default as Lighting } from "./lighting";
 export { default as Scene } from "./scene";
 export { default as GradientBackground } from "./gradient-background";
 export { default as GalleryFallback } from "./gallery-fallback";
+export { default as GalleryDialog } from "./gallery-dialog";
 export { Img } from "./gallery-room";

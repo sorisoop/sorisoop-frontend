@@ -27,7 +27,7 @@ type GLTFResult = GLTF & {
 };
 
 function GalleryRoom(props: JSX.IntrinsicElements["group"] & { editor?: boolean }) {
-  const { nodes, materials } = useGLTF("/assets/gallery/simple_room_solidify_0.17.glb") as unknown as GLTFResult;
+  const { nodes, materials } = useGLTF("/assets/gallery/room.glb") as unknown as GLTFResult;
   const circleRef = useRef<THREE.Mesh>(null);
   const store = useGalleryStore();
 
@@ -73,6 +73,6 @@ function GalleryRoom(props: JSX.IntrinsicElements["group"] & { editor?: boolean 
   );
 }
 
-useGLTF.preload("/assets/gallery/simple_room_solidify_0.17.glb");
+useGLTF.preload("/assets/gallery/room.glb");
 
 export default GalleryRoom;

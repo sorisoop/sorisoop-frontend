@@ -1,8 +1,9 @@
 import * as THREE from "three";
+import { forwardRef, useImperativeHandle, useRef, useState, useEffect } from "react";
 import { useFrame, useThree, useLoader } from "@react-three/fiber";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { MeshoptDecoder } from "three/examples/jsm/libs/meshopt_decoder.module.js";
-import { forwardRef, useImperativeHandle, useRef, useState, useEffect } from "react";
+import { useGalleryDialog } from "@/features/gallery/hooks";
 
 export interface HeendyRef {
   moveTo: (target: THREE.Vector3) => void;
@@ -13,20 +14,30 @@ interface HeendyProps {
 
 const Heendy = forwardRef<HeendyRef, HeendyProps>(({ modelSrc }, ref) => {
   const { camera } = useThree();
+  const { isPaused } = useGalleryDialog();
   const gltf = useLoader(GLTFLoader, modelSrc, (loader) => {
     loader.setMeshoptDecoder(MeshoptDecoder);
   });
 
   const groupRef = useRef<THREE.Group>(null);
   const mixerRef = useRef<THREE.AnimationMixer | null>(null);
+
   const walkActionRef = useRef<THREE.AnimationAction | null>(null);
+  const runActionRef = useRef<THREE.AnimationAction | null>(null);
   const currentActionRef = useRef<THREE.AnimationAction | null>(null);
+
   const [destination, setDestination] = useState<THREE.Vector3 | null>(null);
 
   useImperativeHandle(ref, () => ({
     moveTo: (target: THREE.Vector3) => {
       target.y = 0.7;
       setDestination(target);
+
+      if (runActionRef.current) {
+        currentActionRef.current?.stop();
+        runActionRef.current.reset().play();
+        currentActionRef.current = runActionRef.current;
+      }
     },
   }));
 
@@ -45,16 +56,24 @@ const Heendy = forwardRef<HeendyRef, HeendyProps>(({ modelSrc }, ref) => {
 
     mixerRef.current = new THREE.AnimationMixer(model);
     if (gltf.animations.length > 0) {
-      const walk =
-        gltf.animations.find(
-          (clip) => clip.name.toLowerCase().includes("run") || clip.name.toLowerCase().includes("walk")
-        ) || gltf.animations[0];
-      if (walk) walkActionRef.current = mixerRef.current.clipAction(walk);
+      const walkClip = gltf.animations.find((clip) => clip.name.toLowerCase().includes("walk"));
+      const runClip = gltf.animations.find((clip) => clip.name.toLowerCase().includes("run"));
+
+      if (walkClip) walkActionRef.current = mixerRef.current.clipAction(walkClip);
+      if (runClip) runActionRef.current = mixerRef.current.clipAction(runClip);
     }
   }, [gltf]);
 
   useFrame((_, delta) => {
     if (!groupRef.current) return;
+
+    if (isPaused) {
+      mixerRef.current?.stopAllAction();
+      setDestination(null);
+      currentActionRef.current = null;
+      return;
+    }
+
     mixerRef.current?.update(delta);
 
     if (destination) {
@@ -66,15 +85,9 @@ const Heendy = forwardRef<HeendyRef, HeendyProps>(({ modelSrc }, ref) => {
         dir.normalize();
         pos.add(dir.multiplyScalar(0.07));
         groupRef.current.lookAt(destination);
-
-        if (walkActionRef.current && currentActionRef.current !== walkActionRef.current) {
-          currentActionRef.current?.stop();
-          walkActionRef.current.reset().play();
-          currentActionRef.current = walkActionRef.current;
-        }
       } else {
         setDestination(null);
-        walkActionRef.current?.stop();
+        currentActionRef.current?.stop();
         currentActionRef.current = null;
       }
     }

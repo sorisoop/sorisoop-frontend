@@ -1,10 +1,11 @@
 import { useRef, useEffect } from "react";
+import { Box3, Vector3 } from "three";
 import * as THREE from "three";
 import { Physics, RigidBody } from "@react-three/rapier";
 import { useThree } from "@react-three/fiber";
-import { Box3, Vector3 } from "three";
 import { GalleryRoom, GradientBackground, Heendy, Lighting } from "@/features/gallery/components";
 import type { HeendyRef } from "@/features/gallery/components/heendy";
+import { useGalleryDialog } from "@/features/gallery/hooks";
 
 export default function Scene() {
   const { camera, scene, gl } = useThree();
@@ -12,6 +13,7 @@ export default function Scene() {
   const mouse = new THREE.Vector2();
   const heendyRef = useRef<HeendyRef>(null);
   const roomBoundsRef = useRef<{ min: Vector3; max: Vector3 } | null>(null);
+  const { isPaused } = useGalleryDialog();
 
   useEffect(() => {
     const room = scene.getObjectByName("Room");
@@ -23,6 +25,8 @@ export default function Scene() {
 
   useEffect(() => {
     const handlePointerDown = (e: PointerEvent) => {
+      if (isPaused) return;
+
       const target = e.target as HTMLElement;
       if (target.tagName.toLowerCase() !== "canvas") return;
 
@@ -62,7 +66,7 @@ export default function Scene() {
     return () => {
       gl.domElement.removeEventListener("pointerdown", handlePointerDown);
     };
-  }, [camera, scene, gl]);
+  }, [camera, scene, gl, isPaused]);
 
   return (
     <>
