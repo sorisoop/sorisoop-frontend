@@ -11,6 +11,7 @@ interface FullScreenBackLayoutProps {
 export default function FullScreenBackHeaderLayout({ children, rightSlot }: FullScreenBackLayoutProps) {
   const navigate = useNavigate();
   const { isWebView } = useIsWebview();
+
   return (
     <div
       id="main-container"
@@ -23,7 +24,9 @@ export default function FullScreenBackHeaderLayout({ children, rightSlot }: Full
         <Button
           variant="link"
           size="icon"
-          onClick={() => navigate(-1)}
+          onClick={() => {
+            navigate(-1);
+          }}
           className="rounded-full bg-transparent cursor-pointer"
         >
           <ArrowLeft className="!h-6 !w-6 text-foreground font-bold" />

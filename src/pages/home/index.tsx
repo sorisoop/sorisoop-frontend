@@ -29,7 +29,9 @@ export default function HomePage() {
           value={homeFilter}
           onValueChange={(v) => {
             if (v === "갤러리") {
-              navigate("/gallery");
+              if (location.pathname !== "/gallery") {
+                navigate("/gallery");
+              }
               return;
             }
             setHomeFilter(v as typeof homeFilter);
