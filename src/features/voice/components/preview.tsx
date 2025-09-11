@@ -5,8 +5,11 @@ import { useRecordingSessionContext } from "@/features/voice/hooks";
 import { Button } from "@/shared/components/ui/button";
 import { cn } from "@/shared/lib/utils";
 
+export type PreviewProps = {
+  stopAudio: () => void;
+};
 export default function Preview() {
-  const { finalBlob, finalUrl } = useRecordingSessionContext();
+  const { finalBlob, finalUrl, setStopPlayback } = useRecordingSessionContext();
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
 
@@ -51,6 +54,11 @@ export default function Preview() {
       }
     }
   };
+
+  useEffect(() => {
+    setStopPlayback(() => stopAudio);
+    return () => setStopPlayback(null);
+  }, [setStopPlayback]);
 
   if (!finalUrl) return null;
 

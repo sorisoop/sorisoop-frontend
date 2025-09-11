@@ -12,6 +12,7 @@ import { RecordingSessionProvider } from "@/features/voice/providers";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { CANDIDATES } from "@/features/voice/constants";
+import { useRecordingSessionContext } from "@/features/voice/hooks";
 
 export default function VoiceAddPage() {
   const navigate = useNavigate();
@@ -23,70 +24,77 @@ export default function VoiceAddPage() {
       voiceFile: null,
     },
   });
+
   const { handleSubmit, control } = methods;
 
-  const onSubmit = (data: VoiceFormValues) => {
-    if (!data.voiceFile) return;
-    addVoice(
-      {
-        voiceFile: data.voiceFile,
-        request: {
-          title: data.title,
-          imageUrl: data.imageUrl,
+  function InnerForm() {
+    const { stopPlayback } = useRecordingSessionContext();
+
+    const onSubmit = (data: VoiceFormValues) => {
+      stopPlayback?.();
+      if (!data.voiceFile) return;
+      addVoice(
+        {
+          voiceFile: data.voiceFile,
+          request: { title: data.title, imageUrl: data.imageUrl },
         },
-      },
-      {
-        onSuccess: () => {
-          toast.success("목소리가 등록되었습니다!", { position: "top-right" });
-          navigate("/voice");
-        },
-      }
+        {
+          onSuccess: () => {
+            toast.success("목소리가 등록되었습니다!", { position: "top-right" });
+            navigate("/voice");
+          },
+        }
+      );
+    };
+
+    return (
+      <FormProvider {...methods}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <section className="pt-4">
+            <RecordingDrawer>
+              <Controller
+                control={control}
+                name="imageUrl"
+                render={({ field }) => (
+                  <CharacterSelector
+                    items={CANDIDATES}
+                    selectedId={CANDIDATES.find((c) => c.avatar === field.value)?.id ?? ""}
+                    onSelect={(id) => {
+                      const candidate = CANDIDATES.find((c) => c.id === id);
+                      if (candidate) field.onChange(candidate.avatar);
+                    }}
+                  />
+                )}
+              />
+
+              <Controller
+                control={control}
+                name="title"
+                rules={{ required: true }}
+                render={({ field }) => <NameField value={field.value} onChange={field.onChange} />}
+              />
+
+              <RecordingDrawer.IfRecorded>
+                <Preview />
+              </RecordingDrawer.IfRecorded>
+
+              <RecordingDrawer.Trigger>
+                <RecordButton />
+              </RecordingDrawer.Trigger>
+              <RecordingDrawer.Content />
+            </RecordingDrawer>
+          </section>
+
+          <BottomActionButton isPending={isPending} />
+        </form>
+      </FormProvider>
     );
-  };
+  }
 
   return (
     <BackHeaderLayout title="목소리 추가하기">
       <RecordingSessionProvider>
-        <FormProvider {...methods}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <section className="pt-4">
-              <RecordingDrawer>
-                <Controller
-                  control={control}
-                  name="imageUrl"
-                  render={({ field }) => (
-                    <CharacterSelector
-                      items={CANDIDATES}
-                      selectedId={CANDIDATES.find((c) => c.avatar === field.value)?.id ?? ""}
-                      onSelect={(id) => {
-                        const candidate = CANDIDATES.find((c) => c.id === id);
-                        if (candidate) field.onChange(candidate.avatar);
-                      }}
-                    />
-                  )}
-                />
-
-                <Controller
-                  control={control}
-                  name="title"
-                  rules={{ required: true }}
-                  render={({ field }) => <NameField value={field.value} onChange={field.onChange} />}
-                />
-
-                <RecordingDrawer.IfRecorded>
-                  <Preview />
-                </RecordingDrawer.IfRecorded>
-
-                <RecordingDrawer.Trigger>
-                  <RecordButton />
-                </RecordingDrawer.Trigger>
-                <RecordingDrawer.Content />
-              </RecordingDrawer>
-            </section>
-
-            <BottomActionButton isPending={isPending} />
-          </form>
-        </FormProvider>
+        <InnerForm />
       </RecordingSessionProvider>
     </BackHeaderLayout>
   );

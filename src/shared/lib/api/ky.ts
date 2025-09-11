@@ -30,6 +30,7 @@ import {
   type VoiceErrorCode,
 } from "./errors";
 import { TtsApiError, TtsError, type TtsErrorCode } from "./errors/tts-api-error";
+import { CommonApiError, CommonError, type CommonErrorCode } from "./errors/common-api-error";
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
 
@@ -103,6 +104,11 @@ export const api = ky.create({
           if (code && code in TtsError) {
             throw new TtsApiError(code as TtsErrorCode, status);
           }
+
+          if (code && code in CommonError) {
+            throw new CommonApiError(code as CommonErrorCode, status);
+          }
+
           throw new Error(data.message ?? "알 수 없는 오류가 발생했습니다.");
         }
 

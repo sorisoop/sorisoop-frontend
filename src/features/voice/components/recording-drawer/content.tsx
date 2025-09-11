@@ -189,7 +189,6 @@ export default function RecordingDrawerContent({ className, children }: ContentP
     ),
   }[phase];
 
-  /** body */
   const body = children ?? (
     <div className="relative">
       {!isDesktop && (
