@@ -31,7 +31,7 @@ export default function CommonLayout({ children, title = "" }: CommonLayoutProps
         <div className="mx-auto max-w-screen-xl h-[52px] px-4 flex items-center justify-between gap-4">
           <Link to="/" className="inline-flex items-center">
             <span className="sr-only">Home</span>
-            <img src="/logo.webp" width={62} height={62} alt="logo" className="h-[56px] pt-1" />
+            <img src="/2.png" width={80} height={52} alt="logo" className="h-[52px] pt-1" />
           </Link>
 
           <div className="absolute left-1/2 -translate-x-1/2 truncate text-sm font-bold text-muted-foreground">

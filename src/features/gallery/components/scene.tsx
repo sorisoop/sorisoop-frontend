@@ -1,7 +1,7 @@
+import { useRef, useEffect } from "react";
 import * as THREE from "three";
 import { Physics, RigidBody } from "@react-three/rapier";
 import { useThree } from "@react-three/fiber";
-import { useRef, useEffect } from "react";
 import { Box3, Vector3 } from "three";
 import { GalleryRoom, GradientBackground, Heendy, Lighting } from "@/features/gallery/components";
 import type { HeendyRef } from "@/features/gallery/components/heendy";
