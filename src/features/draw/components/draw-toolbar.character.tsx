@@ -9,7 +9,7 @@ export function DrawToolbarCharacter({ className }: HTMLAttributes<HTMLDivElemen
 
   const characters = [
     { id: "sponge", src: "/assets/character/sponge-bob.webp", label: "스폰지밥" },
-    { id: "pickchu", src: "/assets/character/pickchu.webp", label: "피카츄" },
+    { id: "doraemon", src: "/assets/character/doraemon.webp", label: "도라에몽" },
   ];
 
   return (
