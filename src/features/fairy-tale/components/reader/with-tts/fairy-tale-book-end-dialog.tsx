@@ -51,10 +51,10 @@ export function FairyTaleBookEndDialog() {
           </DialogHeader>
 
           <DialogFooter className="flex gap-2 mt-6 justify-end">
-            <Button variant="outline" onClick={handleGoBack} className="cursor-pointer border-border">
+            <Button variant="outline" onClick={handleReplay} className="cursor-pointer border-border">
               다시보기
             </Button>
-            <Button onClick={handleReplay} className="cursor-pointer bg-primary text-secondary font-semibold">
+            <Button onClick={handleGoBack} className="cursor-pointer bg-primary text-secondary font-semibold">
               돌아가기
             </Button>
           </DialogFooter>
