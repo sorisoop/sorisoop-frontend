@@ -10,7 +10,7 @@ export default function NonHeaderLayout({ children, title = "" }: NonHeaderLayou
       className="flex min-h-dvh w-full max-w-screen-xl mx-auto flex-col items-center bg-background text-foreground"
     >
       <header className="sticky top-0 z-20 w-full bg-background/90 backdrop-blur pt-[env(safe-area-inset-top)]">
-        <div className="mx-auto max-w-screen-xl h-[52px] px-4 flex items-center justify-between gap-4">
+        <div className="mx-auto max-w-screen-xl px-4 flex items-center justify-between gap-4">
           <div className="flex-1 truncate text-center text-sm font-bold text-muted-foreground">{title}</div>
           <div className="h-6 w-6" />
         </div>
