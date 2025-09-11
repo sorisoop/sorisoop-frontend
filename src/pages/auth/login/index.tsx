@@ -26,10 +26,8 @@ export default function LoginPage() {
         <FloatingShapesBackground />
 
         <div className="relative text-center mb-16 flex justify-center items-center gap-2 z-10">
-          <span className="inline-block h-5 w-1.5 rounded-full bg-primary" />
-          <h1 className="text-2xl font-bold text-foreground">소리숲</h1>
+          <img src="/logo.webp" alt="소리숲 로고" className="h-24 w-auto" />
         </div>
-
         <div className="relative w-full max-w-lg mx-auto space-y-6 p-4 z-10">
           <LoginForm onSubmit={handleLogin}>
             <LoginForm.Input label="아이디" />

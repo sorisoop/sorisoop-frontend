@@ -7,21 +7,22 @@ export default function NonHeaderLayout({ children, title = "" }: NonHeaderLayou
   return (
     <div
       id="main-container"
-      className="flex min-h-screen w-full max-w-screen-xl mx-auto flex-col items-center bg-background text-foreground"
+      className="flex min-h-dvh w-full max-w-screen-xl mx-auto flex-col items-center bg-background text-foreground"
     >
-      <header className="sticky top-0 z-0 w-full bg-background/90 backdrop-blur">
+      <header className="sticky top-0 z-20 w-full bg-background/90 backdrop-blur pt-[env(safe-area-inset-top)]">
         <div className="mx-auto max-w-screen-xl h-[52px] px-4 flex items-center justify-between gap-4">
           <div className="flex-1 truncate text-center text-sm font-bold text-muted-foreground">{title}</div>
           <div className="h-6 w-6" />
         </div>
       </header>
 
-      <div
+      <main
         id="main-content"
-        className="flex w-full max-w-screen-xl flex-1 flex-col items-stretch justify-start pb-safe-bottom"
+        className="flex w-full max-w-screen-xl flex-1 flex-col items-stretch justify-start 
+                   pb-[env(safe-area-inset-bottom)]"
       >
         {children}
-      </div>
+      </main>
 
       <div aria-hidden className="pointer-events-none -z-50">
         <div className="fixed inset-0 -z-50 bg-muted" />
