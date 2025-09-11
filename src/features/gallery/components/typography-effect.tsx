@@ -1,6 +1,12 @@
 import { useEffect, useRef } from "react";
 import { Visual } from "@/features/gallery/typography";
 
+const getViewportSize = () => {
+  const width = window.innerWidth;
+  const height = window.visualViewport?.height ?? window.innerHeight;
+  return { width, height };
+};
+
 export default function TypographyEffect() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const visualRef = useRef<Visual | null>(null);
@@ -20,8 +26,10 @@ export default function TypographyEffect() {
     let stageHeight = 0;
 
     const resize = () => {
-      stageWidth = window.innerWidth;
-      stageHeight = window.innerHeight;
+      const { width, height } = getViewportSize();
+
+      stageWidth = width;
+      stageHeight = height;
 
       canvas.width = stageWidth * pixelRatio;
       canvas.height = stageHeight * pixelRatio;
