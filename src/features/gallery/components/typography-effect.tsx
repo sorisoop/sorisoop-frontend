@@ -4,9 +4,11 @@ import { Visual } from "@/features/gallery/typography";
 const getViewportSize = () => {
   const width = window.innerWidth;
   const height = window.visualViewport?.height ?? window.innerHeight;
-  return { width, height };
+  const safeTop = parseInt(
+    getComputedStyle(document.documentElement).getPropertyValue("env(safe-area-inset-top)") || "0"
+  );
+  return { width, height, safeTop };
 };
-
 export default function TypographyEffect() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const visualRef = useRef<Visual | null>(null);
@@ -26,7 +28,7 @@ export default function TypographyEffect() {
     let stageHeight = 0;
 
     const resize = () => {
-      const { width, height } = getViewportSize();
+      const { width, height, safeTop } = getViewportSize();
 
       stageWidth = width;
       stageHeight = height;
@@ -34,10 +36,10 @@ export default function TypographyEffect() {
       canvas.width = stageWidth * pixelRatio;
       canvas.height = stageHeight * pixelRatio;
 
-      ctx.setTransform(1, 0, 0, 1, 0, 0); // scale 중복 방지
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.scale(pixelRatio, pixelRatio);
 
-      visual.show(stageWidth, stageHeight);
+      visual.show(stageWidth, stageHeight - safeTop);
     };
 
     const animate = (t: number) => {
