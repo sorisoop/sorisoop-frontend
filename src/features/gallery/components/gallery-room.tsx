@@ -41,19 +41,15 @@ function GalleryRoom(props: JSX.IntrinsicElements["group"] & { editor?: boolean 
 
       <group {...props} castShadow scale={2} dispose={null} position={[2, 1.5, 2]}>
         <RigidBody type="fixed" colliders="trimesh">
-          {/* 중앙 벽/바닥 */}
           <group position={[0, 1.5, 0]} scale={[1, 1, 1.2]}>
-            {/* 벽/천장 → 밝은 회색 */}
             <mesh geometry={nodes.Cube_1.geometry}>
               <meshStandardMaterial color="#eaeaea" />
             </mesh>
-            {/* 바닥 → 모델 재질 그대로 */}
             <mesh geometry={nodes.Cube_3.geometry}>
               <meshStandardMaterial {...materials.floor} name="floor" />
             </mesh>
           </group>
 
-          {/* 왼쪽 벽 */}
           <group position={[9, 1.5, -3]} rotation={[0, Math.PI / 2, 0]} scale={[1, 1, 1.2]}>
             <mesh geometry={nodes.Cube002_1.geometry}>
               <meshStandardMaterial color="#eaeaea" />
@@ -63,7 +59,6 @@ function GalleryRoom(props: JSX.IntrinsicElements["group"] & { editor?: boolean 
             </mesh>
           </group>
 
-          {/* 오른쪽 벽 */}
           <group position={[9, 1.5, 3]} rotation={[0, Math.PI / 2, 0]} scale={[1, 1, 1.2]}>
             <mesh geometry={nodes.Cube003.geometry}>
               <meshStandardMaterial color="#eaeaea" />
