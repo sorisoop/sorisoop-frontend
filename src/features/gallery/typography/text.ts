@@ -18,19 +18,17 @@ export class Text {
     this.canvas.width = stageWidth;
     this.canvas.height = stageHeight;
 
-    const fontSize = 800;
+    // 🔑 반응형 폰트 크기 (화면 크기에 따라 자동 조정)
+    const fontSize = Math.min(stageWidth, stageHeight) * 0.8;
 
     this.ctx.clearRect(0, 0, stageWidth, stageHeight);
     this.ctx.font = `700 ${fontSize}px sans-serif`;
     this.ctx.fillStyle = "rgba(255, 255, 255, 0.3)";
+    this.ctx.textAlign = "center";
     this.ctx.textBaseline = "middle";
 
-    const fontPos = this.ctx.measureText(str);
-    this.ctx.fillText(
-      str,
-      (stageWidth - fontPos.width) / 2,
-      (fontPos.actualBoundingBoxAscent ?? 0) + (fontPos.actualBoundingBoxDescent ?? 0) + (stageHeight - fontSize) / 2
-    );
+    // 🔑 정확히 중앙 정렬
+    this.ctx.fillText(str, stageWidth / 2, stageHeight / 2);
 
     return this.dotPos(density, stageWidth, stageHeight);
   }
