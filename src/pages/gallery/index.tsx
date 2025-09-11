@@ -50,7 +50,7 @@ function GalleryCanvas() {
 
 export default function GalleryPage() {
   return (
-    <FullScreenBackHeaderLayout>
+    <FullScreenBackHeaderLayout backIconClassName="!h-8 !w-8 text-secondary font-bold">
       <div className="w-full h-dvh relative">
         <GalleryDialogProvider>
           <GalleryCanvas />

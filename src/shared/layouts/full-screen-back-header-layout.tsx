@@ -6,9 +6,14 @@ import { useIsWebview } from "@/shared/hooks/use-is-webview";
 interface FullScreenBackLayoutProps {
   children: React.ReactNode;
   rightSlot?: React.ReactNode;
+  backIconClassName?: string;
 }
 
-export default function FullScreenBackHeaderLayout({ children, rightSlot }: FullScreenBackLayoutProps) {
+export default function FullScreenBackHeaderLayout({
+  children,
+  rightSlot,
+  backIconClassName = "h-6 w-6 text-foreground font-bold",
+}: FullScreenBackLayoutProps) {
   const navigate = useNavigate();
   const { isWebView } = useIsWebview();
 
@@ -29,7 +34,7 @@ export default function FullScreenBackHeaderLayout({ children, rightSlot }: Full
           }}
           className="rounded-full bg-transparent cursor-pointer"
         >
-          <ArrowLeft className="!h-6 !w-6 text-foreground font-bold" />
+          <ArrowLeft className={backIconClassName} />
         </Button>
         <div className="flex items-center">{rightSlot}</div>
       </header>
