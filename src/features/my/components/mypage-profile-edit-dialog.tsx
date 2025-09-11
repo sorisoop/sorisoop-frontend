@@ -129,23 +129,32 @@ export default function MypageProfileEditDialog({ open, onOpenChange }: MypagePr
       ))}
     </ul>
   );
-
   const PasswordForm = (
-    <form onSubmit={handlePasswordSubmit} className="space-y-4">
-      <Input type="text" name="username" autoComplete="username" className="hidden" />
-      <Input
-        type="password"
-        placeholder="비밀번호 입력"
-        autoComplete="current-password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        className="w-full rounded-lg text-sm placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:outline-none"
-      />
-      <div className="flex justify-end gap-2">
-        <Button type="button" variant="outline" onClick={goBackToList} className="cursor-pointer">
+    <form onSubmit={handlePasswordSubmit} className="flex flex-col h-full">
+      <div className="flex-1 space-y-4 overflow-y-auto">
+        <Input
+          type="text"
+          name="username"
+          autoComplete="username"
+          className="hidden"
+          tabIndex={-1}
+          aria-hidden="true"
+        />
+        <Input
+          type="password"
+          placeholder="비밀번호 입력"
+          autoComplete="current-password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          className="w-full rounded-lg text-sm placeholder:text-muted-foreground focus-visible:ring-0 focus-visible:outline-none"
+        />
+      </div>
+
+      <div className="sticky bottom-0 flex justify-end gap-2 bg-background pt-2 pb-[env(safe-area-inset-bottom)]">
+        <Button type="button" variant="outline" onClick={goBackToList}>
           취소
         </Button>
-        <Button type="submit" disabled={isPending || !password} className="text-secondary font-semibold cursor-pointer">
+        <Button type="submit" disabled={isPending || !password} className="text-secondary font-semibold">
           확인
         </Button>
       </div>
@@ -206,7 +215,7 @@ export default function MypageProfileEditDialog({ open, onOpenChange }: MypagePr
   return (
     <Drawer open={open} onOpenChange={handleOpenChange}>
       <DrawerContent
-        className="px-4 pb-4 overflow-hidden"
+        className="h-dvh px-4 pb-4 overflow-hidden"
         onOpenAutoFocus={(e) => {
           e.preventDefault();
           const target = e.currentTarget as HTMLElement;
