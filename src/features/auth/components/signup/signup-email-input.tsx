@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { FormField, FormItem, FormLabel, FormMessage, FormControl } from "@/shared/components/ui/form";
@@ -9,7 +7,7 @@ import type { SignupSchema } from "./signup";
 import { useCheckEmail } from "@/entities/member/api/hooks";
 
 export function SignupEmailInput() {
-  const { control, watch, setValue } = useFormContext<SignupSchema>();
+  const { control, watch, setValue, trigger } = useFormContext<SignupSchema>();
   const email = watch("email");
   const { refetch, isFetching } = useCheckEmail(email);
 
@@ -17,6 +15,13 @@ export function SignupEmailInput() {
 
   const handleCheck = async () => {
     if (!email) return;
+
+    const isValid = await trigger("email");
+    if (!isValid) {
+      setStatus("idle"); // 검증 실패 시 상태 초기화
+      return;
+    }
+
     const result = await refetch();
 
     if (result.data === true) {
