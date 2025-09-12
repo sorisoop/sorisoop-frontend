@@ -22,7 +22,7 @@ export function CustomFairyTaleToggleTextButton() {
       variant="outline"
       size="icon"
       onClick={() => setShowText((prev) => !prev)}
-      className="absolute top-4 right-4 z-10 w-10 h-10 rounded-full 
+      className="z-50 w-10 h-10 rounded-full
                  bg-card/20 backdrop-blur-sm hover:bg-card/30 
                  text-card-foreground border border-border"
     >
