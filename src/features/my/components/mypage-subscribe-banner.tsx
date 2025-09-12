@@ -24,9 +24,9 @@ export default function MypageSubscribeBanner({ children }: { children: React.Re
             )}
           >
             <picture>
-              <source srcSet="/assets/subscribe/subscribe-tablet.png" media="(min-width: 768px)" />
+              <source srcSet="/assets/subscribe/subscribe-tablet.webp" media="(min-width: 768px)" />
               <img
-                src="/assets/subscribe/subscribe-mobile.png"
+                src="/assets/subscribe/subscribe-mobile.webp"
                 alt="구독 배너"
                 className="absolute inset-0 w-full h-full object-cover object-right"
               />
