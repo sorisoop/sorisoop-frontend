@@ -38,6 +38,7 @@ export interface ConceptResponse {
 export interface CustomFairyTaleConceptResponse {
   imageUrl: string;
   imageContentType: string;
+  presignedUrl: string;
   conceptResponse: ConceptResponse[];
 }
 
@@ -45,4 +46,5 @@ export interface MakeCustomFairyTaleRequest {
   imageUrl: string;
   imageContentType: string;
   concept: string;
+  presignedUrl: string;
 }

@@ -16,7 +16,7 @@ export default function DrawResult() {
     return;
   }
 
-  const { conceptResponse, imageUrl, imageContentType } = result;
+  const { conceptResponse, imageUrl, imageContentType, presignedUrl } = result;
 
   const handleProceed = () => {
     if (selectedIndex === null) return;
@@ -27,6 +27,7 @@ export default function DrawResult() {
         imageUrl,
         imageContentType,
         concept: chosen.concept_en,
+        presignedUrl,
       },
       {
         onSuccess: () => {
