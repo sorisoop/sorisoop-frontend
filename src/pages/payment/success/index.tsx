@@ -18,7 +18,7 @@ export default function PaymentSuccessPage() {
 
       if (orderId && paymentKey && amount && planType) {
         await startSubscription({ orderId, paymentKey, amount, planType });
-        navigate("/my", { replace: true });
+        navigate("/parents/my", { replace: true });
       }
     }
 
