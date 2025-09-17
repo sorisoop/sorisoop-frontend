@@ -20,6 +20,7 @@ export function FairyTaleReaderProvider({ id, children }: { id: number; children
   const { currentPage, pause, bookEnded, setBookEnded } = useTtsContext();
   const { logAction } = useReadLog("FAIRY_TALE", id);
 
+  console.log(`data ${data}, id: ${id}`);
   /**
    * 다음 페이지로 이동
    */
