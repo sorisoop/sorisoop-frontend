@@ -17,10 +17,9 @@ export function FairyTaleReaderProvider({ id, children }: { id: number; children
   const flipBookRef = useRef<FlipBookRef | null>(null);
 
   const { data } = useFairyTaleContents(id);
-  const { currentPage, pause, bookEnded, setBookEnded } = useTtsContext();
+  const { currentPage, setCurrentPage, pause, bookEnded, setBookEnded } = useTtsContext();
   const { logAction } = useReadLog("FAIRY_TALE", id);
 
-  console.log(`data ${data}, id: ${id}`);
   /**
    * 다음 페이지로 이동
    */
@@ -31,6 +30,7 @@ export function FairyTaleReaderProvider({ id, children }: { id: number; children
     if (currentPage < data.length - 1) {
       logAction(currentPage, "READ");
       pause();
+      setCurrentPage(currentPage + 1);
       book.flip(currentPage + 1, "top");
     } else {
       logAction(currentPage, "READ");
